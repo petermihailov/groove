@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groove</title>
+    <style>
+      /* css-reset */
+      
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      
+      * {
+        margin: 0;
+      }
+      
+      html {
+        block-size: 100%;
+        inline-size: 100%;
+      }
+      
+      body {
+        min-block-size: 100%;
+        min-inline-size: 100%;
+        line-height: 1.5;
+        font-weight: 500;
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      img, picture, video, canvas, svg {
+        display: block;
+        max-width: 100%;
+      }
+      
+      input, button, textarea, select {
+        font: inherit;
+      }
+
+      button {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      p, h1, h2, h3, h4, h5, h6 {
+        overflow-wrap: break-word;
+      }
+      
+      #root {
+        isolation: isolate;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
