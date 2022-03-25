@@ -1,12 +1,12 @@
 export const colors = {
-  colorText: '#171a1c',
-  colorIcon: '#171a1c',
   colorAccent: '#0055ff',
+  colorDrawer: '#f9fbff',
+  colorIcon: '#171a1c',
+  colorOverlay: 'rgba(0, 0, 0, 0.2)',
   colorSurface1: '#f9fbff',
   colorSurface2: '#d9d9e8',
+  colorText: '#171a1c',
   colorThumbHighlight: 'rgba(0, 0, 0, 0.2)',
-  colorOverlay: 'rgba(0, 0, 0, 0.2)',
-  colorDrawer: '#f9fbff',
 } as const;
 
 export const typography = {

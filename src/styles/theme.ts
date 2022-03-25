@@ -30,7 +30,7 @@ const tokens = {
 type Theme = Record<keyof typeof tokens, string>;
 type CssRootVars = Record<string, string | number>;
 
-export const { theme, rootVars, rootVarsDark } = Object.entries(tokens).reduce<{
+export const { rootVars, rootVarsDark, theme } = Object.entries(tokens).reduce<{
   rootVars: CssRootVars;
   rootVarsDark: CssRootVars;
   theme: Theme;
@@ -50,8 +50,8 @@ export const { theme, rootVars, rootVarsDark } = Object.entries(tokens).reduce<{
     };
   },
   {
-    theme: {} as Theme,
     rootVars: {} as CssRootVars,
     rootVarsDark: {} as CssRootVars,
+    theme: {} as Theme,
   }
 );

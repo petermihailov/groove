@@ -60,11 +60,13 @@ export function Range({
   };
 
   useEffect(() => {
-    rangeRef.current.style.setProperty(
+    rangeRef.current?.style.setProperty(
       '--track-fill',
       rangeToPercent(value, min, max)
     );
-    decimalRef.current.value = String(value);
+    if (decimalRef.current?.value) {
+      decimalRef.current.value = String(value);
+    }
   }, [value, min, max]);
 
   return (
