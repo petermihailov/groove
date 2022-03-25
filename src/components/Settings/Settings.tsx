@@ -1,5 +1,6 @@
 import { MetronomeFrequency } from './MetronomeFrequency';
 import { TimeSignature } from './TimeSignature';
+
 import { useStyles } from './Settings.styles';
 
 export function Settings() {

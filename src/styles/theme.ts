@@ -1,3 +1,5 @@
+import { paramCase } from 'param-case';
+
 import {
   colors,
   easing,
@@ -9,7 +11,6 @@ import {
   zIndex,
 } from './tokens';
 import { colors as colorsDark } from './tokens-dark';
-import { paramCase } from 'param-case';
 
 function makeVariableName(name: string) {
   return `--${paramCase(name)}`;

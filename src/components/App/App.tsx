@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { ThemeSwitcher } from '../ThemeSwitcher';
+
+import { IconMetronome, IconSettings } from '../../icons';
+import { ButtonIcon } from '../ButtonIcon';
+import { Drawer } from '../Drawer';
 import { Range } from '../Range';
+import { Settings } from '../Settings';
+import { ThemeSwitcher } from '../ThemeSwitcher';
 
 import { useStyles } from './App.styles';
-import { Drawer } from '../Drawer';
-import { ButtonIcon } from '../ButtonIcon';
-import { IconMetronome, IconSettings } from '../../icons';
-import { Settings } from '../Settings';
 
 export function App() {
   const classes = useStyles();

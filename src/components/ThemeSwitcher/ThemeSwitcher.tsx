@@ -1,8 +1,9 @@
 import clsx from 'clsx';
 
 import { ButtonIcon, ButtonIconProps } from '../ButtonIcon';
-import { useStyles } from './ThemeSwitcher.styles';
 import { useThemeSwitch } from './useThemeSwitch';
+
+import { useStyles } from './ThemeSwitcher.styles';
 
 type ThemeSwitcherProps = Omit<ButtonIconProps, 'aria-label'>;
 

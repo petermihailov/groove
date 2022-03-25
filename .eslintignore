@@ -1,0 +1,6 @@
+# Dependency directories
+.npm_cache
+node_modules/
+
+# Build
+dist
