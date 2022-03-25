@@ -1,5 +1,3 @@
-import type * as React from 'react';
-
 export type DrawerRefElement = HTMLDivElement;
 
 export interface DrawerProps extends React.HTMLAttributes<DrawerRefElement> {

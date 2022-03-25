@@ -1,10 +1,10 @@
-import * as React from 'react';
+import { useEffect } from "react";
 
 export function useClickOutside(
   ref: Array<React.RefObject<HTMLElement>> | React.RefObject<HTMLElement>,
   handler?: (e: MouseEvent) => void
 ) {
-  React.useEffect(() => {
+  useEffect(() => {
     const refs = !Array.isArray(ref) ? [ref] : ref;
 
     const listener = (e: MouseEvent) => {

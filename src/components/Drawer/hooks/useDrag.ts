@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useLayoutEffect, useRef } from "react";
 
 const noop = Function.prototype;
 
@@ -49,11 +49,11 @@ export function useDrag<T>(
   elementRef: React.RefObject<HTMLElement>,
   onStateChange: StateChangeCallback<T>
 ) {
-  const touchIdentifierRef = React.useRef<number>();
-  const gestureStateRef = React.useRef<GestureState<T>>();
-  const onStateChangeRef = React.useRef<StateChangeCallback<T>>();
+  const touchIdentifierRef = useRef<number>();
+  const gestureStateRef = useRef<GestureState<T>>();
+  const onStateChangeRef = useRef<StateChangeCallback<T>>();
 
-  const handler = React.useCallback(
+  const handler = useCallback(
     (event: TouchEvent) => {
       const onChange = onStateChangeRef.current ?? noop;
       let state: GestureState<T> | undefined = gestureStateRef.current;
@@ -141,7 +141,7 @@ export function useDrag<T>(
   /**
    * Управляет подписками на события
    */
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (!elementRef.current) {
       return;
     }

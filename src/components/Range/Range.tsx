@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import * as React from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useStyles } from './Range.styles';
 
@@ -27,8 +27,8 @@ export function Range({
   ...props
 }: RangeProps) {
   const classes = useStyles();
-  const decimalRef = React.useRef<HTMLInputElement>(null);
-  const rangeRef = React.useRef<HTMLInputElement>(null);
+  const decimalRef = useRef<HTMLInputElement>(null);
+  const rangeRef = useRef<HTMLInputElement>(null);
 
   const handleTrackChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const val = Math.min(Number(e.target.value), max);
@@ -59,7 +59,7 @@ export function Range({
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     rangeRef.current.style.setProperty(
       '--track-fill',
       rangeToPercent(value, min, max)

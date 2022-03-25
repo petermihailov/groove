@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import * as React from 'react';
+import { createRef, useMemo } from 'react';
 
 import { useInOutAnimation, useLockBodyScroll } from '../../hooks';
 import type { DrawerProps } from './Drawer.props';
@@ -7,7 +7,7 @@ import { useClientHeight, useDrawerBehavior } from './hooks';
 
 import useStyles from './Drawer.styles';
 
-export const Drawer: React.FC<DrawerProps> = (props) => {
+export function Drawer(props: DrawerProps) {
   const classes = useStyles();
 
   const {
@@ -29,12 +29,12 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
 
   useLockBodyScroll(open);
 
-  const refs = React.useMemo(
+  const refs = useMemo(
     () => ({
-      root: React.createRef<HTMLDivElement>(),
+      root: createRef<HTMLDivElement>(),
       content: contentRef,
-      curtain: React.createRef<HTMLDivElement>(),
-      overlay: React.createRef<HTMLDivElement>(),
+      curtain: createRef<HTMLDivElement>(),
+      overlay: createRef<HTMLDivElement>(),
     }),
     [contentRef]
   );
