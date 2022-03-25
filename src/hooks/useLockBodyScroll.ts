@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 
 import { getScrollbarWidth } from '../utils';
 
@@ -40,7 +40,7 @@ const decrement = () => {
 };
 
 export function useLockBodyScroll(enabled = true) {
-  React.useEffect(() => {
+  useEffect(() => {
     if (enabled) {
       increment();
       return decrement;

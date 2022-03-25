@@ -1,14 +1,14 @@
-import * as React from 'react';
+import { useState, useCallback } from 'react';
 
 export function useInOutAnimation(entered: boolean) {
-  const [canUnmount, setCanUnmount] = React.useState(true);
-  const [inPristineState, setInPristineState] = React.useState(true);
+  const [canUnmount, setCanUnmount] = useState(true);
+  const [inPristineState, setInPristineState] = useState(true);
 
-  const onAnimationStart = React.useCallback(() => {
+  const onAnimationStart = useCallback(() => {
     setCanUnmount(false);
   }, []);
 
-  const onAnimationEnd = React.useCallback(() => {
+  const onAnimationEnd = useCallback(() => {
     setCanUnmount(!entered);
     if (entered) {
       setInPristineState(false);

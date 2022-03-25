@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 type ThemeValue = 'dark' | 'light';
 
@@ -15,17 +15,17 @@ const getColorPreference = (): ThemeValue => {
 };
 
 export function useThemeSwitch() {
-  const [theme, setTheme] = React.useState<ThemeValue>(getColorPreference);
+  const [theme, setTheme] = useState<ThemeValue>(getColorPreference);
 
-  const toggleTheme = React.useCallback(() => setTheme(prev => prev === 'dark' ? 'light' : 'dark'), []);
+  const toggleTheme = useCallback(() => setTheme(prev => prev === 'dark' ? 'light' : 'dark'), []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem(storageKey, theme);
     document.firstElementChild.setAttribute('data-theme', theme);
   }, [theme]);
 
   // sync with system changes
-  React.useEffect(() => {
+  useEffect(() => {
     window
       .matchMedia('(prefers-color-scheme: dark)')
       .addEventListener('change', ({ matches: isDark }) => {

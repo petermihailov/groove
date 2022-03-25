@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { useStyles } from './TimeSignature.styles';
 
 export function TimeSignature() {

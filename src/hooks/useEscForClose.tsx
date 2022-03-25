@@ -1,7 +1,7 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 
 export function useEscForClose(open: boolean, onClose?: () => void) {
-  React.useEffect(() => {
+  useEffect(() => {
     if (!open) {
       return undefined;
     }

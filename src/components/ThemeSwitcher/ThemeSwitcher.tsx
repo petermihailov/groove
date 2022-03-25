@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import * as React from 'react';
 
 import { ButtonIcon, ButtonIconProps } from '../ButtonIcon';
 import { useStyles } from './ThemeSwitcher.styles';

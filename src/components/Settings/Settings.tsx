@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { MetronomeFrequency } from './MetronomeFrequency';
 import { TimeSignature } from './TimeSignature';
 import { useStyles } from './Settings.styles';

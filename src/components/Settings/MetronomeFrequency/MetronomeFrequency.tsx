@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { IconNote16, IconNote32, IconNote4, IconNote8 } from '../../../icons';
 import { ButtonIcon } from '../../ButtonIcon';
 

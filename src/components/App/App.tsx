@@ -1,21 +1,21 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { ThemeSwitcher } from '../ThemeSwitcher';
 import { Range } from '../Range';
 
-// import { useStyles } from './App.styles';
+import { useStyles } from './App.styles';
 import { Drawer } from '../Drawer';
 import { ButtonIcon } from '../ButtonIcon';
 import { IconMetronome, IconSettings } from '../../icons';
 import { Settings } from '../Settings';
 
 export function App() {
-  // const classes = useStyles();
+  const classes = useStyles();
   
-  const [metronome, setMetronome] = React.useState(false);
+  const [metronome, setMetronome] = useState(false);
 
-  const [bpm, setBpm] = React.useState(80);
+  const [bpm, setBpm] = useState(80);
 
-  const [settings, setSettings] = React.useState(false);
+  const [settings, setSettings] = useState(false);
 
   const toggleMetronome = () => setMetronome(prev => !prev);
   const openSettings = () => setSettings(true);

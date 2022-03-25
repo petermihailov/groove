@@ -1,9 +1,9 @@
-import * as React from 'react';
+import { useState } from 'react';
 
 import { useResize } from '../../../hooks';
 
 export function useClientHeight() {
-  const [clientHeight, setClientHeight] = React.useState<number>(window.innerHeight);
+  const [clientHeight, setClientHeight] = useState<number>(window.innerHeight);
 
   useResize(() => {
     setClientHeight(window.innerHeight);
