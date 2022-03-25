@@ -9,7 +9,10 @@ export function useClickOutside(
 
     const listener = (e: MouseEvent) => {
       const { target } = e;
-      if (target instanceof Element && refs.some((r) => r.current?.contains(target))) {
+      if (
+        target instanceof Element &&
+        refs.some((r) => r.current?.contains(target))
+      ) {
         return;
       }
       handler?.(e);

@@ -11,7 +11,8 @@ const lock = () => {
   originalPaddingRight = originalStyles.paddingRight;
   originalOverflow = originalStyles.overflow;
   // если у body уже есть padding нужно это учесть
-  const paddingRight = (parseFloat(originalPaddingRight) || 0) + getScrollbarWidth();
+  const paddingRight =
+    (parseFloat(originalPaddingRight) || 0) + getScrollbarWidth();
   document.body.style.paddingRight = `${paddingRight}px`;
   document.body.style.overflow = 'hidden';
 };

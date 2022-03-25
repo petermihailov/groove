@@ -21,7 +21,8 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
     ...restProps
   } = props;
 
-  const { inPristineState, canUnmount, animationCallbacks } = useInOutAnimation(open);
+  const { inPristineState, canUnmount, animationCallbacks } =
+    useInOutAnimation(open);
   // решает баг в iOS: в альбомной ориентации fixed элементы с
   // height: 100% показываются некорректно если виден navigation bar
   const clientHeight = useClientHeight();
@@ -53,10 +54,17 @@ export const Drawer: React.FC<DrawerProps> = (props) => {
         [classes.pristine]: inPristineState,
       })}
       {...restProps}
-      style={{ display: !open && canUnmount ? 'none' : '', height: clientHeight }}
+      style={{
+        display: !open && canUnmount ? 'none' : '',
+        height: clientHeight,
+      }}
     >
       <div ref={refs.overlay} className={classes.overlay} onClick={onClose} />
-      <div ref={refs.curtain} className={clsx(className, classes.curtain)} {...animationCallbacks}>
+      <div
+        ref={refs.curtain}
+        className={clsx(className, classes.curtain)}
+        {...animationCallbacks}
+      >
         {children}
       </div>
     </div>

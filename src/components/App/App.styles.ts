@@ -4,8 +4,8 @@ export const useStyles = makeSyles('App', {
   '@global': {
     ':root': rootVars,
     ':root[data-theme="dark"]': rootVarsDark,
-    
-    'body': {
+
+    body: {
       userSelect: 'none',
       fontFamily: theme.fontFamilySans,
       fontSize: theme.fontSizeMedium,
@@ -14,6 +14,6 @@ export const useStyles = makeSyles('App', {
       transitionProperty: 'color',
       transitionTimingFunction: theme.easeOut3,
       transitionDuration: theme.transitionFast,
-    }
+    },
   },
 });

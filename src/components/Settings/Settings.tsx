@@ -6,7 +6,7 @@ export function Settings() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root} style={{height: 300}}>
+    <div className={classes.root} style={{ height: 300 }}>
       <MetronomeFrequency />
       <TimeSignature />
     </div>

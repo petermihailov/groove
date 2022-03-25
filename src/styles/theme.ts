@@ -1,4 +1,13 @@
-import { colors, easing, radius, shadow, spacing, transition, typography, zIndex } from './tokens';
+import {
+  colors,
+  easing,
+  radius,
+  shadow,
+  spacing,
+  transition,
+  typography,
+  zIndex,
+} from './tokens';
 import { colors as colorsDark } from './tokens-dark';
 import { paramCase } from 'param-case';
 
@@ -6,15 +15,15 @@ function makeVariableName(name: string) {
   return `--${paramCase(name)}`;
 }
 
-const tokens = { 
-  ...colors, 
-  ...radius, 
-  ...shadow, 
-  ...spacing, 
+const tokens = {
+  ...colors,
+  ...radius,
+  ...shadow,
+  ...spacing,
   ...easing,
-  ...transition, 
-  ...typography, 
-  ...zIndex 
+  ...transition,
+  ...typography,
+  ...zIndex,
 } as const;
 
 type Theme = Record<keyof typeof tokens, string>;
@@ -27,15 +36,21 @@ export const { theme, rootVars, rootVarsDark } = Object.entries(tokens).reduce<{
 }>(
   (acc, [name, value]) => {
     const varName = makeVariableName(name);
+    
     return {
       theme: { ...acc.theme, [name]: `var(${varName})` },
       rootVars: { ...acc.rootVars, [varName]: value },
-      rootVarsDark: { ...acc.rootVarsDark, ...(name in colorsDark ? { [varName]: colorsDark[name as keyof typeof colors] } : undefined) },
+      rootVarsDark: {
+        ...acc.rootVarsDark,
+        ...(name in colorsDark
+          ? { [varName]: colorsDark[name as keyof typeof colors] }
+          : undefined),
+      },
     };
   },
   {
     theme: {} as Theme,
     rootVars: {} as CssRootVars,
     rootVarsDark: {} as CssRootVars,
-  },
+  }
 );

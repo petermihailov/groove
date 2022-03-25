@@ -51,14 +51,14 @@ export default makeSyles('Drawer', {
 
   curtain: {
     ...scrollingMixin,
-    'position': 'relative',
-    'zIndex': 1,
-    'maxHeight': `calc(100% - ${theme.spacingMedium})`,
-    'willChange': 'transform',
-    'transition': `transform ${theme.transitionMedium} ease-out`,
-    'backgroundColor': theme.colorDrawer,
-    'borderRadius': theme.radiusXLarge,
-    'boxShadow': `0 50px 0 ${theme.colorDrawer}, ${theme.shadowLarge}`,
+    position: 'relative',
+    zIndex: 1,
+    maxHeight: `calc(100% - ${theme.spacingMedium})`,
+    willChange: 'transform',
+    transition: `transform ${theme.transitionMedium} ease-out`,
+    backgroundColor: theme.colorDrawer,
+    borderRadius: theme.radiusXLarge,
+    boxShadow: `0 50px 0 ${theme.colorDrawer}, ${theme.shadowLarge}`,
 
     '$show &': {
       animation: `$showDrawer ${showDuration}ms ${easingDrawer}`,

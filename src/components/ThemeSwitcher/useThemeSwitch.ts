@@ -17,7 +17,10 @@ const getColorPreference = (): ThemeValue => {
 export function useThemeSwitch() {
   const [theme, setTheme] = useState<ThemeValue>(getColorPreference);
 
-  const toggleTheme = useCallback(() => setTheme(prev => prev === 'dark' ? 'light' : 'dark'), []);
+  const toggleTheme = useCallback(
+    () => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark')),
+    []
+  );
 
   useEffect(() => {
     localStorage.setItem(storageKey, theme);

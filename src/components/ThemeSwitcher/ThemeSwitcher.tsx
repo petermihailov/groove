@@ -6,18 +6,36 @@ import { useThemeSwitch } from './useThemeSwitch';
 
 type ThemeSwitcherProps = Omit<ButtonIconProps, 'aria-label'>;
 
-export function ThemeSwitcher({className, ...props}: ThemeSwitcherProps) {
+export function ThemeSwitcher({ className, ...props }: ThemeSwitcherProps) {
   const classes = useStyles();
   const { theme, toggleTheme } = useThemeSwitch();
 
   return (
-    <ButtonIcon className={clsx(className, {[classes.isDark]: theme === 'dark'})} onClick={toggleTheme} aria-label={theme} {...props}>
-      <svg className={classes.sunAndMoon} aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
+    <ButtonIcon
+      className={clsx(className, { [classes.isDark]: theme === 'dark' })}
+      onClick={toggleTheme}
+      aria-label={theme}
+      {...props}
+    >
+      <svg
+        className={classes.sunAndMoon}
+        aria-hidden="true"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+      >
         <mask className={classes.moon} id="moon-mask">
           <rect x="0" y="0" width="100%" height="100%" fill="white" />
           <circle cx="24" cy="10" r="6" fill="black" />
         </mask>
-        <circle className={classes.sun} cx="12" cy="12" r="6" mask="url(#moon-mask)" fill="currentColor" />
+        <circle
+          className={classes.sun}
+          cx="12"
+          cy="12"
+          r="6"
+          mask="url(#moon-mask)"
+          fill="currentColor"
+        />
         <g className={classes.sunBeams} stroke="currentColor">
           <line x1="12" y1="1" x2="12" y2="3" />
           <line x1="12" y1="21" x2="12" y2="23" />

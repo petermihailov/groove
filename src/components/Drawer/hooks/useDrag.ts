@@ -103,12 +103,20 @@ export function useDrag<T>(
             y: state.currentPosition.y - state.initialPosition.y,
           };
           state.delta = {
-            x: state.currentPosition.x - (state.previousPosition ?? state.initialPosition).x,
-            y: state.currentPosition.y - (state.previousPosition ?? state.initialPosition).y,
+            x:
+              state.currentPosition.x -
+              (state.previousPosition ?? state.initialPosition).x,
+            y:
+              state.currentPosition.y -
+              (state.previousPosition ?? state.initialPosition).y,
           };
           state.velocity = {
-            x: state.delta.x / (event.timeStamp - state.startTime - state.elapsedTime) || 0,
-            y: state.delta.y / (event.timeStamp - state.startTime - state.elapsedTime) || 0,
+            x:
+              state.delta.x /
+                (event.timeStamp - state.startTime - state.elapsedTime) || 0,
+            y:
+              state.delta.y /
+                (event.timeStamp - state.startTime - state.elapsedTime) || 0,
           };
           state.elapsedTime = event.timeStamp - state.startTime;
         }

@@ -2,26 +2,26 @@ import { makeSyles, theme } from '../../styles';
 
 export const useStyles = makeSyles('ThemeSwitcher', {
   '@global': {
-    'html': {
+    html: {
       colorScheme: 'light',
 
       '&[data-theme="dark"]': {
         colorScheme: 'dark',
-      }
+      },
     },
   },
 
   sunAndMoon: {
     strokeLinecap: 'round',
   },
-  
+
   moon: {
     fill: 'currentcolor',
 
     '& circle': {
       transformOrigin: 'center center',
       transition: `transform ${theme.transitionMedium} ${theme.easeOut5}`,
-    }
+    },
   },
 
   sun: {
@@ -55,5 +55,5 @@ export const useStyles = makeSyles('ThemeSwitcher', {
       transitionDelay: theme.transitionMedium,
       transitionDuration: theme.transitionSlow,
     },
-  }
+  },
 });

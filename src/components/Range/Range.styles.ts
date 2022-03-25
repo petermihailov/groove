@@ -49,7 +49,7 @@ export const useStyles = makeSyles('Range', {
 
     '&:is(:hover,:active)': {
       '--thumb-highlight-size': '10px',
-    }
+    },
   },
 
   inputDecimal: {
@@ -73,6 +73,6 @@ export const useStyles = makeSyles('Range', {
     input: {
       '--thumb-size': '30px',
       '--thumb-offset': '-14px',
-    }
-  }
+    },
+  },
 });

@@ -21,10 +21,10 @@ export const useStyles = makeSyles('ButtonIcon', {
     '& > svg': {
       blockSize: '100%',
       inlineSize: '100%',
-    }
+    },
   },
 
   active: {
     color: theme.colorAccent,
-  }
+  },
 });

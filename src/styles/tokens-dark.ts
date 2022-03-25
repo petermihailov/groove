@@ -1,6 +1,8 @@
 import { colors as colorsBase } from './tokens';
 
-export const colors: Readonly<Partial<Record<keyof typeof colorsBase, string>>> = {
+export const colors: Readonly<
+  Partial<Record<keyof typeof colorsBase, string>>
+> = {
   colorText: '#e2e6e9',
   colorIcon: '#e2e6e9',
   colorAccent: '#007fff',

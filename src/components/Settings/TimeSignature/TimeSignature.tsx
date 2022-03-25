@@ -6,9 +6,7 @@ export function TimeSignature() {
   return (
     <div className={classes.root}>
       Time Signature
-      <div className={classes.list}>
-        4 / 4
-      </div>
+      <div className={classes.list}>4 / 4</div>
     </div>
   );
 }
