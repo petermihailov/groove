@@ -1,10 +1,10 @@
 import { scrollingMixin } from '../../mixins';
-import { makeSyles, theme } from '../../styles';
+import { createUseStyles, theme } from '../../styles';
 import { showDuration, hideDuration } from './Drawer.const';
 
 const easingDrawer = 'cubic-bezier(0.445,  0.050, 0.550, 0.950)';
 
-export default makeSyles('Drawer', {
+export default createUseStyles('Drawer', {
   root: {
     position: 'fixed',
     zIndex: theme.zIndexDrawer,

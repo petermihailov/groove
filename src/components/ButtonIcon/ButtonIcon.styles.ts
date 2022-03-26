@@ -1,6 +1,6 @@
-import { makeSyles, theme } from '../../styles';
+import { createUseStyles, theme } from '../../styles';
 
-export const useStyles = makeSyles('ButtonIcon', {
+export const useStyles = createUseStyles('ButtonIcon', {
   root: {
     '--size': '2rem',
     display: 'flex',

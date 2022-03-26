@@ -1,6 +1,6 @@
-import { makeSyles, theme } from '../../styles';
+import { createUseStyles, theme } from '../../styles';
 
-export const useStyles = makeSyles('Settings', {
+export const useStyles = createUseStyles('Settings', {
   root: {
     padding: theme.spacingMedium,
     textTransform: 'uppercase',

@@ -1,4 +1,4 @@
-import { colors as colorsBase } from './tokens';
+import type { colors as colorsBase } from './tokens';
 
 export const colors: Readonly<Record<keyof typeof colorsBase, string>> = {
   colorAccent: '#007fff',

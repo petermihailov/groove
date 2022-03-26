@@ -1,6 +1,6 @@
-import { makeSyles, theme } from '../../../styles';
+import { createUseStyles, theme } from '../../../styles';
 
-export const useStyles = makeSyles('MetronomeFrequency', {
+export const useStyles = createUseStyles('MetronomeFrequency', {
   root: {
     display: 'flex',
     alignItems: 'center',

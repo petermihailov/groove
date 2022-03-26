@@ -1,6 +1,6 @@
-import { makeSyles, theme } from '../../styles';
+import { createUseStyles, theme } from '../../styles';
 
-export const useStyles = makeSyles('ThemeSwitcher', {
+export const useStyles = createUseStyles('ThemeSwitcher', {
   '@global': {
     html: {
       colorScheme: 'light',

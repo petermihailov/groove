@@ -1,4 +1,4 @@
-import { makeSyles, theme, Media } from '../../styles';
+import { createUseStyles, theme, Media } from '../../styles';
 
 const trackStyles = {
   appearance: 'none',
@@ -20,7 +20,7 @@ const thumbStyles = {
   transition: 'box-shadow .1s ease',
 };
 
-export const useStyles = makeSyles('Range', {
+export const useStyles = createUseStyles('Range', {
   inputStack: {
     display: 'grid',
     gap: theme.spacingSmall,

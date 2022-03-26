@@ -1,6 +1,6 @@
-import { makeSyles, theme } from '../../../styles';
+import { createUseStyles, theme } from '../../../styles';
 
-export const useStyles = makeSyles('TimeSignature', {
+export const useStyles = createUseStyles('TimeSignature', {
   root: {
     display: 'flex',
     alignItems: 'center',

@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 
-import { ButtonIcon, ButtonIconProps } from '../ButtonIcon';
+import type { ButtonIconProps } from '../ButtonIcon';
+import { ButtonIcon } from '../ButtonIcon';
 import { useThemeSwitch } from './useThemeSwitch';
 
 import { useStyles } from './ThemeSwitcher.styles';
