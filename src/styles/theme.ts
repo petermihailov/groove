@@ -3,6 +3,7 @@ import { paramCase } from 'param-case';
 import {
   colors,
   easing,
+  editor,
   radius,
   shadow,
   spacing,
@@ -18,10 +19,11 @@ function makeVariableName(name: string) {
 
 const tokens = {
   ...colors,
+  ...easing,
+  ...editor,
   ...radius,
   ...shadow,
   ...spacing,
-  ...easing,
   ...transition,
   ...typography,
   ...zIndex,

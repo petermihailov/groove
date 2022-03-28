@@ -2,8 +2,7 @@ import clsx from 'clsx';
 
 import { useStyles } from './ButtonIcon.styles';
 
-export interface ButtonIconProps
-  extends React.HTMLAttributes<HTMLButtonElement> {
+export interface ButtonIconProps extends React.HTMLAttributes<HTMLButtonElement> {
   'aria-label': string; // required
   active?: boolean;
 }

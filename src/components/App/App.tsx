@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { IconMetronome, IconSettings } from '../../icons';
 import { ButtonIcon } from '../ButtonIcon';
 import { Drawer } from '../Drawer';
+import { Editor } from '../Editor';
 import { Range } from '../Range';
 import { Settings } from '../Settings';
 import { ThemeSwitcher } from '../ThemeSwitcher';
@@ -43,6 +44,8 @@ export function App() {
       </ButtonIcon>
 
       <Range label="BPM" min={20} max={240} value={bpm} onChange={setBpm} />
+
+      <Editor />
 
       <Drawer open={settings} onClose={closeSettings}>
         <Settings />

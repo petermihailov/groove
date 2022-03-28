@@ -116,3 +116,10 @@ export const zIndex = {
   zIndexDropdown: 900,
   zIndexTooltip: 1000,
 } as const;
+
+
+/* editor */
+
+export const editor = {
+  editorNoteThickness: '3px',
+} as const;

@@ -1,3 +1,3 @@
-export * from './makeStyles';
+export * from './createUseStyles';
 export * from './Media';
 export * from './theme';
