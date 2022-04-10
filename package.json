@@ -7,16 +7,15 @@
     "build": "webpack --mode production",
     "build:sounds": "src/sounds/build --bitrate 64",
     "start": "webpack-dev-server --mode development",
-    "lint": "eslint . --ext .ts,.tsx --fix",
+    "lint": "eslint . --ext .ts,.tsx --fix && prettier . --write",
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{ts,tsx}": "eslint --fix"
+    "*.{ts,tsx}": "eslint --cache --fix",
+    "*.{ts,tsx,js,css,md}": "prettier --write"
   },
   "dependencies": {
-    "abc2svg": "^1.21.7",
     "clsx": "^1.1.1",
-    "param-case": "^3.0.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-jss": "^10.9.0",

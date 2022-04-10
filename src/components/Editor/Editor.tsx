@@ -1,5 +1,3 @@
-import { Instrument } from './Instrument';
-
 import { useStyles } from './Editor.styles';
 
 export function Editor() {

@@ -1,9 +1,10 @@
 import type { Rule, StyleSheet, Styles, Classes } from 'jss';
-import { paramCase } from 'param-case';
 import { createUseStyles as jssCreateUseStyles } from 'react-jss';
 
+import { uncamelcase } from '../utils';
+
 const generateId = (rule: Rule, sheet?: StyleSheet) => {
-  return `${paramCase(sheet.options.classNamePrefix)}_${paramCase(rule.key)}`;
+  return `${uncamelcase(sheet.options.classNamePrefix)}_${uncamelcase(rule.key)}`;
 };
 
 export const createUseStyles = <C extends string = string>(

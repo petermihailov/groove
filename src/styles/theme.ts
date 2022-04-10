@@ -1,5 +1,4 @@
-import { paramCase } from 'param-case';
-
+import { uncamelcase } from '../utils';
 import {
   colors,
   easing,
@@ -14,7 +13,7 @@ import {
 import { colors as colorsDark } from './tokens-dark';
 
 function makeVariableName(name: string) {
-  return `--${paramCase(name)}`;
+  return `--${uncamelcase(name)}`;
 }
 
 const tokens = {
