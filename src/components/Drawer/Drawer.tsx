@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { createRef, useMemo } from 'react';
+import { createRef, memo, useMemo } from 'react';
 
 import { useInOutAnimation, useLockBodyScroll } from '../../hooks';
 import type { DrawerProps } from './Drawer.props';
@@ -7,7 +7,7 @@ import { useClientHeight, useDrawerBehavior } from './hooks';
 
 import useStyles from './Drawer.styles';
 
-export function Drawer(props: DrawerProps) {
+export const Drawer = memo(function Drawer(props: DrawerProps) {
   const classes = useStyles();
 
   const {
@@ -64,4 +64,4 @@ export function Drawer(props: DrawerProps) {
       </div>
     </div>
   );
-}
+});

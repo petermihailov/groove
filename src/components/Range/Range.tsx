@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 
 import { useStyles } from './Range.styles';
 
@@ -16,7 +16,7 @@ export interface RangeProps extends Omit<React.HTMLAttributes<HTMLInputElement>,
   onChange: (value: number) => void;
 }
 
-export function Range({
+export const Range = memo(function Range({
   className,
   label,
   min = 0,
@@ -95,4 +95,4 @@ export function Range({
       />
     </label>
   );
-}
+});

@@ -24,4 +24,4 @@ export const instruments = [
   'toLowRegular',
   'toMidGhost',
   'toMidRegular',
-];
+] as const;

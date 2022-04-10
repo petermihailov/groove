@@ -19,6 +19,9 @@ type IconName =
   | 'noteGhost'
   | 'metronome'
   | 'settings'
+  | 'play'
+  | 'pause'
+  | 'stop'
   | 'note4'
   | 'note8'
   | 'note16'
@@ -31,7 +34,14 @@ type IconProps = {
 
 export const Icon = memo(function Icon({ name, className }: IconProps) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <svg
+      aria-hidden="true"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+    >
       <use href={`#${name}`} />
     </svg>
   );

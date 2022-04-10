@@ -1,3 +1,4 @@
 import type { instruments } from '../constants';
 
-export type Instrument = keyof typeof instruments | null;
+export type Instruments = typeof instruments;
+export type Instrument = typeof instruments[number] | null;
