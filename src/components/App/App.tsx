@@ -8,7 +8,11 @@ import { Range } from '../Range';
 import { Settings } from '../Settings';
 import { ThemeSwitcher } from '../ThemeSwitcher';
 
+import { useStyles } from './App.styles';
+
 export function App() {
+  useStyles();
+
   const [metronome, setMetronome] = useState(false);
 
   const [bpm, setBpm] = useState(80);

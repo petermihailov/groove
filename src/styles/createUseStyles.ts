@@ -4,7 +4,7 @@ import { createUseStyles as jssCreateUseStyles } from 'react-jss';
 import { uncamelcase } from '../utils';
 
 const generateId = (rule: Rule, sheet?: StyleSheet) => {
-  return `${uncamelcase(sheet.options.classNamePrefix)}_${uncamelcase(rule.key)}`;
+  return `${uncamelcase(sheet.options.classNamePrefix.slice(0, -1))}_${uncamelcase(rule.key)}`;
 };
 
 export const createUseStyles = <C extends string = string>(
