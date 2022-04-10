@@ -4,3 +4,7 @@ node_modules/
 
 # Build
 dist
+public
+
+# Files
+webpack.config.js

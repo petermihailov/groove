@@ -1,0 +1,9 @@
+#!/bin/bash
+dir=$(dirname $0)
+sounds=./public/sounds
+
+rm -rf $sounds && mkdir $sounds
+
+for filename in $dir/wav/*.wav; do
+  $dir/opusenc $filename $sounds/$(basename $filename .wav).opus "$@"
+done

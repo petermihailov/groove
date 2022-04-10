@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { IconMetronome, IconSettings } from '../../icons';
+import { Icon } from "../../icons/Icon";
 import { ButtonIcon } from '../ButtonIcon';
 import { Drawer } from '../Drawer';
 import { Editor } from '../Editor';
@@ -24,7 +24,7 @@ export function App() {
   const closeSettings = () => setSettings(false);
 
   return (
-    <div>
+    <>
       <ThemeSwitcher />
 
       <ButtonIcon
@@ -32,7 +32,7 @@ export function App() {
         aria-label={`metronome ${metronome ? 'enabled' : 'disabled'}`}
         onClick={toggleMetronome}
       >
-        <IconMetronome />
+        <Icon name='metronome' />
       </ButtonIcon>
 
       <ButtonIcon
@@ -40,7 +40,7 @@ export function App() {
         aria-label="open settings"
         onClick={openSettings}
       >
-        <IconSettings />
+        <Icon name='settings' />
       </ButtonIcon>
 
       <Range label="BPM" min={20} max={240} value={bpm} onChange={setBpm} />
@@ -55,6 +55,6 @@ export function App() {
         {`bpm: ${bpm}\n`}
         {`metronome: ${String(metronome)}`}
       </pre>
-    </div>
+    </>
   );
 }
