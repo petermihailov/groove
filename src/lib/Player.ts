@@ -1,26 +1,6 @@
-import { instruments } from '../constants';
 import type { Instrument } from '../types';
 import type { Kit } from './Kit';
-import { Measure } from './Measure';
-
-export const defaultMeasure = new Measure(instruments);
-// hi-hat
-defaultMeasure.notes.hhCloseRegular[0] = true;
-defaultMeasure.notes.hhCloseRegular[2] = true;
-defaultMeasure.notes.hhCloseRegular[4] = true;
-defaultMeasure.notes.hhCloseRegular[6] = true;
-defaultMeasure.notes.hhCloseRegular[8] = true;
-defaultMeasure.notes.hhCloseRegular[10] = true;
-defaultMeasure.notes.hhCloseRegular[12] = true;
-defaultMeasure.notes.hhCloseRegular[14] = true;
-// kick
-defaultMeasure.notes.kiKickRegular[0] = true;
-defaultMeasure.notes.kiKickRegular[7] = true;
-defaultMeasure.notes.kiKickRegular[8] = true;
-defaultMeasure.notes.kiKickRegular[10] = true;
-// snare
-defaultMeasure.notes.snSnareRegular[4] = true;
-defaultMeasure.notes.snSnareRegular[12] = true;
+import type { Measure } from './Measure';
 
 type OnBeatCallback = (measureIndex: number, rhythmIndex: number) => void;
 
@@ -39,7 +19,7 @@ export class Player {
 
   constructor(audioCtx: AudioContext, kit: Kit, onBeat: OnBeatCallback) {
     this.audioCtx = audioCtx;
-    this.measures = [defaultMeasure];
+    this.measures = [];
     this.onBeat = onBeat;
     this.kit = kit;
     this.tempo = 80;
@@ -64,20 +44,26 @@ export class Player {
   }
 
   play() {
-    this.measureIndex = 0;
-    this.rhythmIndex = 0;
-    const measure = this.measures[this.measureIndex];
+    this.kit.load().then(() => {
+      this.measureIndex = 0;
+      this.rhythmIndex = 0;
+      const measure = this.measures[this.measureIndex];
 
-    // Ensure that initial notes are played at once by scheduling the playback slightly in the future.
-    this.nextBeatAt = (this.audioCtx.currentTime + this.safetyBuffer) * 1000;
+      // Ensure that initial notes are played at once by scheduling the playback slightly in the future.
+      this.nextBeatAt = (this.audioCtx.currentTime + this.safetyBuffer) * 1000;
 
-    for (const instrument of measure.instruments) {
-      this.playNoteAtTime(instrument, measure.notes[instrument][this.rhythmIndex], this.nextBeatAt);
-    }
+      for (const instrument of measure.instruments) {
+        this.playNoteAtTime(
+          instrument,
+          measure.notes[instrument][this.rhythmIndex],
+          this.nextBeatAt
+        );
+      }
 
-    this.timeoutId = window.setTimeout(() => this.onBeat?.(0, 0), this.getScheduleTimeout());
+      this.timeoutId = window.setTimeout(() => this.onBeat?.(0, 0), this.getScheduleTimeout());
 
-    this.schedule();
+      this.schedule();
+    });
   }
 
   stop() {

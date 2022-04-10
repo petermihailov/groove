@@ -16,40 +16,12 @@ import { useStyles } from './App.styles';
 export function App() {
   useStyles();
 
-  const [loaded, setLoaded] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [metronome, setMetronome] = useState(false);
-  const [bpm, setBpm] = useState(80);
+  const [tempo, setTempo] = useState(80);
   const [settings, setSettings] = useState(false);
-  const [player, setPlayer] = useState<Player | null>(null);
 
-  const handleBeat = (measureIndex: number, rhythmIndex: number) => {
-    console.log(measureIndex, rhythmIndex);
-  };
-
-  const handlePlay = () => {
-    const value = !playing;
-
-    if (value) {
-      if (!player) {
-        const audioCtx = new AudioContext();
-        const kit = new Kit(audioCtx);
-        kit.load().then(() => {
-          setLoaded(true);
-          const playerInstance = new Player(audioCtx, kit, handleBeat);
-          setPlayer(playerInstance);
-          playerInstance.play();
-        });
-      } else {
-        player.play();
-      }
-    } else {
-      player.stop();
-    }
-
-    setPlaying(value);
-  };
-
+  const togglePlaying = () => setPlaying((prev) => !prev);
   const toggleMetronome = () => setMetronome((prev) => !prev);
   const openSettings = () => setSettings(true);
   const closeSettings = () => setSettings(false);
@@ -58,7 +30,7 @@ export function App() {
     <>
       <ThemeSwitcher />
 
-      <ButtonPlay active playing={playing} onClick={handlePlay} />
+      <ButtonPlay active playing={playing} onClick={togglePlaying} />
 
       <ButtonIcon
         active={metronome}
@@ -72,18 +44,17 @@ export function App() {
         <Icon name="settings" />
       </ButtonIcon>
 
-      <Range label="BPM" min={20} max={240} value={bpm} onChange={setBpm} />
+      <Range label="BPM" min={20} max={240} value={tempo} onChange={setTempo} />
 
-      <Editor player={player} />
+      <Editor playing={playing} tempo={tempo} />
 
       <Drawer open={settings} onClose={closeSettings}>
         <Settings />
       </Drawer>
 
       <pre>
-        {`bpm: ${bpm}\n`}
+        {`tempo: ${tempo}\n`}
         {`metronome: ${String(metronome)}`}
-        {`loaded: ${String(loaded)}`}
       </pre>
     </>
   );
