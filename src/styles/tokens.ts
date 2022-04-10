@@ -117,7 +117,6 @@ export const zIndex = {
   zIndexTooltip: 1000,
 } as const;
 
-
 /* editor */
 
 export const editor = {

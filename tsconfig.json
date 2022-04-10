@@ -7,7 +7,7 @@
     "jsx": "react-jsx",
     "allowJs": true,
     "moduleResolution": "node",
-    "noImplicitAny": true,
+    "noImplicitAny": true
   },
   "exclude": ["node_modules"]
 }

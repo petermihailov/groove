@@ -4,12 +4,10 @@ import { useStyles } from './Instrument.styles';
 
 type InstrumentProps = {
   note: InstrumentType;
-}
+};
 
-export function Instrument({note}: InstrumentProps) {
+export function Instrument({ note }: InstrumentProps) {
   const classes = useStyles();
 
-  return (
-    <div/>
-  );
+  return <div />;
 }

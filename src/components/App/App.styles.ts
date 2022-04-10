@@ -5,7 +5,7 @@ export const useStyles = createUseStyles('App', {
     ':root': rootVars,
     ':root[data-theme="dark"]': rootVarsDark,
 
-    body: {
+    'body': {
       userSelect: 'none',
       fontFamily: theme.fontFamilySans,
       fontSize: theme.fontSizeMedium,

@@ -1,4 +1,4 @@
-import { theme } from "../styles";
+import { theme } from '../styles';
 
 export const noteLineMixin = {
   position: 'absolute',
@@ -6,4 +6,4 @@ export const noteLineMixin = {
   height: '1rem',
   backgroundColor: 'currentcolor',
   borderRadius: theme.radiusSmall,
-}
+};

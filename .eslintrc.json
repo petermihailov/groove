@@ -65,7 +65,6 @@
       { "property": "observer", "object": "<pragma>" }
     ],
     "formComponents": ["CustomForm", { "name": "Form", "formAttribute": "endpoint" }],
-    "linkComponents": ["Hyperlink", { "name": "Link", "linkAttribute": "to" }
-    ]
+    "linkComponents": ["Hyperlink", { "name": "Link", "linkAttribute": "to" }]
   }
 }

@@ -7,9 +7,7 @@ export function Editor() {
 
   return (
     <>
-     <div className={classes.root}>
-
-     </div>
+      <div className={classes.root}></div>
     </>
   );
 }

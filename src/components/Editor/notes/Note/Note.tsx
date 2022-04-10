@@ -10,7 +10,5 @@ export interface NoteProps extends HTMLAttributes<HTMLButtonElement> {
 export function Note({ className, children, ...props }: NoteProps) {
   const classes = useStyles();
 
-  return (
-    <button className={clsx(className, classes.root)} {...props} />
-  );
+  return <button className={clsx(className, classes.root)} {...props} />;
 }

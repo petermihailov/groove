@@ -1,8 +1,8 @@
-import * as React from "react";
+import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from './components/App';
-import {Sprite} from "./icons";
+import { Sprite } from './icons';
 
 const container = document.getElementById('root');
 const root = createRoot(container);

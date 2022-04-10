@@ -56,14 +56,11 @@ export function useDrawerBehavior(
     const velocity = vy;
 
     if (first) {
-      data.isTargetUnderContent = contentEl.contains(
-        event.target as HTMLElement
-      );
+      data.isTargetUnderContent = contentEl.contains(event.target as HTMLElement);
       data.initialScrollPosition = contentEl.scrollTop;
       data.isScrolled = data.initialScrollPosition !== 0;
     } else {
-      data.isScrolled =
-        data.isScrolled || data.initialScrollPosition - contentEl.scrollTop < 0;
+      data.isScrolled = data.isScrolled || data.initialScrollPosition - contentEl.scrollTop < 0;
     }
 
     // предотвращает инерционный проскролл родительских элементов, если это возможно
@@ -75,11 +72,7 @@ export function useDrawerBehavior(
         }
 
         // элемент проскроллен до нижней границы
-        if (
-          contentEl.scrollHeight - contentEl.scrollTop <=
-            contentEl.clientHeight &&
-          my < 0
-        ) {
+        if (contentEl.scrollHeight - contentEl.scrollTop <= contentEl.clientHeight && my < 0) {
           event.preventDefault();
         }
       } else {

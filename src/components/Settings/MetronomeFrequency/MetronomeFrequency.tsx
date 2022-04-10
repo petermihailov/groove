@@ -1,4 +1,4 @@
-import {Icon} from "../../../icons/Icon";
+import { Icon } from '../../../icons/Icon';
 import { ButtonIcon } from '../../ButtonIcon';
 
 import { useStyles } from './MetronomeFrequency.styles';

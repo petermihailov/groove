@@ -3,10 +3,10 @@ import { createUseStyles } from '../../../../styles';
 
 export const useStyles = createUseStyles('IconAccent', {
   accent: {
-    position: 'absolute',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    'position': 'absolute',
+    'display': 'flex',
+    'alignItems': 'center',
+    'justifyContent': 'center',
 
     '&::before': {
       content: '""',
@@ -22,6 +22,6 @@ export const useStyles = createUseStyles('IconAccent', {
 
     '$hhClose &, $hhOpen &': {
       top: '-30%',
-    }
+    },
   },
 });

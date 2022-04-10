@@ -1,5 +1,5 @@
 export const disableScrollbarMixin = {
-  scrollbarWidth: 'none',
+  'scrollbarWidth': 'none',
 
   '&::-webkit-scrollbar': {
     display: 'none',

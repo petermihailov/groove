@@ -7,7 +7,7 @@ const cssLine = {
   height: '1rem',
   backgroundColor: 'currentcolor',
   borderRadius: theme.radiusSmall,
-}
+};
 
 export const useStyles = createUseStyles('Note', {
   root: {
@@ -33,10 +33,10 @@ export const useStyles = createUseStyles('Note', {
   },
 
   accent: {
-    position: 'absolute',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    'position': 'absolute',
+    'display': 'flex',
+    'alignItems': 'center',
+    'justifyContent': 'center',
 
     '&::before': {
       content: '""',
@@ -52,6 +52,6 @@ export const useStyles = createUseStyles('Note', {
 
     '$hhClose &, $hhOpen &': {
       top: '-30%',
-    }
+    },
   },
 });

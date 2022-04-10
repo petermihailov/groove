@@ -6,7 +6,7 @@ const cssLine = {
   height: '1rem',
   backgroundColor: 'currentcolor',
   borderRadius: theme.radiusSmall,
-}
+};
 
 export const useStyles = createUseStyles('Instrument', {
   root: {
@@ -31,10 +31,10 @@ export const useStyles = createUseStyles('Instrument', {
   },
 
   accent: {
-    position: 'absolute',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    'position': 'absolute',
+    'display': 'flex',
+    'alignItems': 'center',
+    'justifyContent': 'center',
 
     '&::before': {
       content: '""',
@@ -50,7 +50,7 @@ export const useStyles = createUseStyles('Instrument', {
 
     '$hhClose &, $hhOpen &': {
       top: '-30%',
-    }
+    },
   },
 
   /* hats */
@@ -77,6 +77,4 @@ export const useStyles = createUseStyles('Instrument', {
   },
 
   /* snare */
-
-
 });

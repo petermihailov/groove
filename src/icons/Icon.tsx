@@ -1,4 +1,4 @@
-import {memo} from "react";
+import { memo } from 'react';
 
 type IconName =
   | 'cyBellRegular'
@@ -27,9 +27,9 @@ type IconName =
 type IconProps = {
   className?: string;
   name: IconName;
-}
+};
 
-export const Icon = memo(function Icon({name, className}: IconProps) {
+export const Icon = memo(function Icon({ name, className }: IconProps) {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className={className}>
       <use href={`#${name}`} />

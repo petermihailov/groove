@@ -1,1 +1,1 @@
-export * from './IconAccent'
+export * from './IconAccent';

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Icon } from "../../icons/Icon";
+import { Icon } from '../../icons/Icon';
 import { ButtonIcon } from '../ButtonIcon';
 import { Drawer } from '../Drawer';
 import { Editor } from '../Editor';
@@ -32,15 +32,11 @@ export function App() {
         aria-label={`metronome ${metronome ? 'enabled' : 'disabled'}`}
         onClick={toggleMetronome}
       >
-        <Icon name='metronome' />
+        <Icon name="metronome" />
       </ButtonIcon>
 
-      <ButtonIcon
-        active={settings}
-        aria-label="open settings"
-        onClick={openSettings}
-      >
-        <Icon name='settings' />
+      <ButtonIcon active={settings} aria-label="open settings" onClick={openSettings}>
+        <Icon name="settings" />
       </ButtonIcon>
 
       <Range label="BPM" min={20} max={240} value={bpm} onChange={setBpm} />

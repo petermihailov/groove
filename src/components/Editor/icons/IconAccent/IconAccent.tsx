@@ -6,7 +6,5 @@ import { useStyles } from './IconAccent.styles';
 export function IconAccent({ className, ...props }: HTMLAttributes<HTMLSpanElement>) {
   const classes = useStyles();
 
-  return (
-    <span className={clsx(className, classes.accent)} {...props} />
-  );
+  return <span className={clsx(className, classes.accent)} {...props} />;
 }

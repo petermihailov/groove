@@ -8,8 +8,7 @@ const rangeToPercent = (value: number, min: number, max: number) => {
   return `${percent * 100}%`;
 };
 
-export interface RangeProps
-  extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> {
+export interface RangeProps extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> {
   label?: React.ReactNode;
   min?: number;
   max?: number;
@@ -60,10 +59,7 @@ export function Range({
   };
 
   useEffect(() => {
-    rangeRef.current?.style.setProperty(
-      '--track-fill',
-      rangeToPercent(value, min, max)
-    );
+    rangeRef.current?.style.setProperty('--track-fill', rangeToPercent(value, min, max));
     if (decimalRef.current?.value) {
       decimalRef.current.value = String(value);
     }

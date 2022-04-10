@@ -3,7 +3,7 @@ import { createUseStyles, theme } from '../../styles';
 export const useStyles = createUseStyles('ThemeSwitcher', {
   '@global': {
     html: {
-      colorScheme: 'light',
+      'colorScheme': 'light',
 
       '&[data-theme="dark"]': {
         colorScheme: 'dark',
@@ -11,12 +11,12 @@ export const useStyles = createUseStyles('ThemeSwitcher', {
     },
   },
 
-  sunAndMoon: {
+  'sunAndMoon': {
     strokeLinecap: 'round',
   },
 
-  moon: {
-    fill: 'currentcolor',
+  'moon': {
+    'fill': 'currentcolor',
 
     '& circle': {
       transformOrigin: 'center center',
@@ -24,20 +24,20 @@ export const useStyles = createUseStyles('ThemeSwitcher', {
     },
   },
 
-  sun: {
+  'sun': {
     fill: 'currentcolor',
     transformOrigin: 'center center',
     transition: `transform ${theme.transitionSlow} ${theme.easeElastic3}`,
   },
 
-  sunBeams: {
+  'sunBeams': {
     stroke: 'currentcolor',
     strokeWidth: 2,
     transformOrigin: 'center center',
     transition: `transform ${theme.transitionSlow} ${theme.easeElastic4}, opacity ${theme.transitionSlow} ${theme.ease3}`,
   },
 
-  isDark: {
+  'isDark': {
     '& $sun': {
       transform: 'scale(1.75)',
       transitionTimingFunction: theme.ease3,

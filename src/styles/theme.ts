@@ -39,7 +39,7 @@ export const { rootVars, rootVarsDark, theme } = Object.entries(tokens).reduce<{
 }>(
   (acc, [name, value]) => {
     const varName = makeVariableName(name);
-    
+
     return {
       theme: { ...acc.theme, [name]: `var(${varName})` },
       rootVars: { ...acc.rootVars, [varName]: value },

@@ -1,1 +1,1 @@
-export {Sprite} from './Sprite';
+export { Sprite } from './Sprite';
