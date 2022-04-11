@@ -1,6 +1,8 @@
-export const instrumentGroups = ['cy', 'hh', 'sn', 't1', 't2', 't3', 'ki'] as const;
+import type { InstrumentGroup, Instrument } from './types';
 
-export const instruments = [
+export const instrumentGroups: InstrumentGroup[] = ['cy', 'hh', 'sn', 't1', 't2', 't3', 'ki'];
+
+export const instruments: Instrument[] = [
   'cyBellRegular',
   // 'cyChinaRegular',
   'cyCowbellRegular',
@@ -26,36 +28,4 @@ export const instruments = [
   't2MidRegular',
   't3LowGhost',
   't3LowRegular',
-] as const;
-
-export const shirtInstrumentLiterals = {
-  cyBellRegular: 'cbr',
-  // cyChinaRegular: 'chr',
-  cyCowbellRegular: 'cwr',
-  cyCrashRegular: 'ccr',
-  cyRideRegular: 'crr',
-  // cySplashRegular: 'csr',
-  hhCloseAccent: 'hca',
-  hhCloseGhost: 'hcg',
-  hhCloseRegular: 'hcr',
-  hhFootRegular: 'hfr',
-  hhOpenAccent: 'hoa',
-  hhOpenGhost: 'hog',
-  hhOpenRegular: 'hor',
-  kiKickGhost: 'kkg',
-  kiKickRegular: 'kkr',
-  snRimRegular: 'srr',
-  snSnareAccent: 'ssa',
-  snSnareGhost: 'ssg',
-  snSnareRegular: 'ssr',
-  t1HighGhost: 'thg',
-  t1HighRegular: 'thr',
-  t2MidGhost: 'tmg',
-  t2MidRegular: 'tmr',
-  t3LowGhost: 'tlg',
-  t3LowRegular: 'tlr',
-} as const;
-
-export const longInstrumentLiterals = Object.fromEntries(
-  Object.entries(shirtInstrumentLiterals).map(([value, key]) => [key, value])
-);
+];

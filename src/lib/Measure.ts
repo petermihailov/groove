@@ -1,9 +1,9 @@
-import type { Instrument, InstrumentGroups, InstrumentGroup } from '../types';
+import type { Instrument, InstrumentGroup } from '../types';
 
 type Notes = Record<InstrumentGroup, Instrument[]>;
 
 export class Measure {
-  readonly instrumentGroups: InstrumentGroups;
+  readonly instrumentGroups: InstrumentGroup[];
   beatsCount: number;
   beatsPerFullNote: number;
   length: number;
@@ -11,7 +11,7 @@ export class Measure {
   timeDivision: number;
 
   constructor(
-    instrumentGroups: InstrumentGroups,
+    instrumentGroups: InstrumentGroup[],
     timeDivision = 16,
     beatsCount = 4,
     beatsPerFullNote = 4
@@ -29,7 +29,7 @@ export class Measure {
     return (timeDivision / beatsPerFullNote) * beatsCount;
   }
 
-  createNotes(instrumentGroups: InstrumentGroups, length: number) {
+  createNotes(instrumentGroups: InstrumentGroup[], length: number) {
     return instrumentGroups.reduce<Notes>((notes, group) => {
       notes[group] = new Array(length).fill(null);
       return notes;

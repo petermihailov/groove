@@ -3,7 +3,7 @@ import { memo, useEffect, useRef } from 'react';
 import { Kit } from '../../lib/Kit';
 import { Player } from '../../lib/Player';
 import { createMeasureFromShirtRecord } from '../../utils';
-import { defaultMeasureStr } from './Editor.constants';
+import { defaultBeatStr } from './Editor.constants';
 import { Measure } from './Measure/Measure';
 
 import { useStyles } from './Editor.styles';
@@ -13,7 +13,7 @@ type EditorProps = {
   tempo: number;
 };
 
-const defaultMeasure = createMeasureFromShirtRecord(defaultMeasureStr);
+const defaultBeat = createMeasureFromShirtRecord(defaultBeatStr);
 
 export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
   const classes = useStyles();
@@ -30,7 +30,7 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
       const audioCtx = new AudioContext();
       const kit = new Kit(audioCtx);
       player.current = new Player(audioCtx, kit, handleBeat);
-      player.current.addMeasure(defaultMeasure);
+      defaultBeat.forEach((measure) => player.current.addMeasure(measure));
     }
   }, []);
 
@@ -53,7 +53,7 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
   return (
     <>
       <div className={classes.root}>
-        <Measure measure={defaultMeasure} />
+        <Measure measure={defaultBeat[0]} />
       </div>
     </>
   );
