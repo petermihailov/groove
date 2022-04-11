@@ -1,9 +1,4 @@
-import {
-  instrumentGroups,
-  instruments,
-  longInstrumentLiterals,
-  shirtInstrumentLiterals,
-} from '../constants';
+import { instrumentGroups, longInstrumentLiterals, shirtInstrumentLiterals } from '../constants';
 import { Measure } from '../lib/Measure';
 import type { Instrument, InstrumentGroup } from '../types';
 import { ensureArray } from './array';
@@ -42,4 +37,8 @@ export const createMeasureFromShirtRecord = (str: string) => {
 
 export const getGroupByInstrument = (instrument: Instrument) => {
   return instrument.substring(0, 2) as InstrumentGroup;
+};
+
+export const isTriplet = (timeDivision: number) => {
+  return timeDivision % 12 === 0;
 };

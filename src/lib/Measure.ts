@@ -25,10 +25,6 @@ export class Measure {
     this.notes = this.createNotes(instrumentGroups, this.length);
   }
 
-  isTriplet(timeDivision: number) {
-    return timeDivision % 12 === 0;
-  }
-
   calcLength(timeDivision: number, beatsCount: number, beatsPerFullNote: number) {
     return (timeDivision / beatsPerFullNote) * beatsCount;
   }
@@ -64,9 +60,5 @@ export class Measure {
 
   clear() {
     this.notes = this.createNotes(this.instrumentGroups, this.length);
-  }
-
-  toString() {
-    this.notes;
   }
 }
