@@ -2,7 +2,9 @@ import { memo, useEffect, useRef } from 'react';
 
 import { Kit } from '../../lib/Kit';
 import { Player } from '../../lib/Player';
-import { defaultMeasure } from './Editor.constants';
+import { createMeasureFromShirtRecord } from '../../utils';
+import { defaultMeasureStr } from './Editor.constants';
+import { Measure } from './Measure/Measure';
 
 import { useStyles } from './Editor.styles';
 
@@ -10,6 +12,8 @@ type EditorProps = {
   playing: boolean;
   tempo: number;
 };
+
+const defaultMeasure = createMeasureFromShirtRecord(defaultMeasureStr);
 
 export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
   const classes = useStyles();
@@ -48,7 +52,9 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
 
   return (
     <>
-      <div className={classes.root}>Editor</div>
+      <div className={classes.root}>
+        <Measure measure={defaultMeasure} />
+      </div>
     </>
   );
 });

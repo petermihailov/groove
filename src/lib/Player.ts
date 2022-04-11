@@ -52,12 +52,8 @@ export class Player {
       // Ensure that initial notes are played at once by scheduling the playback slightly in the future.
       this.nextBeatAt = (this.audioCtx.currentTime + this.safetyBuffer) * 1000;
 
-      for (const instrument of measure.instruments) {
-        this.playNoteAtTime(
-          instrument,
-          measure.notes[instrument][this.rhythmIndex],
-          this.nextBeatAt
-        );
+      for (const group of measure.instrumentGroups) {
+        this.playNoteAtTime(measure.notes[group][this.rhythmIndex], this.nextBeatAt);
       }
 
       this.timeoutId = window.setTimeout(() => this.onBeat?.(0, 0), this.getScheduleTimeout());
@@ -83,12 +79,8 @@ export class Player {
     this.nextBeatAt +=
       (1000 * 60) / ((this.tempo * currentMeasure.timeDivision) / currentMeasure.beatsPerFullNote);
 
-    for (const instrument of nextMeasure.instruments) {
-      this.playNoteAtTime(
-        instrument,
-        nextMeasure.notes[instrument][nextRhythmIndex],
-        this.nextBeatAt
-      );
+    for (const group of nextMeasure.instrumentGroups) {
+      this.playNoteAtTime(nextMeasure.notes[group][nextRhythmIndex], this.nextBeatAt);
     }
 
     this.measureIndex = nextMeasureIndex;
@@ -119,8 +111,8 @@ export class Player {
     return { nextMeasureIndex, nextRhythmIndex };
   }
 
-  playNoteAtTime(instrument: Instrument, note: boolean, when?: number) {
-    if (note) {
+  playNoteAtTime(instrument: Instrument, when?: number) {
+    if (instrument) {
       const whenIsSeconds = when ? when / 1000 : 0;
       const source = new AudioBufferSourceNode(this.audioCtx, {
         buffer: this.kit.buffer[instrument],
