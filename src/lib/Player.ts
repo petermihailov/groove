@@ -1,6 +1,6 @@
 import type { Instrument } from '../types';
+import type { Groove } from './Groove';
 import type { Kit } from './Kit';
-import type { Measure } from './Measure';
 
 type OnBeatCallback = (measureIndex: number, rhythmIndex: number) => void;
 
@@ -9,20 +9,18 @@ export class Player {
   private readonly onBeat: OnBeatCallback;
   private readonly safetyBuffer: number;
   private readonly kit: Kit;
-  private tempo: number;
-  private measures: Measure[];
+  private groove: Groove;
   private measureIndex: number;
   private nextBeatAt: number;
   private rhythmIndex: number;
   private scheduledBuffers: AudioBufferSourceNode[];
   private timeoutId: number;
 
-  constructor(audioCtx: AudioContext, kit: Kit, onBeat: OnBeatCallback) {
+  constructor(audioCtx: AudioContext, kit: Kit, groove: Groove, onBeat: OnBeatCallback) {
     this.audioCtx = audioCtx;
-    this.measures = [];
     this.onBeat = onBeat;
     this.kit = kit;
-    this.tempo = 80;
+    this.groove = groove;
     this.measureIndex = 0;
     this.rhythmIndex = 0;
     this.nextBeatAt = 0;
@@ -31,23 +29,20 @@ export class Player {
     this.scheduledBuffers = [];
   }
 
-  addMeasure(measure: Measure) {
-    this.measures.push(measure);
-  }
-
-  removeMeasure(index: number) {
-    this.measures = this.measures.filter((_, idx) => idx !== index);
+  setGroove(groove: Groove) {
+    this.stop();
+    this.groove = groove;
   }
 
   setTempo(tempo: number) {
-    this.tempo = tempo;
+    this.groove.tempo = tempo;
   }
 
   play() {
     this.kit.load().then(() => {
       this.measureIndex = 0;
       this.rhythmIndex = 0;
-      const measure = this.measures[this.measureIndex];
+      const measure = this.groove.measures[this.measureIndex];
 
       // Ensure that initial notes are played at once by scheduling the playback slightly in the future.
       this.nextBeatAt = (this.audioCtx.currentTime + this.safetyBuffer) * 1000;
@@ -73,11 +68,12 @@ export class Player {
     this.onBeat?.(this.measureIndex, this.rhythmIndex);
     const { nextMeasureIndex, nextRhythmIndex } = this.getNextBeat();
 
-    const currentMeasure = this.measures[this.measureIndex];
-    const nextMeasure = this.measures[nextMeasureIndex];
+    const currentMeasure = this.groove.measures[this.measureIndex];
+    const nextMeasure = this.groove.measures[nextMeasureIndex];
 
     this.nextBeatAt +=
-      (1000 * 60) / ((this.tempo * currentMeasure.timeDivision) / currentMeasure.beatsPerFullNote);
+      (1000 * 60) /
+      ((this.groove.tempo * currentMeasure.timeDivision) / currentMeasure.beatsPerFullNote);
 
     for (const group of nextMeasure.instrumentGroups) {
       this.playNoteAtTime(nextMeasure.notes[group][nextRhythmIndex], this.nextBeatAt);
@@ -94,8 +90,8 @@ export class Player {
 
   getNextBeat() {
     const isLastRhythmIndex =
-      this.rhythmIndex === this.measures[this.measureIndex].timeDivision - 1;
-    const isLastMeasureIndex = this.measureIndex === this.measures.length - 1;
+      this.rhythmIndex === this.groove.measures[this.measureIndex].timeDivision - 1;
+    const isLastMeasureIndex = this.measureIndex === this.groove.measures.length - 1;
     const nextRhythmIndex = isLastRhythmIndex ? 0 : this.rhythmIndex + 1;
 
     let nextMeasureIndex = this.measureIndex;

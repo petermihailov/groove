@@ -1,4 +1,5 @@
 import type { Instrument, InstrumentGroup } from '../types';
+import { getGroupByInstrument } from '../utils';
 
 type Notes = Record<InstrumentGroup, Instrument[]>;
 
@@ -22,15 +23,15 @@ export class Measure {
     this.beatsPerFullNote = beatsPerFullNote;
 
     this.length = this.calcLength(timeDivision, beatsCount, beatsPerFullNote);
-    this.notes = this.createNotes(instrumentGroups, this.length);
+    this.notes = this.fillWithNull(this.length);
   }
 
   calcLength(timeDivision: number, beatsCount: number, beatsPerFullNote: number) {
     return (timeDivision / beatsPerFullNote) * beatsCount;
   }
 
-  createNotes(instrumentGroups: InstrumentGroup[], length: number) {
-    return instrumentGroups.reduce<Notes>((notes, group) => {
+  fillWithNull(length: number) {
+    return this.instrumentGroups.reduce<Notes>((notes, group) => {
       notes[group] = new Array(length).fill(null);
       return notes;
     }, {} as Notes);
@@ -39,7 +40,7 @@ export class Measure {
   scale(timeDivision: number, beatsCount = 4, beatsPerFullNote = 4) {
     const scale = timeDivision / this.timeDivision;
     const length = this.calcLength(timeDivision, beatsCount, beatsPerFullNote);
-    const notes = this.createNotes(this.instrumentGroups, length);
+    const notes = this.fillWithNull(length);
 
     this.timeDivision = timeDivision;
     this.beatsCount = beatsCount;
@@ -58,7 +59,11 @@ export class Measure {
     }, notes);
   }
 
+  editNote(rhythmIndex: number, instrument: Instrument) {
+    this.notes[getGroupByInstrument(instrument)][rhythmIndex] = instrument;
+  }
+
   clear() {
-    this.notes = this.createNotes(this.instrumentGroups, this.length);
+    this.notes = this.fillWithNull(this.length);
   }
 }

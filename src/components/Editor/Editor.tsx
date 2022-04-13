@@ -1,9 +1,9 @@
 import { memo, useEffect, useRef } from 'react';
 
+import { grooveDefault } from '../../constants';
 import { Kit } from '../../lib/Kit';
 import { Player } from '../../lib/Player';
-import { createMeasureFromShirtRecord } from '../../utils';
-import { defaultBeatStr } from './Editor.constants';
+import { createGrooveFromString } from '../../utils';
 import { Measure } from './Measure/Measure';
 
 import { useStyles } from './Editor.styles';
@@ -13,7 +13,7 @@ type EditorProps = {
   tempo: number;
 };
 
-const defaultBeat = createMeasureFromShirtRecord(defaultBeatStr);
+const groove1 = createGrooveFromString(grooveDefault);
 
 export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
   const classes = useStyles();
@@ -29,8 +29,7 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
     if (!player.current) {
       const audioCtx = new AudioContext();
       const kit = new Kit(audioCtx);
-      player.current = new Player(audioCtx, kit, handleBeat);
-      defaultBeat.forEach((measure) => player.current.addMeasure(measure));
+      player.current = new Player(audioCtx, kit, groove1, handleBeat);
     }
   }, []);
 
@@ -52,9 +51,7 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
 
   return (
     <>
-      <div className={classes.root}>
-        <Measure measure={defaultBeat[0]} />
-      </div>
+      <div className={classes.root}>{/*<Measure measure={defaultBeat[0]} />*/}</div>
     </>
   );
 });

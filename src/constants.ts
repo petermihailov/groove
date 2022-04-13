@@ -29,3 +29,6 @@ export const instruments: Instrument[] = [
   't3LowGhost',
   't3LowRegular',
 ];
+
+export const grooveDefault =
+  't80|s44d16:hcrkkr--hcr--hcrssr--hcrkkr-kkr-hcr-kkr-hcrkkr--hcrssr--hcr-hcr';
