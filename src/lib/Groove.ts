@@ -1,17 +1,13 @@
 import type { Instrument } from '../types';
 import type { Measure } from './Measure';
 
-type OnChangeCallback = () => void;
-
 export class Groove {
   measures: Measure[];
   tempo: number;
-  onChange: OnChangeCallback;
 
-  constructor(tempo: number, measures: Measure[], onChange?: OnChangeCallback) {
+  constructor(tempo: number, measures: Measure[]) {
     this.measures = measures;
     this.tempo = tempo;
-    this.onChange = onChange;
   }
 
   addMeasure(measure: Measure) {
