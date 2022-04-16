@@ -63,10 +63,13 @@ export class Player {
     this.scheduledBuffers = [];
   }
 
-  schedule() {
+  schedule(playNote?: boolean) {
     this.scheduledBuffers = [];
-    this.onBeat?.(this.measureIndex, this.rhythmIndex);
     const { nextMeasureIndex, nextRhythmIndex } = this.getNextBeat();
+
+    if (playNote) {
+      this.onBeat?.(this.measureIndex, this.rhythmIndex);
+    }
 
     const currentMeasure = this.groove.measures[this.measureIndex];
     const nextMeasure = this.groove.measures[nextMeasureIndex];
@@ -75,13 +78,16 @@ export class Player {
       (1000 * 60) /
       ((this.groove.tempo * currentMeasure.timeDivision) / currentMeasure.beatsPerFullNote);
 
+    let hasNote = false;
     for (const group of nextMeasure.instrumentGroups) {
-      this.playNoteAtTime(nextMeasure.notes[group][nextRhythmIndex], this.nextBeatAt);
+      const note = nextMeasure.notes[group][nextRhythmIndex];
+      this.playNoteAtTime(note, this.nextBeatAt);
+      if (!hasNote && note) hasNote = true;
     }
 
     this.measureIndex = nextMeasureIndex;
     this.rhythmIndex = nextRhythmIndex;
-    this.timeoutId = window.setTimeout(() => this.schedule(), this.getScheduleTimeout());
+    this.timeoutId = window.setTimeout(() => this.schedule(hasNote), this.getScheduleTimeout());
   }
 
   getScheduleTimeout() {

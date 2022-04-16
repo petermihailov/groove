@@ -31,4 +31,4 @@ export const instruments: Instrument[] = [
 ];
 
 export const grooveDefault =
-  't80|s44d16:hcrkkr--hcr--hcrssr--hcrkkr-kkr-hcr-kkr-hcrkkr--hcrssr--hcr-hcr';
+  't80|s44d16:hcakkr-ssg-hcr-ssg-hcassa-ssg-hcrkkr-ssgkkr-hca-ssgkkr-hcrkkr--hcassa--hcr-hcr';

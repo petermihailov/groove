@@ -1,6 +1,7 @@
-import { memo, useEffect, useRef } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 
 import { grooveDefault } from '../../constants';
+import type { Groove } from '../../lib/Groove';
 import { Kit } from '../../lib/Kit';
 import { Player } from '../../lib/Player';
 import { createGrooveFromString } from '../../utils';
@@ -19,9 +20,15 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
   const classes = useStyles();
 
   const player = useRef<Player>(null);
+  const groove = useRef<Groove>(groove1);
+
+  const [playingBeat, setPlayingBeat] = useState({ measureIndex: null, rhythmIndex: null });
 
   const handleBeat = (measureIndex: number, rhythmIndex: number) => {
-    console.log(measureIndex, rhythmIndex);
+    setPlayingBeat({
+      measureIndex,
+      rhythmIndex,
+    });
   };
 
   /* createPlayer */
@@ -29,7 +36,7 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
     if (!player.current) {
       const audioCtx = new AudioContext();
       const kit = new Kit(audioCtx);
-      player.current = new Player(audioCtx, kit, groove1, handleBeat);
+      player.current = new Player(audioCtx, kit, groove.current, handleBeat);
     }
   }, []);
 
@@ -51,7 +58,18 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
 
   return (
     <>
-      <div className={classes.root}>{/*<Measure measure={defaultBeat[0]} />*/}</div>
+      <div className={classes.root}>
+        {groove.current &&
+          groove.current.measures.map((measure, idx) => (
+            <Measure
+              key={idx}
+              measure={measure}
+              highlightIndex={
+                playingBeat.measureIndex === idx ? playingBeat.rhythmIndex : undefined
+              }
+            />
+          ))}
+      </div>
     </>
   );
 });

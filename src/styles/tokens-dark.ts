@@ -9,4 +9,5 @@ export const colors: Readonly<Record<keyof typeof colorsBase, string>> = {
   colorSurface2: '#394146',
   colorText: '#e2e6e9',
   colorThumbHighlight: 'rgba(255, 255, 255, 0.075)',
+  colorBeatHighlight: '#007fff',
 };

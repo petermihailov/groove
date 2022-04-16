@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-type IconName =
+export type IconName =
   | 'cyBellRegular'
   | 'cyChinaRegular'
   | 'cyCowbellRegular'
@@ -17,6 +17,7 @@ type IconName =
   | 'noteAccent'
   | 'noteEmpty'
   | 'noteGhost'
+  | 'noteRegular'
   | 'metronome'
   | 'settings'
   | 'play'

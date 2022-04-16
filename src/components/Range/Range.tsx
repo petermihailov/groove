@@ -77,6 +77,7 @@ export const Range = memo(function Range({
             inputMode="decimal"
             min={0}
             max={max}
+            defaultValue={value}
             onFocus={handleFocus}
             onBlur={handleBlur}
             onKeyDown={handleKeyPress}
