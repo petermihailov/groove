@@ -30,6 +30,7 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
   const groove = useRef<Groove>(groove1);
 
   const [playingBeat, setPlayingBeat] = useState({ measureIndex: null, rhythmIndex: null });
+  const [defaults, setDefaults] = useState(defaultGroupNoteMap);
   const [focusedNote, setFocusedNote] = useState({
     measureIndex: null,
     rhythmIndex: null,
@@ -61,7 +62,7 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
       const { rhythmIndex, group, instrument } = getDataFromNoteElement(noteElement);
 
       if (isInstrumentGroup(group)) {
-        const newInstrument = !instrument ? defaultGroupNoteMap[group] : null;
+        const newInstrument = !instrument ? defaults[group] : null;
         editNote(measureIndex, rhythmIndex, group, newInstrument);
 
         setFocusedNote({
@@ -72,12 +73,13 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
         });
       }
     },
-    [editNote]
+    [defaults, editNote]
   );
 
   const handlePickNote = useCallback(
     (measureIndex: number, rhythmIndex: number, group: InstrumentGroup, instrument: Instrument) => {
       editNote(measureIndex, rhythmIndex, group, instrument);
+      setDefaults((prev) => ({ ...prev, [group]: instrument }));
     },
     [editNote]
   );
