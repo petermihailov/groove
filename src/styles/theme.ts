@@ -2,7 +2,6 @@ import { uncamelcase } from '../utils';
 import {
   colors,
   easing,
-  editor,
   radius,
   sizes,
   shadow,
@@ -20,7 +19,6 @@ function makeVariableName(name: string) {
 const tokens = {
   ...colors,
   ...easing,
-  ...editor,
   ...radius,
   ...sizes,
   ...shadow,

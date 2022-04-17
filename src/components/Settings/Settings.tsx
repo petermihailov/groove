@@ -9,7 +9,7 @@ export const Settings = memo(function Settings() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root} style={{ height: 150 }}>
+    <div className={classes.root}>
       <MetronomeFrequency />
       <TimeSignature />
     </div>

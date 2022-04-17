@@ -1,3 +1,4 @@
+import type { RefObject } from 'react';
 import { useCallback, useLayoutEffect, useRef } from 'react';
 
 const noop = Function.prototype;
@@ -46,7 +47,7 @@ type StateChangeCallback<T> = (arg: Readonly<GestureState<T>>) => void;
  * простыми touch-событиями (где используется один палец)
  */
 export function useDrag<T>(
-  elementRef: React.RefObject<HTMLElement>,
+  elementRef: RefObject<HTMLElement>,
   onStateChange: StateChangeCallback<T>
 ) {
   const touchIdentifierRef = useRef<number>();

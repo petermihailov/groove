@@ -1,6 +1,6 @@
 import { instruments } from '../constants';
 import type { Instrument } from '../types';
-import { fetchAndDecodeAudio } from '../utils';
+import { fetchAndDecodeAudio, getPublicFile } from '../utils';
 
 export class Kit {
   private readonly audioCtx: AudioContext;
@@ -15,7 +15,7 @@ export class Kit {
     const instrumentPromises = instruments.map(async (instrument) => {
       this.buffer[instrument] = await fetchAndDecodeAudio(
         this.audioCtx,
-        `/public/sounds/${instrument}.opus`
+        getPublicFile(`sounds/${instrument}.opus`)
       );
     });
     const promise = Promise.all(instrumentPromises).then(() => null);

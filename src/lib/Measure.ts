@@ -1,5 +1,4 @@
 import type { Instrument, InstrumentGroup } from '../types';
-import { getGroupByInstrument } from '../utils';
 
 type Notes = Record<InstrumentGroup, Instrument[]>;
 
@@ -59,8 +58,8 @@ export class Measure {
     }, notes);
   }
 
-  editNote(rhythmIndex: number, instrument: Instrument) {
-    this.notes[getGroupByInstrument(instrument)][rhythmIndex] = instrument;
+  editNote(rhythmIndex: number, group: InstrumentGroup, instrument: Instrument) {
+    this.notes[group][rhythmIndex] = instrument;
   }
 
   clear() {

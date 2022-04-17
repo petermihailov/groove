@@ -4,48 +4,7 @@ import { Measure } from '../lib/Measure';
 import { ensureArray } from './array';
 import { getGroupByInstrument } from './groove';
 import { isInstrument } from './guards';
-
-const symbols = {
-  tempo: 't',
-  timeSignature: 's',
-  timeDivision: 'd',
-  measureDelimiter: '+',
-  measureSettingsDelimiter: ':',
-  grooveSettingsDelimiter: '|',
-  beatDelimiter: '-',
-};
-
-export const shirtInstrumentMap = {
-  cyBellRegular: 'cbr',
-  // cyChinaRegular: 'chr',
-  cyCowbellRegular: 'cwr',
-  cyCrashRegular: 'ccr',
-  cyRideRegular: 'crr',
-  // cySplashRegular: 'csr',
-  hhCloseAccent: 'hca',
-  hhCloseGhost: 'hcg',
-  hhCloseRegular: 'hcr',
-  hhFootRegular: 'hfr',
-  hhOpenAccent: 'hoa',
-  hhOpenGhost: 'hog',
-  hhOpenRegular: 'hor',
-  kiKickGhost: 'kkg',
-  kiKickRegular: 'kkr',
-  snRimRegular: 'srr',
-  snSnareAccent: 'ssa',
-  snSnareGhost: 'ssg',
-  snSnareRegular: 'ssr',
-  t1HighGhost: 'thg',
-  t1HighRegular: 'thr',
-  t2MidGhost: 'tmg',
-  t2MidRegular: 'tmr',
-  t3LowGhost: 'tlg',
-  t3LowRegular: 'tlr',
-} as const;
-
-export const longInstrumentMap = Object.fromEntries(
-  Object.entries(shirtInstrumentMap).map(([value, key]) => [key, value])
-);
+import { longInstrumentMap, shirtInstrumentMap, shirtSymbolsMap as symbols } from './maps';
 
 export const readStringParamValue = (settingsString: string, shirtParam: string) => {
   const pattern = new RegExp(`${shirtParam}[0-9]+`, 'g');

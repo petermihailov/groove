@@ -5,7 +5,7 @@ export const useStyles = createUseStyles('App', {
     ':root': rootVars,
     ':root[data-theme="dark"]': rootVarsDark,
 
-    'body': {
+    body: {
       userSelect: 'none',
       fontFamily: theme.fontFamilySans,
       fontSize: theme.fontSizeMedium,
@@ -15,5 +15,16 @@ export const useStyles = createUseStyles('App', {
       transitionTimingFunction: theme.easeOut3,
       transitionDuration: theme.transitionFast,
     },
+  },
+
+  controls: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: theme.spacingXSmall,
+    padding: [theme.spacingMedium, theme.sizeHorizontalPadding],
+  },
+
+  bpm: {
+    flex: 1,
   },
 });

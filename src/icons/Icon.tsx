@@ -1,32 +1,6 @@
 import { memo } from 'react';
 
-export type IconName =
-  | 'cyBellRegular'
-  | 'cyChinaRegular'
-  | 'cyCowbellRegular'
-  | 'cyCrashRegular'
-  | 'cyRideRegular'
-  | 'cySplashRegular'
-  | 'hhCloseAccent'
-  | 'hhCloseGhost'
-  | 'hhCloseRegular'
-  | 'hhOpenAccent'
-  | 'hhOpenGhost'
-  | 'hhOpenRegular'
-  | 'snRimRegular'
-  | 'noteAccent'
-  | 'noteEmpty'
-  | 'noteGhost'
-  | 'noteRegular'
-  | 'metronome'
-  | 'settings'
-  | 'play'
-  | 'pause'
-  | 'stop'
-  | 'note4'
-  | 'note8'
-  | 'note16'
-  | 'note32';
+import type { IconName } from '../types';
 
 type IconProps = {
   className?: string;

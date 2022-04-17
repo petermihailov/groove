@@ -5,7 +5,7 @@ import { showDuration, hideDuration } from './Drawer.const';
 const easingDrawer = 'cubic-bezier(0.445,  0.050, 0.550, 0.950)';
 
 export default createUseStyles('Drawer', {
-  'root': {
+  root: {
     position: 'fixed',
     zIndex: theme.zIndexDrawer,
     top: 0,
@@ -19,22 +19,22 @@ export default createUseStyles('Drawer', {
     touchAction: 'manipulation',
   },
 
-  'pristine': {},
+  pristine: {},
 
-  'show': {},
+  show: {},
 
-  'hide': {
+  hide: {
     pointerEvents: 'none',
   },
 
-  'overlay': {
-    'position': 'fixed',
-    'top': 0,
-    'left': 0,
-    'width': '100%',
-    'height': '100%',
-    'backgroundColor': theme.colorOverlay,
-    'transition': `opacity ${theme.transitionMedium} ease-out`,
+  overlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: theme.colorOverlay,
+    transition: `opacity ${theme.transitionMedium} ease-out`,
 
     '$show &': {
       // Drawer полностью открыт уже на 40% от таймлайна анимации, оверлей тоже нужно показать к тому времени
@@ -49,16 +49,16 @@ export default createUseStyles('Drawer', {
     },
   },
 
-  'curtain': {
+  curtain: {
     ...scrollingMixin,
-    'position': 'relative',
-    'zIndex': 1,
-    'maxHeight': `calc(100% - ${theme.spacingMedium})`,
-    'willChange': 'transform',
-    'transition': `transform ${theme.transitionMedium} ease-out`,
-    'backgroundColor': theme.colorDrawer,
-    'borderRadius': theme.radiusXLarge,
-    'boxShadow': `0 50px 0 ${theme.colorDrawer}, ${theme.shadowLarge}`,
+    position: 'relative',
+    zIndex: 1,
+    maxHeight: `calc(100% - ${theme.spacingMedium})`,
+    willChange: 'transform',
+    transition: `transform ${theme.transitionMedium} ease-out`,
+    backgroundColor: theme.colorDrawer,
+    borderRadius: theme.radiusXLarge,
+    boxShadow: `0 50px 0 ${theme.colorDrawer}, ${theme.shadowLarge}`,
 
     '$show &': {
       animation: `$showDrawer ${showDuration}ms ${easingDrawer}`,

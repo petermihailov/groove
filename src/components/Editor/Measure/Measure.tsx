@@ -1,4 +1,5 @@
-import { memo, useMemo } from 'react';
+import type { MouseEventHandler } from 'react';
+import { useMemo } from 'react';
 
 import type { Measure as MeasureType } from '../../../lib/Measure';
 import { theme } from '../../../styles';
@@ -10,15 +11,16 @@ import { useStyles } from './Measure.styles';
 type MeasureProps = {
   measure: MeasureType;
   highlightIndex?: number;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
-export const Measure = memo(function Measure({ measure, highlightIndex }: MeasureProps) {
+export const Measure = function Measure({ measure, highlightIndex, ...delegated }: MeasureProps) {
   const classes = useStyles();
 
   const renderNotesByGroup = useMemo(
     () => (group: InstrumentGroup) => {
       return measure.notes[group].map((instrument, idx) => (
-        <Note key={idx} instrument={instrument} group={group} />
+        <Note key={idx} index={idx} instrument={instrument} group={group} />
       ));
     },
     [measure.notes]
@@ -28,6 +30,7 @@ export const Measure = memo(function Measure({ measure, highlightIndex }: Measur
     <div
       className={classes.root}
       style={{ gridTemplateColumns: `repeat(${measure.length}, auto)` }}
+      {...delegated}
     >
       {highlightIndex !== undefined && (
         <div
@@ -45,4 +48,4 @@ export const Measure = memo(function Measure({ measure, highlightIndex }: Measur
       {renderNotesByGroup('ki')}
     </div>
   );
-});
+};

@@ -1,5 +1,5 @@
 export * from './useClickOutside';
-export * from './useEscForClose';
+export * from './useForceUpdate';
 export * from './useInOutAnimation';
 export * from './useLockBodyScroll';
 export * from './useResize';

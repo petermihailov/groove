@@ -4,7 +4,7 @@ const trackStyles = {
   appearance: 'none',
   blockSize: 'var(--track-height)',
   borderRadius: '5ex',
-  background: `linear-gradient(to right, transparent var(--track-fill), ${theme.colorSurface2} 0%), linear-gradient( to bottom, ${theme.colorAccent}, transparent ) fixed`,
+  background: `linear-gradient(to right, transparent var(--track-fill), ${theme.colorBorder} 0%), linear-gradient( to bottom, ${theme.colorAccent}, transparent ) fixed`,
 };
 
 const thumbStyles = {
@@ -35,11 +35,11 @@ export const useStyles = createUseStyles('Range', {
     '--thumb-size': '3ex',
     '--thumb-offset': '-1.25ex',
     '--thumb-highlight-size': '0px',
-    'display': 'block',
-    'width': '100%',
-    'appearance': 'none',
-    'background': '0 0',
-    'outlineOffset': 5,
+    display: 'block',
+    width: '100%',
+    appearance: 'none',
+    background: '0 0',
+    outlineOffset: 5,
 
     '&::-webkit-slider-runnable-track': trackStyles,
     '&::-moz-range-track': trackStyles,

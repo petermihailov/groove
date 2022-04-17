@@ -1,19 +1,18 @@
 export const colors = {
   colorAccent: '#05f',
+  colorHighlight: '#05f',
+  colorBorder: '#d9d9e8',
   colorDrawer: '#f9fbff',
   colorIcon: '#171a1c',
   colorOverlay: 'rgba(0, 0, 0, 0.2)',
   colorSurface1: '#f9fbff',
-  colorSurface2: '#d9d9e8',
+  colorSurface2: '#fff',
   colorText: '#171a1c',
   colorThumbHighlight: 'rgba(0, 0, 0, 0.2)',
-  colorBeatHighlight: '#05f',
 } as const;
 
 export const typography = {
   fontFamilySans: 'system-ui, sans-serif',
-  fontFamilySerif: 'Georgia, "Times New Roman", serif',
-  fontFamilyMono: 'Menlo, Monaco, "Courier New", monospace',
   fontSizeXxSmall: '0.625rem',
   fontSizeXSmall: '0.75rem',
   fontSizeSmall: '0.875rem',
@@ -35,10 +34,6 @@ export const typography = {
   lineHeightLoose: '2.2',
 } as const;
 
-export const sizes = {
-  sizeNote: '2rem',
-};
-
 export const spacing = {
   spacingXxxSmall: '0.125rem',
   spacingXxSmall: '0.25rem',
@@ -50,8 +45,14 @@ export const spacing = {
   spacingXxLarge: '2.25rem',
   spacingXxxLarge: '3rem',
   spacingXxxxLarge: '4.5rem',
-  spacingNote: '0.125rem',
+  spacingNote: '0.25rem',
 } as const;
+
+export const sizes = {
+  sizeHorizontalPadding: spacing.spacingMedium,
+  sizeIcon: '2rem',
+  sizeNote: '2rem',
+};
 
 export const shadow = {
   shadowXSmall: '0 1px 0 #0d131e0d',
@@ -121,10 +122,4 @@ export const zIndex = {
   zIndexDialog: 800,
   zIndexDropdown: 900,
   zIndexTooltip: 1000,
-} as const;
-
-/* editor */
-
-export const editor = {
-  editorNoteThickness: '3px',
 } as const;

@@ -1,33 +1,5 @@
-import type { IconName } from '../../../icons/Icon';
-import type { Instrument, InstrumentGroup } from '../../../types';
-
-const iconNamesMap: Record<Instrument, IconName> = {
-  cyBellRegular: 'cyBellRegular',
-  // 'cyChinaRegular': 'cyChinaRegular',
-  cyCowbellRegular: 'cyCowbellRegular',
-  cyCrashRegular: 'cyCrashRegular',
-  cyRideRegular: 'cyRideRegular',
-  // 'cySplashRegular', 'cySplashRegular',
-  hhCloseAccent: 'hhCloseAccent',
-  hhCloseGhost: 'hhCloseGhost',
-  hhCloseRegular: 'hhCloseRegular',
-  hhFootRegular: 'hhCloseRegular',
-  hhOpenAccent: 'hhOpenAccent',
-  hhOpenGhost: 'hhOpenGhost',
-  hhOpenRegular: 'hhOpenRegular',
-  kiKickGhost: 'noteGhost',
-  kiKickRegular: 'noteRegular',
-  snRimRegular: 'snRimRegular',
-  snSnareAccent: 'noteAccent',
-  snSnareGhost: 'noteGhost',
-  snSnareRegular: 'noteRegular',
-  t1HighGhost: 'noteGhost',
-  t1HighRegular: 'noteRegular',
-  t2MidGhost: 'noteGhost',
-  t2MidRegular: 'noteRegular',
-  t3LowGhost: 'noteGhost',
-  t3LowRegular: 'noteRegular',
-};
+import type { IconName, Instrument, InstrumentGroup } from '../../../types';
+import { groupNamesMap, iconNamesMap, uncamelcase } from '../../../utils';
 
 export const getIconName = (instrument: Instrument, group: InstrumentGroup): IconName => {
   const iconName = iconNamesMap[instrument];
@@ -41,4 +13,15 @@ export const getIconName = (instrument: Instrument, group: InstrumentGroup): Ico
   }
 
   return iconName;
+};
+
+export const getNoteLabel = (instrument: Instrument, group: InstrumentGroup): string => {
+  if (!instrument) {
+    return 'empty note';
+  }
+
+  const groupName = groupNamesMap[group];
+  const instrumentName = uncamelcase(instrument.slice(2), ' ');
+
+  return group === 'hh' ? `${groupName} ${instrumentName}` : instrumentName;
 };

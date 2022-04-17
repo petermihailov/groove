@@ -1,10 +1,12 @@
+import type { RefObject } from 'react';
+
 import { useDrag } from './useDrag';
 
 interface DrawerRefs {
-  content?: React.RefObject<HTMLElement>;
-  curtain: React.RefObject<HTMLElement>;
-  overlay: React.RefObject<HTMLElement>;
-  root: React.RefObject<HTMLElement>;
+  content?: RefObject<HTMLElement>;
+  curtain: RefObject<HTMLElement>;
+  overlay: RefObject<HTMLElement>;
+  root: RefObject<HTMLElement>;
 }
 
 /* Промежуточное состояние компонента между событиями touchstart и touchend */

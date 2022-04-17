@@ -1,4 +1,11 @@
 import clsx from 'clsx';
+import type {
+  ChangeEventHandler,
+  FocusEventHandler,
+  HTMLAttributes,
+  KeyboardEventHandler,
+  ReactNode,
+} from 'react';
 import { memo, useEffect, useRef } from 'react';
 
 import { useStyles } from './Range.styles';
@@ -8,8 +15,8 @@ const rangeToPercent = (value: number, min: number, max: number) => {
   return `${percent * 100}%`;
 };
 
-export interface RangeProps extends Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> {
-  label?: React.ReactNode;
+export interface RangeProps extends Omit<HTMLAttributes<HTMLInputElement>, 'onChange'> {
+  label?: ReactNode;
   min?: number;
   max?: number;
   value: number;
@@ -29,18 +36,18 @@ export const Range = memo(function Range({
   const decimalRef = useRef<HTMLInputElement>(null);
   const rangeRef = useRef<HTMLInputElement>(null);
 
-  const handleTrackChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleTrackChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const val = Math.min(Number(e.target.value), max);
     if (!Number.isNaN(val)) {
       onChange(Math.max(min, val));
     }
   };
 
-  const handleFocus: React.FocusEventHandler<HTMLInputElement> = (e) => {
+  const handleFocus: FocusEventHandler<HTMLInputElement> = (e) => {
     e.target.setSelectionRange(0, 3);
   };
 
-  const handleBlur: React.FocusEventHandler<HTMLInputElement> = (e) => {
+  const handleBlur: FocusEventHandler<HTMLInputElement> = (e) => {
     if (e.target.value === '') {
       e.target.value = String(value);
       return;
@@ -52,7 +59,7 @@ export const Range = memo(function Range({
     }
   };
 
-  const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+  const handleKeyPress: KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === 'Enter') {
       (e.target as HTMLInputElement).blur();
     }

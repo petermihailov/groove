@@ -8,7 +8,7 @@ export const useStyles = createUseStyles('Note', {
   },
 
   empty: {
-    'opacity': 0.15,
+    opacity: 0.15,
 
     '&:hover': {
       opacity: 0.5,

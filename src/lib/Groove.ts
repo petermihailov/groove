@@ -1,4 +1,4 @@
-import type { Instrument } from '../types';
+import type { Instrument, InstrumentGroup } from '../types';
 import type { Measure } from './Measure';
 
 export class Groove {
@@ -18,7 +18,12 @@ export class Groove {
     this.measures = this.measures.filter((cur) => cur !== measure);
   }
 
-  editNote(measureIndex: number, rhythmIndex: number, instrument: Instrument) {
-    this.measures[measureIndex].editNote(rhythmIndex, instrument);
+  editNote(
+    measureIndex: number,
+    rhythmIndex: number,
+    group: InstrumentGroup,
+    instrument: Instrument
+  ) {
+    this.measures[measureIndex].editNote(rhythmIndex, group, instrument);
   }
 }
