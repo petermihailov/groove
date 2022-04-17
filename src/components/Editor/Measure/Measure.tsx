@@ -14,7 +14,7 @@ type MeasureProps = {
   onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
-export const Measure = function Measure({ measure, highlightIndex, ...delegated }: MeasureProps) {
+export function Measure({ measure, highlightIndex, ...delegated }: MeasureProps) {
   const classes = useStyles();
 
   const renderNotesByGroup = useMemo(
@@ -48,4 +48,4 @@ export const Measure = function Measure({ measure, highlightIndex, ...delegated 
       {renderNotesByGroup('ki')}
     </div>
   );
-};
+}

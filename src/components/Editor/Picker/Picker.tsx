@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { memo } from 'react';
 
 import { instruments } from '../../../constants';
 import type { Instrument, InstrumentGroup, MouseEventHandler } from '../../../types';
@@ -21,7 +22,7 @@ type PickerProps = {
   ) => void;
 };
 
-export const Picker = function Picker({
+export const Picker = memo(function Picker({
   className,
   instrument,
   measureIndex,
@@ -61,4 +62,4 @@ export const Picker = function Picker({
       </div>
     </div>
   );
-};
+});
