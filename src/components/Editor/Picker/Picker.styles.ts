@@ -10,9 +10,15 @@ export const useStyles = createUseStyles('Picker', {
   },
 
   content: {
-    padding: [0, theme.spacingMedium],
+    display: 'flex',
+    gap: theme.spacingXSmall,
+    padding: [theme.spacingXSmall, theme.spacingMedium],
     backgroundColor: theme.colorSurface2,
     borderRadius: theme.radiusPill,
     boxShadow: theme.shadowMedium,
+  },
+
+  selected: {
+    backgroundColor: theme.colorHighlight,
   },
 });

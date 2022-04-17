@@ -1,4 +1,5 @@
 import { uncamelcase } from '../utils';
+import { colorsDark } from './colors-dark';
 import {
   colors,
   easing,
@@ -10,7 +11,6 @@ import {
   typography,
   zIndex,
 } from './tokens';
-import { colors as colorsDark } from './tokens-dark';
 
 function makeVariableName(name: string) {
   return `--${uncamelcase(name)}`;

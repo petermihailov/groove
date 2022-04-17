@@ -25,3 +25,10 @@ export const getNoteLabel = (instrument: Instrument, group: InstrumentGroup): st
 
   return group === 'hh' ? `${groupName} ${instrumentName}` : instrumentName;
 };
+
+export const getDataFromNoteElement = (element: HTMLElement) => {
+  const { index, instrument, group } = element.dataset;
+  const rhythmIndex = Number(index);
+
+  return { rhythmIndex, group, instrument };
+};

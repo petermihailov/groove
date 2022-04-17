@@ -11,7 +11,6 @@ export const useStyles = createUseStyles('Measure', {
 
   highlight: {
     pointerEvents: 'none',
-    opacity: 0.25,
     position: 'absolute',
     width: theme.sizeNote,
     height: '100%',

@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { memo } from 'react';
 
 import { Icon } from '../../../icons/Icon';
-import type { Instrument, InstrumentGroup } from '../../../types';
+import type { Instrument, InstrumentGroup, MouseEventHandler } from '../../../types';
 import { ButtonIcon } from '../../ButtonIcon';
 import { getIconName, getNoteLabel } from './Note.utils';
 
@@ -13,9 +13,16 @@ type NoteProps = {
   group: InstrumentGroup;
   index: number;
   instrument: Instrument;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
-export const Note = memo(function Note({ className, group, index, instrument }: NoteProps) {
+export const Note = memo(function Note({
+  className,
+  group,
+  index,
+  instrument,
+  onClick,
+}: NoteProps) {
   const classes = useStyles();
 
   const isEmpty = !instrument;
@@ -29,6 +36,7 @@ export const Note = memo(function Note({ className, group, index, instrument }: 
       data-group={group}
       data-instrument={instrument}
       data-index={index}
+      onClick={onClick}
     >
       <Icon name={iconName} />
     </ButtonIcon>
