@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import { instruments } from '../../../constants';
 import type { Instrument, InstrumentGroup, MouseEventHandler } from '../../../types';
@@ -30,11 +30,7 @@ export const Picker = memo(function Picker({
   onChange,
 }: PickerProps) {
   const classes = useStyles();
-
-  let group: InstrumentGroup;
-  if (instrument) {
-    group = getGroupByInstrument(instrument);
-  }
+  const [cachedGroup, cacheGroup] = useState<InstrumentGroup>(null);
 
   const handleChange: MouseEventHandler<HTMLButtonElement> = (e) => {
     const { group, instrument } = getDataFromNoteElement(e.currentTarget);
@@ -43,17 +39,23 @@ export const Picker = memo(function Picker({
     }
   };
 
+  useEffect(() => {
+    if (instrument) {
+      cacheGroup(getGroupByInstrument(instrument));
+    }
+  }, [instrument]);
+
   return (
     <div className={clsx(className, classes.root)}>
       <div className={classes.content}>
-        {Boolean(instrument) &&
+        {Boolean(cachedGroup) &&
           instruments
-            .filter((instrument) => instrument.startsWith(group))
+            .filter((instrument) => instrument.startsWith(cachedGroup))
             .map((ins) => (
               <Note
                 key={ins}
                 className={clsx({ [classes.selected]: ins === instrument })}
-                group={group}
+                group={cachedGroup}
                 index={rhythmIndex}
                 instrument={ins}
                 onClick={handleChange}
