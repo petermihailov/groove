@@ -31,3 +31,12 @@ export const instruments: Instrument[] = [
 ];
 
 export const grooveDefault = 't80|s44d16:hcrkkr--hcr--hcrssr--hcr--hcr--hcrkkr-kkr-hcrssr--hcr-hcr';
+
+export const grooveNotNow =
+  't106|s44d32:hfrkkr--tlr--hfrkkr--ssatlr--hfrkkr--tlr--hfrthrkkr--tlr--hfrkkr--thrtlr--hfrkkr--hoatlr--hfrssakkr--tlr--hfrssrkkr-thr-tlr-tlr';
+
+export const grooveFeeling =
+  't173|s44d16:horkkr-ssg-hcr-ssg-ssa-ssg-hcr-ssg-hcr-ssg-horkkr-ssg-hcr-ssg-hcrssa-ssg';
+
+export const grooveDumpweed =
+  't96|s44d16:crrhfrkkr-crrssg-crrhfrkkr-cbr-crrhfrssrkkr-crr-crrhfrkkr-cbr-crrhfrkkr-crrhcr-cbrhorkkr-crr-crrhfrssrkkr-crr-crrhfrssgkkr-crrssg';

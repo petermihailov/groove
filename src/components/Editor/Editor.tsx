@@ -1,13 +1,18 @@
 import clsx from 'clsx';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
-import { grooveDefault } from '../../constants';
+import { grooveDefault, grooveNotNow, grooveFeeling } from '../../constants';
 import { useClickOutside, useForceUpdate } from '../../hooks';
 import type { Groove } from '../../lib/Groove';
 import { Kit } from '../../lib/Kit';
 import { Player } from '../../lib/Player';
 import type { Instrument, InstrumentGroup, MouseEventHandler } from '../../types';
-import { createGrooveFromString, defaultGroupNoteMap, isInstrumentGroup } from '../../utils';
+import {
+  createGrooveFromString,
+  createStringGroove,
+  defaultGroupNoteMap,
+  isInstrumentGroup,
+} from '../../utils';
 import { Measure } from './Measure';
 import { getDataFromNoteElement } from './Note/Note.utils';
 import { Picker } from './Picker';
@@ -19,7 +24,7 @@ type EditorProps = {
   tempo: number;
 };
 
-const groove1 = createGrooveFromString(grooveDefault);
+const groove1 = createGrooveFromString(grooveNotNow);
 
 export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
   const classes = useStyles();
@@ -143,6 +148,8 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
         onChange={handlePickNote}
         {...focusedNote}
       />
+
+      <button onClick={() => console.log(createStringGroove(groove.current))}>logBeat</button>
     </>
   );
 });

@@ -40,11 +40,12 @@ export function Measure({ measure, highlightIndex, ...delegated }: MeasureProps)
           }}
         />
       )}
-      {/*{renderNotesByGroup("cy")}*/}
+      {renderNotesByGroup('cy')}
       {renderNotesByGroup('hh')}
-      {/*{renderNotesByGroup("t1")}*/}
+      {renderNotesByGroup('t1')}
       {renderNotesByGroup('sn')}
-      {/*{renderNotesByGroup("t3")}*/}
+      {renderNotesByGroup('t2')}
+      {renderNotesByGroup('t3')}
       {renderNotesByGroup('ki')}
     </div>
   );

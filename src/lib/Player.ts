@@ -14,6 +14,7 @@ export class Player {
   private nextBeatAt: number;
   private rhythmIndex: number;
   private scheduledBuffers: AudioBufferSourceNode[];
+  private playingHatOpenBuffers: AudioBufferSourceNode[];
   private timeoutId: number;
 
   constructor(audioCtx: AudioContext, kit: Kit, groove: Groove, onBeat: OnBeatCallback) {
@@ -27,6 +28,7 @@ export class Player {
     this.timeoutId = null;
     this.safetyBuffer = 0.25;
     this.scheduledBuffers = [];
+    this.playingHatOpenBuffers = [];
   }
 
   setGroove(groove: Groove) {
@@ -63,11 +65,11 @@ export class Player {
     this.scheduledBuffers = [];
   }
 
-  schedule(playNote?: boolean) {
+  schedule(playNoteNow?: boolean) {
     this.scheduledBuffers = [];
     const { nextMeasureIndex, nextRhythmIndex } = this.getNextBeat();
 
-    if (playNote) {
+    if (playNoteNow) {
       this.onBeat?.(this.measureIndex, this.rhythmIndex);
     }
 
@@ -81,6 +83,14 @@ export class Player {
     let hasNote = false;
     for (const group of nextMeasure.instrumentGroups) {
       const note = nextMeasure.notes[group][nextRhythmIndex];
+
+      if (note && (note.startsWith('hhFoot') || note.startsWith('hhClose'))) {
+        window.setTimeout(() => {
+          this.playingHatOpenBuffers.forEach((buffer) => buffer.stop());
+          this.playingHatOpenBuffers = [];
+        }, this.getScheduleTimeout());
+      }
+
       this.playNoteAtTime(note, this.nextBeatAt);
       if (!hasNote && note) hasNote = true;
     }
@@ -113,15 +123,20 @@ export class Player {
     return { nextMeasureIndex, nextRhythmIndex };
   }
 
-  playNoteAtTime(instrument: Instrument, when?: number) {
+  playNoteAtTime(instrument: Instrument, when: number, duration?: number) {
     if (instrument) {
-      const whenIsSeconds = when ? when / 1000 : 0;
+      const whenSeconds = when / 1000;
+      const durationSeconds = duration ? duration / 1000 : undefined;
       const source = new AudioBufferSourceNode(this.audioCtx, {
         buffer: this.kit.buffer[instrument],
       });
       source.connect(this.audioCtx.destination);
-      source.start(whenIsSeconds);
+      source.start(whenSeconds, 0, durationSeconds);
       this.scheduledBuffers.push(source);
+
+      if (instrument.startsWith('hhOpen')) {
+        this.playingHatOpenBuffers.push(source);
+      }
     }
   }
 }
