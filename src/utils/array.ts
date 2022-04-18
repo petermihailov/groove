@@ -1,3 +1,1 @@
-export function ensureArray(arg: unknown) {
-  return Array.isArray(arg) ? arg : [arg];
-}
+export const ensureArray = <T>(value: T | T[]): T[] => (Array.isArray(value) ? value : [value]);

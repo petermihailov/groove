@@ -8,3 +8,4 @@ export * from './safe-keys';
 export * from './scroll';
 export * from './shirtify';
 export * from './uncamelcase';
+export * from './url';

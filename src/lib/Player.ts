@@ -84,7 +84,7 @@ export class Player {
     for (const group of nextMeasure.instrumentGroups) {
       const note = nextMeasure.notes[group][nextRhythmIndex];
 
-      if (note && (note.startsWith('hhFoot') || note.startsWith('hhClose'))) {
+      if (note && note.startsWith('hh') && !note.startsWith('hhOpen')) {
         window.setTimeout(() => {
           this.playingHatOpenBuffers.forEach((buffer) => buffer.stop());
           this.playingHatOpenBuffers = [];

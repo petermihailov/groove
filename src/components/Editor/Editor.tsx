@@ -1,18 +1,17 @@
 import clsx from 'clsx';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
-import { grooveDefault, grooveNotNow, grooveFeeling } from '../../constants';
 import { useClickOutside, useForceUpdate } from '../../hooks';
 import type { Groove } from '../../lib/Groove';
 import { Kit } from '../../lib/Kit';
 import { Player } from '../../lib/Player';
-import type { Instrument, InstrumentGroup, MouseEventHandler } from '../../types';
-import {
-  createGrooveFromString,
-  createStringGroove,
-  defaultGroupNoteMap,
-  isInstrumentGroup,
-} from '../../utils';
+import type {
+  Instrument,
+  InstrumentGroup,
+  MouseEventHandler,
+  InstrumentGroupEnabled,
+} from '../../types';
+import { defaultGroupNoteMap, isInstrumentGroup } from '../../utils';
 import { Measure } from './Measure';
 import { getDataFromNoteElement } from './Note/Note.utils';
 import { Picker } from './Picker';
@@ -20,19 +19,25 @@ import { Picker } from './Picker';
 import { useStyles } from './Editor.styles';
 
 type EditorProps = {
+  enabledGroups: InstrumentGroupEnabled;
+  groove: Groove | null;
   playing: boolean;
   tempo: number;
+  onUpdate?: () => void;
 };
 
-const groove1 = createGrooveFromString(grooveNotNow);
-
-export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
+export const Editor = memo(function Editor({
+  enabledGroups,
+  groove,
+  playing,
+  tempo,
+  onUpdate,
+}: EditorProps) {
   const classes = useStyles();
   const { forceUpdate } = useForceUpdate();
 
   const editorRef = useRef<HTMLDivElement>(null);
-  const player = useRef<Player>(null);
-  const groove = useRef<Groove>(groove1);
+  const [player, setPlayer] = useState<Player>(null);
 
   const [playingBeat, setPlayingBeat] = useState({ measureIndex: null, rhythmIndex: null });
   const [defaults, setDefaults] = useState(defaultGroupNoteMap);
@@ -52,30 +57,33 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
 
   const editNote = useCallback(
     (measureIndex: number, rhythmIndex: number, group: InstrumentGroup, instrument: Instrument) => {
-      groove.current.editNote(measureIndex, rhythmIndex, group, instrument);
+      groove.editNote(measureIndex, rhythmIndex, group, instrument);
       setFocusedNote({ measureIndex, rhythmIndex, group, instrument });
+      onUpdate();
       forceUpdate(); // update state
     },
-    [forceUpdate]
+    [forceUpdate, groove, onUpdate]
   );
 
   const handleEdit: MouseEventHandler<HTMLDivElement> = useCallback(
     ({ currentTarget, target }) => {
       const measureIndex = Number(currentTarget.dataset.index);
-
       const noteElement = target.closest('button');
-      const { rhythmIndex, group, instrument } = getDataFromNoteElement(noteElement);
 
-      if (isInstrumentGroup(group)) {
-        const newInstrument = !instrument ? defaults[group] : null;
-        editNote(measureIndex, rhythmIndex, group, newInstrument);
+      if (noteElement) {
+        const { rhythmIndex, group, instrument } = getDataFromNoteElement(noteElement);
 
-        setFocusedNote({
-          measureIndex,
-          rhythmIndex,
-          group,
-          instrument: newInstrument,
-        });
+        if (isInstrumentGroup(group)) {
+          const newInstrument = !instrument ? defaults[group] : null;
+          editNote(measureIndex, rhythmIndex, group, newInstrument);
+
+          setFocusedNote({
+            measureIndex,
+            rhythmIndex,
+            group,
+            instrument: newInstrument,
+          });
+        }
       }
     },
     [defaults, editNote]
@@ -100,56 +108,55 @@ export const Editor = memo(function Editor({ playing, tempo }: EditorProps) {
 
   /* createPlayer */
   useEffect(() => {
-    if (!player.current) {
+    if (!player && groove) {
       const audioCtx = new AudioContext();
       const kit = new Kit(audioCtx);
-      player.current = new Player(audioCtx, kit, groove.current, handleBeat);
+      setPlayer(new Player(audioCtx, kit, groove, handleBeat));
     }
-  }, []);
+  }, [groove, player]);
 
   /* handle playing */
   useEffect(() => {
-    if (player.current) {
+    if (player) {
       if (playing) {
-        player.current.play();
+        player.play();
       } else {
-        player.current.stop();
+        player.stop();
         setPlayingBeat({
           measureIndex: null,
           rhythmIndex: null,
         });
       }
     }
-  }, [playing]);
+  }, [player, playing]);
 
   /* handle tempo */
   useEffect(() => {
-    player.current.setTempo(tempo);
-  }, [tempo]);
+    if (player) {
+      player.setTempo(tempo);
+      onUpdate();
+    }
+  }, [onUpdate, player, tempo]);
 
   return (
     <>
       <div ref={editorRef} className={classes.root}>
-        {groove.current &&
-          groove.current.measures.map((measure, idx) => (
-            <Measure
-              key={idx}
-              onClick={handleEdit}
-              measure={measure}
-              data-index={idx}
-              highlightIndex={
-                playingBeat.measureIndex === idx ? playingBeat.rhythmIndex : undefined
-              }
-            />
-          ))}
+        {groove?.measures.map((measure, idx) => (
+          <Measure
+            key={idx}
+            enabledGroups={enabledGroups}
+            onClick={handleEdit}
+            measure={measure}
+            data-index={idx}
+            highlightIndex={playingBeat.measureIndex === idx ? playingBeat.rhythmIndex : undefined}
+          />
+        ))}
       </div>
       <Picker
         className={clsx(classes.picker, { [classes.pickerHidden]: !focusedNote.instrument })}
         onChange={handlePickNote}
         {...focusedNote}
       />
-
-      <button onClick={() => console.log(createStringGroove(groove.current))}>logBeat</button>
     </>
   );
 });

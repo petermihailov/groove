@@ -63,8 +63,9 @@ export const createMeasureFromString = (str: string): Measure[] => {
 
     const beats = notesStr.split(symbols.beatDelimiter);
     const measure = new Measure(instrumentGroups, timeDivision, beatsCount, beatsPerFullNote);
+    const slicedBeats = beats.slice(0, measure.length);
 
-    beats.forEach((insStr, beatIdx) => {
+    slicedBeats.forEach((insStr, beatIdx) => {
       ensureArray(insStr.match(/.{3}/g)).forEach((ins) => {
         const instrument = longInstrumentMap[ins];
         if (isInstrument(instrument)) {

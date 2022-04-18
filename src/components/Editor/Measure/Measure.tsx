@@ -3,27 +3,31 @@ import { useMemo } from 'react';
 
 import type { Measure as MeasureType } from '../../../lib/Measure';
 import { theme } from '../../../styles';
-import type { InstrumentGroup } from '../../../types';
+import type { InstrumentGroup, InstrumentGroupEnabled } from '../../../types';
 import { Note } from '../Note';
 
 import { useStyles } from './Measure.styles';
 
 type MeasureProps = {
+  enabledGroups: InstrumentGroupEnabled;
   measure: MeasureType;
   highlightIndex?: number;
   onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
-export function Measure({ measure, highlightIndex, ...delegated }: MeasureProps) {
+export function Measure({ enabledGroups, measure, highlightIndex, ...delegated }: MeasureProps) {
   const classes = useStyles();
 
   const renderNotesByGroup = useMemo(
     () => (group: InstrumentGroup) => {
-      return measure.notes[group].map((instrument, idx) => (
-        <Note key={idx} index={idx} instrument={instrument} group={group} />
-      ));
+      if (enabledGroups[group]) {
+        return measure.notes[group].map((instrument, idx) => (
+          <Note key={idx} index={idx} instrument={instrument} group={group} />
+        ));
+      }
+      return null;
     },
-    [measure.notes]
+    [enabledGroups, measure.notes]
   );
 
   return (
