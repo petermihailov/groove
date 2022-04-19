@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { debounce as debounceFn } from 'throttle-debounce';
+
+import { debounce as debounceFn } from '../utils';
 
 export function useResize(cb: (e: Event) => void, debounce = 250) {
   useEffect(() => {

@@ -6,7 +6,7 @@ export const useStyles = createUseStyles('Measure', {
     display: 'grid',
     gridGap: theme.spacingNote,
     paddingTop: theme.spacingMedium,
-    paddingBottom: theme.spacingMedium,
+    paddingBottom: theme.spacingXxxLarge,
   },
 
   highlight: {

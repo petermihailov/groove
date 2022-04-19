@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import type { HTMLAttributes } from 'react';
 import { memo } from 'react';
 
 import { Icon } from '../../../icons/Icon';
@@ -8,20 +9,18 @@ import { getIconName, getNoteLabel } from './Note.utils';
 
 import { useStyles } from './Note.styles';
 
-type NoteProps = {
-  className?: string;
+interface NoteProps extends HTMLAttributes<HTMLButtonElement> {
   group: InstrumentGroup;
   index: number;
   instrument: Instrument;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-};
+}
 
 export const Note = memo(function Note({
   className,
   group,
   index,
   instrument,
-  onClick,
+  ...delegated
 }: NoteProps) {
   const classes = useStyles();
 
@@ -36,9 +35,12 @@ export const Note = memo(function Note({
       data-group={group}
       data-instrument={instrument}
       data-index={index}
-      onClick={onClick}
+      {...delegated}
     >
-      <Icon name={iconName} />
+      <Icon
+        name={iconName}
+        className={clsx({ [classes.emptyCymbal]: isEmpty && group === 'cy' })}
+      />
     </ButtonIcon>
   );
 });

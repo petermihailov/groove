@@ -1,8 +1,9 @@
 import type { MouseEventHandler } from 'react';
-import { useMemo } from 'react';
+import { useCallback } from 'react';
 
 import type { Measure as MeasureType } from '../../../lib/Measure';
 import { theme } from '../../../styles';
+import { sizes } from '../../../styles/tokens';
 import type { InstrumentGroup, InstrumentGroupEnabled } from '../../../types';
 import { Note } from '../Note';
 
@@ -18,12 +19,21 @@ type MeasureProps = {
 export function Measure({ enabledGroups, measure, highlightIndex, ...delegated }: MeasureProps) {
   const classes = useStyles();
 
-  const renderNotesByGroup = useMemo(
-    () => (group: InstrumentGroup) => {
+  const renderNotesByGroup = useCallback(
+    (group: InstrumentGroup) => {
       if (enabledGroups[group]) {
-        return measure.notes[group].map((instrument, idx) => (
-          <Note key={idx} index={idx} instrument={instrument} group={group} />
-        ));
+        return measure.notes[group].map((instrument, idx) => {
+          let style;
+
+          if (instrument === 'hhFootRegular') {
+            const enabledGroupsCount = Object.values(enabledGroups).filter(Boolean).length;
+            style = {
+              transform: `translateY(calc(${sizes.sizeNote} * ${enabledGroupsCount - 1} + 0.5rem))`,
+            };
+          }
+
+          return <Note key={idx} style={style} index={idx} instrument={instrument} group={group} />;
+        });
       }
       return null;
     },

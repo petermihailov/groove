@@ -10,8 +10,13 @@ export const useStyles = createUseStyles('Note', {
   empty: {
     opacity: 0.15,
 
-    '&:hover': {
+    '&:active': {
       opacity: 0.5,
     },
+  },
+
+  emptyCymbal: {
+    transform: 'scale(0.5)',
+    transformOrigin: 'bottom',
   },
 });
