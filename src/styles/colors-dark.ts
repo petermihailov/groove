@@ -2,7 +2,7 @@ import type { colors as colorsBase } from './tokens';
 
 export const colorsDark: Readonly<Record<keyof typeof colorsBase, string>> = {
   colorAccent: '#007fff',
-  colorHighlight: 'rgba(0, 127, 255, 0.25)',
+  colorHighlight: 'rgba(0, 127, 255, 0.2)',
   colorBorder: '#394146',
   colorDrawer: '#394146',
   colorIcon: '#e2e6e9',
