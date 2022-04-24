@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 interface Cancel {
   cancel: () => void;
 }
 
-interface NoReturn<T extends (...args: unknown[]) => unknown> {
+interface NoReturn<T extends (...args: any[]) => any> {
   (...args: Parameters<T>): void;
 }
 
-export type Throttle<T extends (...args: unknown[]) => unknown> = NoReturn<T> & Cancel;
-export type Debounce<T extends (...args: unknown[]) => unknown> = Throttle<T>;
+export type Throttle<T extends (...args: any[]) => any> = NoReturn<T> & Cancel;
+export type Debounce<T extends (...args: any[]) => any> = Throttle<T>;
 
 type ThrottleOptions = Partial<{
   noTrailing: boolean;
@@ -15,14 +17,14 @@ type ThrottleOptions = Partial<{
   debounceMode: boolean;
 }>;
 
-export function throttle<T extends (...args: unknown[]) => unknown>(
+export function throttle<T extends (...args: any[]) => any>(
   delay: number,
   callback: T,
   options?: ThrottleOptions
 ): Throttle<T> {
   const { noTrailing = false, noLeading = false, debounceMode = undefined } = options || {};
 
-  let timeoutId: number;
+  let timeoutId: number | undefined;
   let cancelled = false;
 
   let lastExec = 0;
@@ -38,9 +40,7 @@ export function throttle<T extends (...args: unknown[]) => unknown>(
     cancelled = true;
   }
 
-  function wrapper(...args: Parameters<T>) {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const self = this;
+  const wrapper = (...args: Parameters<T>) => {
     const elapsed = Date.now() - lastExec;
 
     if (cancelled) {
@@ -49,7 +49,7 @@ export function throttle<T extends (...args: unknown[]) => unknown>(
 
     function exec() {
       lastExec = Date.now();
-      callback.apply(self, args);
+      callback(args);
     }
 
     function clear() {
@@ -71,20 +71,20 @@ export function throttle<T extends (...args: unknown[]) => unknown>(
       } else {
         exec();
       }
-    } else if (noTrailing !== true) {
+    } else if (!noTrailing) {
       timeoutId = window.setTimeout(
         debounceMode ? clear : exec,
         debounceMode === undefined ? delay - elapsed : delay
       );
     }
-  }
+  };
 
   wrapper.cancel = cancel;
 
   return wrapper;
 }
 
-export function debounce<T extends (...args: unknown[]) => unknown>(
+export function debounce<T extends (...args: any[]) => any>(
   delay: number,
   callback: T
 ): Debounce<T> {

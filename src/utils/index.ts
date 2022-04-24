@@ -6,7 +6,7 @@ export * from './guards';
 export * from './maps';
 export * from './safe-keys';
 export * from './scroll';
-export * from './shirtify';
+// export * from './shirtify';
 export * from './throttling';
 export * from './uncamelcase';
 export * from './url';

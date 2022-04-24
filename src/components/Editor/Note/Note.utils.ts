@@ -1,21 +1,19 @@
 import type { IconName, Instrument, InstrumentGroup } from '../../../types';
 import { groupNamesMap, iconNamesMap, uncamelcase } from '../../../utils';
 
-export const getIconName = (instrument: Instrument, group: InstrumentGroup): IconName => {
-  const iconName = iconNamesMap[instrument];
-
-  if (!iconName) {
+export const getIconName = (instrument: Instrument | null, group: InstrumentGroup): IconName => {
+  if (!instrument) {
     // is empty note
     if (group === 'hh') {
       return iconNamesMap.hhCloseRegular;
     }
-    return 'noteEmpty';
+    return 'note-empty';
   }
 
-  return iconName;
+  return iconNamesMap[instrument];
 };
 
-export const getNoteLabel = (instrument: Instrument, group: InstrumentGroup): string => {
+export const getNoteLabel = (instrument: Instrument | null, group: InstrumentGroup): string => {
   if (!instrument) {
     return 'empty note';
   }

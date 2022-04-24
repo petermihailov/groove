@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2016",
+    "strict": true,
+    "target": "ES2022",
     "lib": ["DOM", "DOM.Iterable", "ES2021"],
     "outDir": "./dist",
     "module": "es6",

@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'react';
 import { memo } from 'react';
 
 import { Icon } from '../../../icons/Icon';
-import type { Instrument, InstrumentGroup, MouseEventHandler } from '../../../types';
+import type { Instrument, InstrumentGroup } from '../../../types';
 import { ButtonIcon } from '../../ButtonIcon';
 import { getIconName, getNoteLabel } from './Note.utils';
 
@@ -12,7 +12,7 @@ import { useStyles } from './Note.styles';
 interface NoteProps extends HTMLAttributes<HTMLButtonElement> {
   group: InstrumentGroup;
   index: number;
-  instrument: Instrument;
+  instrument: Instrument | null;
 }
 
 export const Note = memo(function Note({

@@ -1,14 +1,12 @@
-import { instrumentGroups } from '../constants';
-import { Groove } from '../lib/Groove';
-import { Measure } from '../lib/Measure';
-import { ensureArray } from './array';
-import { getGroupByInstrument } from './groove';
+import type { Groove, Measure } from '../types';
+import { createEmptyMeasure, getInstrumentsByIndex } from './groove';
 import { isInstrument } from './guards';
 import { longInstrumentMap, shirtInstrumentMap, shirtSymbolsMap as symbols } from './maps';
 
 export const readStringParamValue = (settingsString: string, shirtParam: string) => {
   const pattern = new RegExp(`${shirtParam}[0-9]+`, 'g');
-  return (ensureArray(settingsString.match(pattern))[0] || '').substring(1);
+  const matches = Array.from(settingsString.match(pattern) || ['']);
+  return matches[0].substring(1);
 };
 
 export const readStringTimeSignature = (
@@ -29,13 +27,14 @@ export const createStringMeasure = (measure: Measure) => {
 
   let measureString = settings + symbols.measureSettingsDelimiter;
 
-  for (let i = 0; i < measure.length; i++) {
-    if (i !== 0) measureString += symbols.beatDelimiter;
+  for (let rhythmIndex = 0; rhythmIndex < measure.length; rhythmIndex++) {
+    if (rhythmIndex !== 0) measureString += symbols.beatDelimiter;
 
-    for (const group of measure.instrumentGroups) {
-      const instrument = measure.notes[group][i];
+    const instruments = getInstrumentsByIndex(measure, rhythmIndex);
+
+    instruments.forEach((instrument) => {
       measureString += shirtInstrumentMap[instrument] || '';
-    }
+    });
   }
 
   return measureString;
@@ -54,23 +53,27 @@ export const createStringGroove = (groove: Groove) => {
 export const createMeasureFromString = (str: string): Measure[] => {
   const measuresStrArr = str.split(symbols.measureDelimiter);
 
-  return measuresStrArr.reduce((measures, measureStr) => {
-    const [measureSettingsString, notesStr] = measureStr.split(symbols.measureSettingsDelimiter);
+  return measuresStrArr.reduce<Measure[]>((measures, measureStr) => {
+    const [measureSettingsString = '', notesStr = ''] = measureStr.split(
+      symbols.measureSettingsDelimiter
+    );
 
     const signature = readStringParamValue(measureSettingsString, symbols.timeSignature);
     const timeDivision = Number(readStringParamValue(measureSettingsString, symbols.timeDivision));
     const [beatsCount, beatsPerFullNote] = readStringTimeSignature(signature);
-
     const beats = notesStr.split(symbols.beatDelimiter);
-    const measure = new Measure(instrumentGroups, timeDivision, beatsCount, beatsPerFullNote);
+    const measure = createEmptyMeasure(timeDivision, beatsCount, beatsPerFullNote);
     const slicedBeats = beats.slice(0, measure.length);
 
-    slicedBeats.forEach((insStr, beatIdx) => {
-      ensureArray(insStr.match(/.{3}/g)).forEach((ins) => {
+    slicedBeats.forEach((insStr, rhythmIndex) => {
+      const matches = Array.from(insStr.match(/.{3}/g) || []);
+
+      matches.forEach((ins) => {
         const instrument = longInstrumentMap[ins];
         if (isInstrument(instrument)) {
-          const group = getGroupByInstrument(instrument);
-          measure.notes[group][beatIdx] = instrument;
+          const instrumentNotes = measure.instruments[instrument] || [];
+          instrumentNotes[rhythmIndex] = true;
+          measure.instruments[instrument] = instrumentNotes;
         }
       });
     });
@@ -84,5 +87,5 @@ export const createGrooveFromString = (str: string): Groove => {
   const [settingsString, measuresStr] = str.split(symbols.grooveSettingsDelimiter);
   const tempo = Number(readStringParamValue(settingsString, symbols.tempo));
   const measures = createMeasureFromString(measuresStr);
-  return new Groove(tempo, measures);
+  return { tempo, measures };
 };

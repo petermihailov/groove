@@ -5,11 +5,14 @@ import { App } from './components/App';
 import { Sprite } from './icons';
 
 const container = document.getElementById('root');
-const root = createRoot(container);
 
-root.render(
-  <React.StrictMode>
-    <App />
-    <Sprite />
-  </React.StrictMode>
-);
+if (container) {
+  const root = createRoot(container);
+
+  root.render(
+    <React.StrictMode>
+      <App />
+      <Sprite />
+    </React.StrictMode>
+  );
+}

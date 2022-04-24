@@ -22,7 +22,7 @@ export function useThemeSwitch() {
 
   useEffect(() => {
     localStorage.setItem(storageKey, theme);
-    document.firstElementChild.setAttribute('data-theme', theme);
+    document.firstElementChild?.setAttribute('data-theme', theme);
   }, [theme]);
 
   // sync with system changes

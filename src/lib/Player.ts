@@ -1,142 +1,147 @@
-import type { Instrument } from '../types';
-import type { Groove } from './Groove';
-import type { Kit } from './Kit';
+import type { Beat, Instrument, Measure, DrumKit } from '../types';
+import { getAudioContext, getInstrumentsByIndex } from '../utils';
 
-type OnBeatCallback = (measureIndex: number, rhythmIndex: number) => void;
+const safetyBuffer = 0.25; // seconds
 
 export class Player {
   private readonly audioCtx: AudioContext;
-  private readonly onBeat: OnBeatCallback;
-  private readonly safetyBuffer: number;
-  private readonly kit: Kit;
-  private groove: Groove;
-  private measureIndex: number;
+  private kit: DrumKit;
+  private measures: Measure[];
+  private tempo: number;
   private nextBeatAt: number;
-  private rhythmIndex: number;
   private scheduledBuffers: AudioBufferSourceNode[];
-  private playingHatOpenBuffers: AudioBufferSourceNode[];
-  private timeoutId: number;
+  private hhOpenBuffers: AudioBufferSourceNode[];
+  private onBeat: (beat: Beat) => void;
+  private timeoutId: number | undefined;
 
-  constructor(audioCtx: AudioContext, kit: Kit, groove: Groove, onBeat: OnBeatCallback) {
-    this.audioCtx = audioCtx;
-    this.onBeat = onBeat;
-    this.kit = kit;
-    this.groove = groove;
-    this.measureIndex = 0;
-    this.rhythmIndex = 0;
+  constructor() {
+    this.kit = {} as DrumKit;
+    this.measures = [];
+    this.tempo = 80;
     this.nextBeatAt = 0;
-    this.timeoutId = null;
-    this.safetyBuffer = 0.25;
+    this.onBeat = () => undefined;
+    this.audioCtx = getAudioContext();
     this.scheduledBuffers = [];
-    this.playingHatOpenBuffers = [];
+    this.hhOpenBuffers = [];
   }
 
-  setGroove(groove: Groove) {
-    this.stop();
-    this.groove = groove;
+  setKit(kit: DrumKit) {
+    this.kit = kit;
+  }
+
+  setMeasures(measures: Measure[]) {
+    this.measures = measures;
   }
 
   setTempo(tempo: number) {
-    this.groove.tempo = tempo;
+    this.tempo = tempo;
+  }
+
+  setOnBeat(onBeat: (beat: Beat) => void) {
+    this.onBeat = onBeat;
+  }
+
+  playNotesAtTime(instruments: Instrument[], when: number) {
+    const whenSeconds = when / 1000;
+
+    instruments.forEach((instrument) => {
+      const source = new AudioBufferSourceNode(this.audioCtx, {
+        buffer: this.kit[instrument],
+      });
+
+      source.connect(this.audioCtx.destination);
+      source.start(whenSeconds);
+      this.scheduledBuffers.push(source);
+
+      if (instrument.startsWith('hh') && !instrument.startsWith('hhOpen')) {
+        this.hhOpenBuffers.forEach((buffer) => buffer.stop(whenSeconds));
+        window.setTimeout(() => {
+          this.hhOpenBuffers = [];
+        }, (whenSeconds - this.audioCtx.currentTime) * 1000);
+      }
+
+      if (instrument.startsWith('hhOpen')) {
+        this.hhOpenBuffers.push(source);
+      }
+    });
+  }
+
+  schedule(currentBeat: Beat) {
+    this.scheduledBuffers = [];
+
+    const { measureIndex, rhythmIndex } = currentBeat;
+    const { nextMeasureIndex, nextRhythmIndex } = getNextBeatPosition(
+      this.measures,
+      measureIndex,
+      rhythmIndex
+    );
+
+    const currentMeasure = this.measures[measureIndex];
+    const nextMeasure = this.measures[nextMeasureIndex];
+
+    this.nextBeatAt +=
+      (1000 * 60) / ((this.tempo * currentMeasure.timeDivision) / currentMeasure.beatsPerFullNote);
+
+    const instruments = getInstrumentsByIndex(nextMeasure, nextRhythmIndex);
+    this.playNotesAtTime(instruments, this.nextBeatAt);
+
+    this.onBeat(currentBeat);
+
+    this.timeoutId = window.setTimeout(
+      () =>
+        this.schedule({
+          measureIndex: nextMeasureIndex,
+          rhythmIndex: nextRhythmIndex,
+          playNote: Boolean(instruments.length),
+        }),
+      this.nextBeatAt - this.audioCtx.currentTime * 1000
+    );
   }
 
   play() {
-    this.kit.load().then(() => {
-      this.measureIndex = 0;
-      this.rhythmIndex = 0;
-      const measure = this.groove.measures[this.measureIndex];
+    const measure = this.measures[0];
 
-      // Ensure that initial notes are played at once by scheduling the playback slightly in the future.
-      this.nextBeatAt = (this.audioCtx.currentTime + this.safetyBuffer) * 1000;
+    this.nextBeatAt = (this.audioCtx.currentTime + safetyBuffer) * 1000;
+    const instruments = getInstrumentsByIndex(measure, 0);
+    this.playNotesAtTime(instruments, this.nextBeatAt);
 
-      for (const group of measure.instrumentGroups) {
-        this.playNoteAtTime(measure.notes[group][this.rhythmIndex], this.nextBeatAt);
-      }
-
-      this.timeoutId = window.setTimeout(() => this.onBeat?.(0, 0), this.getScheduleTimeout());
-
-      this.schedule();
+    this.schedule({
+      measureIndex: 0,
+      rhythmIndex: 0,
+      playNote: Boolean(instruments.length),
     });
   }
 
   stop() {
-    clearTimeout(this.timeoutId);
+    window.clearTimeout(this.timeoutId);
     this.scheduledBuffers.forEach((buffer) => buffer.stop());
     this.scheduledBuffers = [];
+    this.hhOpenBuffers.forEach((buffer) => buffer.stop());
+    this.hhOpenBuffers = [];
+    this.onBeat({
+      measureIndex: 0,
+      rhythmIndex: 0,
+      playNote: false,
+    });
   }
+}
 
-  schedule(playNoteNow?: boolean) {
-    this.scheduledBuffers = [];
-    const { nextMeasureIndex, nextRhythmIndex } = this.getNextBeat();
+/* Utils */
 
-    if (playNoteNow) {
-      this.onBeat?.(this.measureIndex, this.rhythmIndex);
-    }
+function getNextBeatPosition(measures: Measure[], measureIndex: number, rhythmIndex: number) {
+  const isLastRhythmIndex = rhythmIndex === measures[measureIndex].length - 1;
+  const isLastMeasureIndex = measureIndex === measures.length - 1;
+  const nextRhythmIndex = isLastRhythmIndex ? 0 : rhythmIndex + 1;
 
-    const currentMeasure = this.groove.measures[this.measureIndex];
-    const nextMeasure = this.groove.measures[nextMeasureIndex];
+  let nextMeasureIndex = measureIndex;
 
-    this.nextBeatAt +=
-      (1000 * 60) /
-      ((this.groove.tempo * currentMeasure.timeDivision) / currentMeasure.beatsPerFullNote);
-
-    let hasNote = false;
-    for (const group of nextMeasure.instrumentGroups) {
-      const note = nextMeasure.notes[group][nextRhythmIndex];
-
-      if (note && note.startsWith('hh') && !note.startsWith('hhOpen')) {
-        window.setTimeout(() => {
-          this.playingHatOpenBuffers.forEach((buffer) => buffer.stop());
-          this.playingHatOpenBuffers = [];
-        }, this.getScheduleTimeout());
-      }
-
-      this.playNoteAtTime(note, this.nextBeatAt);
-      if (!hasNote && note) hasNote = true;
-    }
-
-    this.measureIndex = nextMeasureIndex;
-    this.rhythmIndex = nextRhythmIndex;
-    this.timeoutId = window.setTimeout(() => this.schedule(hasNote), this.getScheduleTimeout());
-  }
-
-  getScheduleTimeout() {
-    return this.nextBeatAt - this.audioCtx.currentTime * 1000;
-  }
-
-  getNextBeat() {
-    const isLastRhythmIndex =
-      this.rhythmIndex === this.groove.measures[this.measureIndex].timeDivision - 1;
-    const isLastMeasureIndex = this.measureIndex === this.groove.measures.length - 1;
-    const nextRhythmIndex = isLastRhythmIndex ? 0 : this.rhythmIndex + 1;
-
-    let nextMeasureIndex = this.measureIndex;
-
-    if (isLastRhythmIndex) {
-      if (isLastMeasureIndex) {
-        nextMeasureIndex = 0;
-      } else {
-        nextMeasureIndex += 1;
-      }
-    }
-
-    return { nextMeasureIndex, nextRhythmIndex };
-  }
-
-  playNoteAtTime(instrument: Instrument, when: number, duration?: number) {
-    if (instrument) {
-      const whenSeconds = when / 1000;
-      const durationSeconds = duration ? duration / 1000 : undefined;
-      const source = new AudioBufferSourceNode(this.audioCtx, {
-        buffer: this.kit.buffer[instrument],
-      });
-      source.connect(this.audioCtx.destination);
-      source.start(whenSeconds, 0, durationSeconds);
-      this.scheduledBuffers.push(source);
-
-      if (instrument.startsWith('hhOpen')) {
-        this.playingHatOpenBuffers.push(source);
-      }
+  if (isLastRhythmIndex) {
+    if (isLastMeasureIndex) {
+      nextMeasureIndex = 0;
+    } else {
+      nextMeasureIndex += 1;
     }
   }
+
+  return { nextMeasureIndex, nextRhythmIndex };
 }

@@ -1,43 +1,74 @@
 import type { MouseEventHandler } from 'react';
-import { useCallback } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 
-import type { Measure as MeasureType } from '../../../lib/Measure';
 import { theme } from '../../../styles';
 import { sizes } from '../../../styles/tokens';
-import type { InstrumentGroup, InstrumentGroupEnabled } from '../../../types';
+import type { Instrument, Measure as MeasureType, InstrumentGroup } from '../../../types';
+import { getGroupByInstrument, safeKeys } from '../../../utils';
 import { Note } from '../Note';
 
 import { useStyles } from './Measure.styles';
 
 type MeasureProps = {
-  enabledGroups: InstrumentGroupEnabled;
   measure: MeasureType;
   highlightIndex?: number;
   onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
-export function Measure({ enabledGroups, measure, highlightIndex, ...delegated }: MeasureProps) {
+export const Measure = memo(function Measure({
+  measure,
+  highlightIndex,
+  ...delegated
+}: MeasureProps) {
   const classes = useStyles();
+
+  const concertedByGroups = useMemo(() => {
+    return safeKeys(measure.instruments).reduce<
+      Partial<Record<InstrumentGroup, (Instrument | undefined)[]>>
+    >((res, key) => {
+      const groupName = getGroupByInstrument(key);
+      const group = res[groupName] || [];
+      const notes = (measure.instruments[key] || []).map((hasNote) => (hasNote ? key : undefined));
+
+      notes.forEach((instrument, rhythmIndex) => {
+        group[rhythmIndex] = instrument;
+      });
+
+      res[groupName] = group;
+      return res;
+    }, {});
+  }, [measure]);
 
   const renderNotesByGroup = useCallback(
     (group: InstrumentGroup) => {
-      if (enabledGroups[group]) {
-        return measure.notes[group].map((instrument, idx) => {
-          let style;
+      const renderGroup = [];
 
-          if (instrument === 'hhFootRegular') {
-            const enabledGroupsCount = Object.values(enabledGroups).filter(Boolean).length;
-            style = {
-              transform: `translateY(calc(${sizes.sizeNote} * ${enabledGroupsCount - 1} + 0.5rem))`,
-            };
-          }
-
-          return <Note key={idx} style={style} index={idx} instrument={instrument} group={group} />;
-        });
+      for (let idx = 0; idx < measure.length; idx++) {
+        const instruments = concertedByGroups[group] || [];
+        renderGroup.push(
+          <Note key={idx} index={idx} instrument={instruments[idx] || null} group={group} />
+        );
       }
-      return null;
+
+      return renderGroup;
+
+      // // if (enabledGroups[group]) {
+      // return groups[group]?.map((instrument, idx) => {
+      //   // let style;
+      //
+      //   // if (instrument === 'hhFootRegular') {
+      //   //   const enabledGroupsCount = Object.values(enabledGroups).filter(Boolean).length;
+      //   //   style = {
+      //   //     transform: `translateY(calc(${sizes.sizeNote} * ${enabledGroupsCount} + 0.5rem))`,
+      //   //   };
+      //   // }
+      //
+      //   return <Note key={idx} index={idx} instrument={instrument} group={group} />;
+      // });
+      // // }
+      // // return null;
     },
-    [enabledGroups, measure.notes]
+    [concertedByGroups, measure.length]
   );
 
   return (
@@ -63,4 +94,4 @@ export function Measure({ enabledGroups, measure, highlightIndex, ...delegated }
       {renderNotesByGroup('ki')}
     </div>
   );
-}
+});

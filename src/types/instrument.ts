@@ -28,3 +28,31 @@ export type Instrument =
   | 't2MidRegular'
   | 't3LowGhost'
   | 't3LowRegular';
+
+export type DrumKit = Record<Instrument, AudioBuffer>;
+
+export type Measure = {
+  timeDivision: number;
+  beatsCount: number;
+  beatsPerFullNote: number;
+  length: number;
+  instruments: Partial<Record<Instrument, boolean[]>>;
+};
+
+export type Beat = {
+  measureIndex: number;
+  rhythmIndex: number;
+  playNote: boolean;
+};
+
+export type Note = {
+  group: InstrumentGroup;
+  instrument: Instrument;
+  measureIndex: number;
+  rhythmIndex: number;
+};
+
+export type Groove = {
+  tempo: number;
+  measures: Measure[];
+};

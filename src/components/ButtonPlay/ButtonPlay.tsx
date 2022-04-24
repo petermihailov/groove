@@ -24,17 +24,17 @@ export const ButtonPlay = memo(function ButtonPlay({
 }: ButtonPlayProps) {
   const classes = useStyles();
 
-  const playAnimationRef = useRef<SVGAnimateElement>();
-  const stopAnimationRef = useRef<SVGAnimateElement>();
+  const playAnimationRef = useRef<SVGAnimateElement>(null);
+  const stopAnimationRef = useRef<SVGAnimateElement>(null);
 
   const playPolygon = '6 6, 18 12, 18 12, 6 18';
   const stopPolygon = '6 6, 18 6, 18 18, 6 18';
 
   useEffect(() => {
     if (playing) {
-      stopAnimationRef.current.beginElement();
+      stopAnimationRef.current?.beginElement();
     } else {
-      playAnimationRef.current.beginElement();
+      playAnimationRef.current?.beginElement();
     }
   }, [playing]);
 
