@@ -2,14 +2,17 @@ import clsx from 'clsx';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import { useClickOutside, useMeasure } from '../../hooks';
+import { Icon } from '../../icons/Icon';
 import type {
   Beat,
   Instrument,
   Measure as MeasureType,
   InstrumentGroup,
   MouseEventHandler,
+  InstrumentGroupEnabled,
 } from '../../types';
 import { defaultGroupNoteMap, isInstrumentGroup } from '../../utils';
+import { Groups } from './Groups';
 import { Measure } from './Measure';
 import { getDataFromNoteElement } from './Note/Note.utils';
 import { Picker } from './Picker';
@@ -18,12 +21,18 @@ import { useStyles } from './Editor.styles';
 
 type EditorProps = {
   beat: Beat;
+  enabledGroups: InstrumentGroupEnabled;
   measures: MeasureType[];
   playing: boolean;
   setMeasures: (measures: MeasureType[]) => void;
 };
 
-export const Editor = memo(function Editor({ beat, measures, playing, setMeasures }: EditorProps) {
+export const Editor = memo(function Editor({
+  beat,
+  measures,
+  playing,
+  enabledGroups,
+}: EditorProps) {
   const classes = useStyles();
 
   const editorRef = useRef<HTMLDivElement>(null);
@@ -100,27 +109,27 @@ export const Editor = memo(function Editor({ beat, measures, playing, setMeasure
   // });
 
   return (
-    <>
-      <div ref={editorRef} className={classes.root}>
-        {measures.map((measure, idx) => (
-          <Measure
-            key={idx}
-            // onClick={handleEdit}
-            measure={measure}
-            data-index={idx}
-            highlightIndex={
-              playing && highlightBeat.current.measureIndex === idx
-                ? highlightBeat.current.rhythmIndex
-                : undefined
-            }
-          />
-        ))}
-      </div>
+    <div ref={editorRef} className={classes.root}>
+      <Groups className={classes.groups} enabledGroups={enabledGroups} />
+      {measures.map((measure, idx) => (
+        <Measure
+          key={idx}
+          enabledGroups={enabledGroups}
+          // onClick={handleEdit}
+          measure={measure}
+          data-index={idx}
+          highlightIndex={
+            playing && highlightBeat.current.measureIndex === idx
+              ? highlightBeat.current.rhythmIndex
+              : undefined
+          }
+        />
+      ))}
       {/*<Picker*/}
       {/*  className={clsx(classes.picker, { [classes.pickerHidden]: !focusedNote.instrument })}*/}
       {/*  onChange={handlePickNote}*/}
       {/*  {...focusedNote}*/}
       {/*/>*/}
-    </>
+    </div>
   );
 });

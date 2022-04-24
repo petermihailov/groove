@@ -3,19 +3,26 @@ import { memo, useCallback, useMemo } from 'react';
 
 import { theme } from '../../../styles';
 import { sizes } from '../../../styles/tokens';
-import type { Instrument, Measure as MeasureType, InstrumentGroup } from '../../../types';
+import type {
+  Instrument,
+  Measure as MeasureType,
+  InstrumentGroup,
+  InstrumentGroupEnabled,
+} from '../../../types';
 import { getGroupByInstrument, safeKeys } from '../../../utils';
 import { Note } from '../Note';
 
 import { useStyles } from './Measure.styles';
 
 type MeasureProps = {
+  enabledGroups: InstrumentGroupEnabled;
   measure: MeasureType;
   highlightIndex?: number;
   onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
 export const Measure = memo(function Measure({
+  enabledGroups,
   measure,
   highlightIndex,
   ...delegated
@@ -41,6 +48,10 @@ export const Measure = memo(function Measure({
 
   const renderNotesByGroup = useCallback(
     (group: InstrumentGroup) => {
+      if (!enabledGroups[group]) {
+        return null;
+      }
+
       const renderGroup = [];
 
       for (let idx = 0; idx < measure.length; idx++) {
@@ -68,7 +79,7 @@ export const Measure = memo(function Measure({
       // // }
       // // return null;
     },
-    [concertedByGroups, measure.length]
+    [concertedByGroups, measure.length, enabledGroups]
   );
 
   return (

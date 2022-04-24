@@ -5,8 +5,20 @@ export const useStyles = createUseStyles('Editor', {
     display: 'flex',
     overflow: 'auto',
     backgroundColor: theme.colorSurface2,
+    paddingRight: theme.sizeHorizontalPadding,
+  },
+
+  groups: {
+    position: 'sticky',
+    left: 0,
+    zIndex: 1,
+    flex: 'none',
+    marginRight: theme.spacingSmall,
+    paddingLeft: theme.sizeHorizontalPadding,
+    paddingRight: theme.spacingSmall,
+    backgroundColor: theme.colorHighlight,
+    backdropFilter: 'blur(20px)',
     boxShadow: theme.shadowSmall,
-    padding: [0, theme.sizeHorizontalPadding],
   },
 
   picker: {

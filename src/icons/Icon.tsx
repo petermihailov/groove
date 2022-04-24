@@ -11,8 +11,8 @@ export const Icon = memo(function Icon({ name, className }: IconProps) {
   return (
     <svg
       aria-hidden="true"
-      width="24"
-      height="24"
+      width="2rem"
+      height="2rem"
       viewBox="0 0 24 24"
       fill="currentColor"
       className={className}

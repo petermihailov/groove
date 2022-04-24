@@ -1,6 +1,6 @@
 export const colors = {
   colorAccent: '#05f',
-  colorHighlight: 'rgba(0, 85, 255, 0.25)',
+  colorHighlight: 'rgba(0, 85, 255, 0.1)',
   colorBorder: '#d9d9e8',
   colorDrawer: '#f9fbff',
   colorIcon: '#171a1c',
@@ -65,6 +65,24 @@ export const shadow = {
     '2.1px 4.1px 5.2px -1.7px rgba(0, 0, 0, 0.11),' +
     '5px 10px 12.6px -2.5px rgba(0, 0, 0, 0.11)',
   shadowLarge:
+    '0.3px 0.5px 0.7px rgba(0, 0, 0, 0.1),' +
+    '1.5px 2.9px 3.7px -0.4px rgba(0, 0, 0, 0.1),' +
+    '2.7px 5.4px 6.8px -0.7px rgba(0, 0, 0, 0.1),' +
+    '4.5px 8.9px 11.2px -1.1px rgba(0, 0, 0, 0.1),' +
+    '7.1px 14.3px 18px -1.4px rgba(0, 0, 0, 0.1),' +
+    '11.2px 22.3px 28.1px -1.8px rgba(0, 0, 0, 0.1),' +
+    '17px 33.9px 42.7px -2.1px rgba(0, 0, 0, 0.1),' +
+    '25px 50px 62.9px -2.5px rgba(0, 0, 0, 0.1)',
+  shadowSmallInvert:
+    '-0.3px -0.5px 0.7px rgba(0, 0, 0, 0.1),' +
+    '-0.4px -0.8px 1px -1.2px rgba(0, 0, 0, 0.1),' +
+    '-1px -2px 2.5px -2.5px rgba(0, 0, 0, 0.1)',
+  shadowMediumInvert:
+    '0.3px 0.5px 0.7px rgba(0, 0, 0, 0.11),' +
+    '0.8px 1.6px 2px -0.8px rgba(0, 0, 0, 0.11),' +
+    '2.1px 4.1px 5.2px -1.7px rgba(0, 0, 0, 0.11),' +
+    '5px 10px 12.6px -2.5px rgba(0, 0, 0, 0.11)',
+  shadowLargeInvert:
     '0.3px 0.5px 0.7px rgba(0, 0, 0, 0.1),' +
     '1.5px 2.9px 3.7px -0.4px rgba(0, 0, 0, 0.1),' +
     '2.7px 5.4px 6.8px -0.7px rgba(0, 0, 0, 0.1),' +

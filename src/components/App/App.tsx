@@ -2,7 +2,8 @@ import { memo, useCallback, useEffect, useState } from 'react';
 
 import { usePlayer, useQuerySync } from '../../hooks';
 import { Icon } from '../../icons/Icon';
-import type { Groove, Measure } from '../../types';
+import type { Groove, Measure, InstrumentGroupEnabled } from '../../types';
+import { getGrooveGroups } from '../../utils';
 import { ButtonIcon } from '../ButtonIcon';
 import { ButtonPlay } from '../ButtonPlay';
 import { Drawer } from '../Drawer';
@@ -18,6 +19,7 @@ export const App = memo(function App() {
 
   const [metronome, setMetronome] = useState(false);
   const [settings, setSettings] = useState(false);
+  const [enabledGroups, setEnabledGroups] = useState<InstrumentGroupEnabled>({});
   const [groove, setGroove] = useState<Groove>({
     tempo: 80,
     measures: [],
@@ -41,12 +43,20 @@ export const App = memo(function App() {
 
   // initialize
   useEffect(() => {
-    setGroove(getGrooveFromQuery());
+    const grooveFromQuery = getGrooveFromQuery();
+    setEnabledGroups(getGrooveGroups(grooveFromQuery));
+    setGroove(grooveFromQuery);
   }, [getGrooveFromQuery]);
 
   return (
     <>
-      <Editor playing={playing} beat={beat} measures={groove.measures} setMeasures={setMeasures} />
+      <Editor
+        playing={playing}
+        beat={beat}
+        measures={groove.measures}
+        setMeasures={setMeasures}
+        enabledGroups={enabledGroups}
+      />
 
       <div className={classes.controls}>
         <ButtonPlay active playing={playing} onClick={togglePlaying} />
@@ -74,13 +84,8 @@ export const App = memo(function App() {
       </div>
 
       <Drawer open={settings} onClose={closeSettings}>
-        <Settings />
+        <Settings enabledGroups={enabledGroups} setEnabledGroups={setEnabledGroups} />
       </Drawer>
-
-      <pre>
-        {`tempo: ${groove.tempo}\n`}
-        {`metronome: ${String(metronome)}\n`}
-      </pre>
     </>
   );
 });

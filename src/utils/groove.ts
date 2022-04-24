@@ -1,29 +1,36 @@
 import { instruments } from '../constants';
-// import type { Groove } from '../lib/Groove';
-import type { Measure, Instrument, InstrumentGroup } from '../types';
+import type {
+  Measure,
+  Instrument,
+  InstrumentGroup,
+  Groove,
+  InstrumentGroupEnabled,
+} from '../types';
 import { safeKeys } from './safe-keys';
-//
-// export const getGrooveGroups = (groove: Groove) => {
-//   const groups: InstrumentGroupEnabled = {
-//     cy: false,
-//     hh: false,
-//     ki: false,
-//     sn: false,
-//     t1: false,
-//     t2: false,
-//     t3: false,
-//   };
-//
-//   for (const measure of groove.measures) {
-//     for (const group of measure.instrumentGroups) {
-//       if (!groups[group] && measure.notes[group].some(Boolean)) {
-//         groups[group] = true;
-//       }
-//     }
-//   }
-//
-//   return groups;
-// };
+
+export const getGrooveGroups = (groove: Groove) => {
+  const groups: InstrumentGroupEnabled = {
+    cy: false,
+    hh: false,
+    ki: false,
+    sn: false,
+    t1: false,
+    t2: false,
+    t3: false,
+  };
+
+  for (const measure of groove.measures) {
+    for (const instrument in measure.instruments) {
+      const group = getGroupByInstrument(instrument as Instrument);
+
+      if (!groups[group] && measure.instruments[instrument as Instrument]?.some(Boolean)) {
+        groups[group] = true;
+      }
+    }
+  }
+
+  return groups;
+};
 
 export const createEmptyMeasure = (
   timeDivision: number,

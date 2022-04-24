@@ -1,17 +1,31 @@
 import { memo } from 'react';
 
+import type { InstrumentGroupsProps } from './InstrumentGroups';
+import { InstrumentGroups } from './InstrumentGroups';
+import type { MetronomeFrequencyProps } from './MetronomeFrequency';
 import { MetronomeFrequency } from './MetronomeFrequency';
 import { TimeSignature } from './TimeSignature';
 
 import { useStyles } from './Settings.styles';
 
-export const Settings = memo(function Settings() {
+interface SettingsProps extends InstrumentGroupsProps, MetronomeFrequencyProps {}
+
+export const Settings = memo(function Settings({
+  metronomeFrequency,
+  setMetronomeFrequency,
+  enabledGroups,
+  setEnabledGroups,
+}: SettingsProps) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <MetronomeFrequency />
+      <MetronomeFrequency
+        metronomeFrequency={metronomeFrequency}
+        setMetronomeFrequency={setMetronomeFrequency}
+      />
       <TimeSignature />
+      <InstrumentGroups enabledGroups={enabledGroups} setEnabledGroups={setEnabledGroups} />
     </div>
   );
 });
