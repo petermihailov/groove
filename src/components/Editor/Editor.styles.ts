@@ -21,6 +21,11 @@ export const useStyles = createUseStyles('Editor', {
     boxShadow: theme.shadowSmall,
   },
 
+  item: {
+    paddingTop: theme.spacingXSmall,
+    paddingBottom: `calc(${theme.sizeNote} + ${theme.spacingNote})`,
+  },
+
   picker: {
     position: 'fixed',
     bottom: 0,

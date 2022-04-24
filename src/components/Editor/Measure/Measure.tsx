@@ -1,8 +1,9 @@
+import clsx from 'clsx';
 import type { MouseEventHandler } from 'react';
 import { memo, useCallback, useMemo } from 'react';
 
 import { theme } from '../../../styles';
-import { sizes } from '../../../styles/tokens';
+import { sizes, spacing } from '../../../styles/tokens';
 import type {
   Instrument,
   Measure as MeasureType,
@@ -15,6 +16,7 @@ import { Note } from '../Note';
 import { useStyles } from './Measure.styles';
 
 type MeasureProps = {
+  className?: string;
   enabledGroups: InstrumentGroupEnabled;
   measure: MeasureType;
   highlightIndex?: number;
@@ -22,6 +24,7 @@ type MeasureProps = {
 };
 
 export const Measure = memo(function Measure({
+  className,
   enabledGroups,
   measure,
   highlightIndex,
@@ -29,7 +32,7 @@ export const Measure = memo(function Measure({
 }: MeasureProps) {
   const classes = useStyles();
 
-  const concertedByGroups = useMemo(() => {
+  const convertedByGroups = useMemo(() => {
     return safeKeys(measure.instruments).reduce<
       Partial<Record<InstrumentGroup, (Instrument | undefined)[]>>
     >((res, key) => {
@@ -55,36 +58,32 @@ export const Measure = memo(function Measure({
       const renderGroup = [];
 
       for (let idx = 0; idx < measure.length; idx++) {
-        const instruments = concertedByGroups[group] || [];
+        const instruments = convertedByGroups[group] || [];
+        const instrument = instruments[idx] || null;
+        let footStyle;
+
+        if (instrument === 'hhFootRegular') {
+          const offsetGroups =
+            Object.values(enabledGroups).filter(Boolean).length - Number(enabledGroups.cy);
+
+          footStyle = {
+            transform: `translateY(calc(${sizes.sizeNote} * ${offsetGroups} + ${spacing.spacingNote} * ${offsetGroups})) rotate(180deg)`,
+          };
+        }
+
         renderGroup.push(
-          <Note key={idx} index={idx} instrument={instruments[idx] || null} group={group} />
+          <Note key={idx} style={footStyle} index={idx} instrument={instrument} group={group} />
         );
       }
 
       return renderGroup;
-
-      // // if (enabledGroups[group]) {
-      // return groups[group]?.map((instrument, idx) => {
-      //   // let style;
-      //
-      //   // if (instrument === 'hhFootRegular') {
-      //   //   const enabledGroupsCount = Object.values(enabledGroups).filter(Boolean).length;
-      //   //   style = {
-      //   //     transform: `translateY(calc(${sizes.sizeNote} * ${enabledGroupsCount} + 0.5rem))`,
-      //   //   };
-      //   // }
-      //
-      //   return <Note key={idx} index={idx} instrument={instrument} group={group} />;
-      // });
-      // // }
-      // // return null;
     },
-    [concertedByGroups, measure.length, enabledGroups]
+    [convertedByGroups, measure.length, enabledGroups]
   );
 
   return (
     <div
-      className={classes.root}
+      className={clsx(className, classes.root)}
       style={{ gridTemplateColumns: `repeat(${measure.length}, auto)` }}
       {...delegated}
     >

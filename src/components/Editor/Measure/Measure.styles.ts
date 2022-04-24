@@ -5,8 +5,6 @@ export const useStyles = createUseStyles('Measure', {
     position: 'relative',
     display: 'grid',
     gridGap: theme.spacingNote,
-    paddingTop: theme.spacingMedium,
-    paddingBottom: theme.spacingXxxLarge,
   },
 
   highlight: {

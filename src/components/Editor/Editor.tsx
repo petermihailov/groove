@@ -110,10 +110,11 @@ export const Editor = memo(function Editor({
 
   return (
     <div ref={editorRef} className={classes.root}>
-      <Groups className={classes.groups} enabledGroups={enabledGroups} />
+      <Groups className={clsx(classes.item, classes.groups)} enabledGroups={enabledGroups} />
       {measures.map((measure, idx) => (
         <Measure
           key={idx}
+          className={classes.item}
           enabledGroups={enabledGroups}
           // onClick={handleEdit}
           measure={measure}
