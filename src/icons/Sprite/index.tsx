@@ -7,7 +7,7 @@ import { UI } from './UI';
 
 export const Sprite = memo(function Sprite() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ display: 'none' }}>
+    <svg fill="none" height="24" style={{ display: 'none' }} viewBox="0 0 24 24" width="24">
       <NotesIcons />
       <UI />
       <NotesDuration />

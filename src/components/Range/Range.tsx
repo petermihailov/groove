@@ -80,13 +80,13 @@ export const Range = memo(function Range({
           <input
             ref={decimalRef}
             className={classes.inputDecimal}
-            type="text"
-            inputMode="decimal"
-            min={0}
-            max={max}
             defaultValue={value}
-            onFocus={handleFocus}
+            inputMode="decimal"
+            max={max}
+            min={0}
+            type="text"
             onBlur={handleBlur}
+            onFocus={handleFocus}
             onKeyDown={handleKeyPress}
           />
         </div>
@@ -94,9 +94,9 @@ export const Range = memo(function Range({
       <input
         ref={rangeRef}
         className={classes.input}
-        type="range"
-        min={min}
         max={max}
+        min={min}
+        type="range"
         value={String(value)}
         onChange={handleTrackChange}
         {...props}

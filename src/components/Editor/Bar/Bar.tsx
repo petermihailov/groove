@@ -17,20 +17,22 @@ import { useStyles } from './Bar.styles';
 
 type BarProps = {
   className?: string;
-  enabledGroups: InstrumentGroupEnabled;
   bar: BarType;
+  enabledGroups: InstrumentGroupEnabled;
   highlightIndex?: number;
   onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
 export const Bar = memo(function Bar({
   className,
-  enabledGroups,
   bar,
+  enabledGroups,
   highlightIndex,
   ...delegated
 }: BarProps) {
   const classes = useStyles();
+
+  console.log('render');
 
   const convertedByGroups = useMemo(() => {
     return safeKeys(bar.instruments).reduce<
@@ -72,7 +74,7 @@ export const Bar = memo(function Bar({
         }
 
         renderGroup.push(
-          <Note key={idx} style={footStyle} index={idx} instrument={instrument} group={group} />
+          <Note key={idx} group={group} index={idx} instrument={instrument} style={footStyle} />
         );
       }
 

@@ -39,14 +39,14 @@ export const ButtonPlay = memo(function ButtonPlay({
   }, [playing]);
 
   return (
-    <ButtonIcon className={clsx(className)} aria-label={playing ? 'stop' : 'play'} {...props}>
+    <ButtonIcon aria-label={playing ? 'stop' : 'play'} className={clsx(className)} {...props}>
       <svg
         className={classes.icon}
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
         fill="currentColor"
+        height="24"
         stroke="currentColor"
+        viewBox="0 0 24 24"
+        width="24"
       >
         <polygon points={playPolygon} strokeLinejoin="round" strokeWidth="5">
           <animate ref={stopAnimationRef} to={stopPolygon} {...animationProps} />

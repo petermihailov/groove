@@ -16,8 +16,8 @@ export const Groups = memo(function Groups({ className, enabledGroups }: GroupsP
 
   return (
     <div className={clsx(className, classes.root)}>
-      {enabledGroups.cy && <Icon name="group-cy" className={classes.toBottom} />}
-      {enabledGroups.hh && <Icon name="group-hh" className={classes.toBottom} />}
+      {enabledGroups.cy && <Icon className={classes.toBottom} name="group-cy" />}
+      {enabledGroups.hh && <Icon className={classes.toBottom} name="group-hh" />}
       {enabledGroups.t1 && <Icon name="group-t1" />}
       {enabledGroups.sn && <Icon name="group-sn" />}
       {enabledGroups.t2 && <Icon name="group-t2" />}

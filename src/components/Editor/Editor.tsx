@@ -2,12 +2,9 @@ import clsx from 'clsx';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import { useClickOutside } from '../../hooks';
-import { Icon } from '../../icons/Icon';
 import type {
   Beat,
-  Instrument,
   Bar as BarType,
-  InstrumentGroup,
   MouseEventHandler,
   InstrumentGroupEnabled,
   Note,
@@ -107,23 +104,23 @@ export const Editor = memo(function Editor({
       {bars.map((bar, idx) => (
         <Bar
           key={idx}
-          className={classes.item}
-          enabledGroups={enabledGroups}
-          onClick={toggleNote}
           bar={bar}
+          className={classes.item}
           data-index={idx}
+          enabledGroups={enabledGroups}
           highlightIndex={
             playing && highlightBeat.current.barIndex === idx
               ? highlightBeat.current.rhythmIndex
               : undefined
           }
+          onClick={toggleNote}
         />
       ))}
 
       <Picker
         className={clsx(classes.picker, { [classes.pickerHidden]: !focusedNote?.instrument })}
-        onChange={handlePickNote}
         note={focusedNote}
+        onChange={handlePickNote}
       />
     </div>
   );

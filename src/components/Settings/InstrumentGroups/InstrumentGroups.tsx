@@ -23,25 +23,25 @@ export function InstrumentGroups({ enabledGroups, setEnabledGroups }: Instrument
     <div className={classes.root}>
       Groups
       <div className={classes.list}>
-        <ButtonIcon aria-label="cymbals" active={enabledGroups?.cy} onClick={toggleGroup('cy')}>
+        <ButtonIcon active={enabledGroups?.cy} aria-label="cymbals" onClick={toggleGroup('cy')}>
           <Icon name="group-cy" />
         </ButtonIcon>
-        <ButtonIcon aria-label="hi-hat" active={enabledGroups?.hh} onClick={toggleGroup('hh')}>
+        <ButtonIcon active={enabledGroups?.hh} aria-label="hi-hat" onClick={toggleGroup('hh')}>
           <Icon name="group-hh" />
         </ButtonIcon>
-        <ButtonIcon aria-label="snare" active={enabledGroups?.sn} onClick={toggleGroup('sn')}>
+        <ButtonIcon active={enabledGroups?.sn} aria-label="snare" onClick={toggleGroup('sn')}>
           <Icon name="group-sn" />
         </ButtonIcon>
-        <ButtonIcon aria-label="kick" active={enabledGroups?.ki} onClick={toggleGroup('ki')}>
+        <ButtonIcon active={enabledGroups?.ki} aria-label="kick" onClick={toggleGroup('ki')}>
           <Icon name="group-ki" />
         </ButtonIcon>
-        <ButtonIcon aria-label="high tom" active={enabledGroups?.t1} onClick={toggleGroup('t1')}>
+        <ButtonIcon active={enabledGroups?.t1} aria-label="high tom" onClick={toggleGroup('t1')}>
           <Icon name="group-t1" />
         </ButtonIcon>
-        <ButtonIcon aria-label="middle tom" active={enabledGroups?.t2} onClick={toggleGroup('t2')}>
+        <ButtonIcon active={enabledGroups?.t2} aria-label="middle tom" onClick={toggleGroup('t2')}>
           <Icon name="group-t2" />
         </ButtonIcon>
-        <ButtonIcon aria-label="low tom" active={enabledGroups?.t3} onClick={toggleGroup('t3')}>
+        <ButtonIcon active={enabledGroups?.t3} aria-label="low tom" onClick={toggleGroup('t3')}>
           <Icon name="group-t3" />
         </ButtonIcon>
       </div>

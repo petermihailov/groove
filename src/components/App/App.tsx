@@ -18,12 +18,11 @@ export const App = memo(function App() {
   const classes = useStyles();
 
   const { groove, dispatch } = useGrooveContext();
+  const { beat, play, playing, stop } = usePlayer(groove);
 
   const [metronome, setMetronome] = useState(false);
   const [settings, setSettings] = useState(false);
   const [enabledGroups, setEnabledGroups] = useState<InstrumentGroupEnabled>({});
-
-  const { beat, play, playing, stop } = usePlayer(groove);
 
   const togglePlaying = () => (playing ? stop() : play());
   const toggleMetronome = () => setMetronome((prev) => !prev);
@@ -53,11 +52,11 @@ export const App = memo(function App() {
   return (
     <>
       <Editor
-        playing={playing}
-        beat={beat}
         bars={groove.bars}
-        setNote={setNote}
+        beat={beat}
         enabledGroups={enabledGroups}
+        playing={playing}
+        setNote={setNote}
       />
 
       <div className={classes.controls}>
@@ -73,8 +72,8 @@ export const App = memo(function App() {
         <Range
           className={classes.bpm}
           label="BPM"
-          min={20}
           max={240}
+          min={20}
           value={groove.tempo}
           onChange={setTempo}
         />

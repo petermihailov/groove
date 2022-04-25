@@ -30,16 +30,16 @@ export const Note = memo(function Note({
 
   return (
     <ButtonIcon
-      className={clsx(className, classes.root, { [classes.empty]: isEmpty })}
       aria-label={label}
+      className={clsx(className, classes.root, { [classes.empty]: isEmpty })}
       data-group={group}
-      data-instrument={instrument}
       data-index={index}
+      data-instrument={instrument}
       {...delegated}
     >
       <Icon
-        name={iconName}
         className={clsx({ [classes.emptyCymbal]: isEmpty && group === 'cy' })}
+        name={iconName}
       />
     </ButtonIcon>
   );
