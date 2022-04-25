@@ -38,7 +38,7 @@ export const Bar = memo(function Bar({
     >((res, key) => {
       const groupName = getGroupByInstrument(key);
       const group = res[groupName] || [];
-      const notes = (bar.instruments[key] || []).map((hasNote) => (hasNote ? key : undefined));
+      const notes = bar.instruments[key].map((hasNote) => (hasNote ? key : undefined));
 
       notes.forEach((instrument, rhythmIndex) => {
         group[rhythmIndex] = instrument;

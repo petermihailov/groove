@@ -1,30 +1,27 @@
 import { createContext, useContext, useReducer } from 'react';
 import type { Dispatch, FC, ReactNode } from 'react';
 
-import type { Bar, MetronomeFrequency, Note, TimeSignature } from '../types';
+import { grooveDefault } from '../constants';
+import type { Groove, Note, TimeSignature } from '../types';
 import { exhaustiveCheck } from '../types';
-import { createAction } from '../utils';
+import { cloneBar, createAction, createGrooveFromString, scaleBar } from '../utils';
 
 type AddBarAction = {
-  type: 'ADD_MEASURE';
-  payload: {
-    copyBar: number; // index
-  };
+  type: 'ADD_BAR';
+  /** Bar index */
+  payload: number;
 };
 
 type RemoveBarAction = {
-  type: 'REMOVE_MEASURE';
-  payload: number; // index
+  type: 'REMOVE_BAR';
+  /** Bar index */
+  payload: number;
 };
 
 type SetGrooveFromStringAction = {
   type: 'SET_GROOVE_FROM_STRING';
+  /** Groove string */
   payload: string;
-};
-
-type SetMetronomeFrequencyAction = {
-  type: 'SET_METRONOME_FREQUENCY';
-  payload: MetronomeFrequency;
 };
 
 type SetNoteAction = {
@@ -34,7 +31,10 @@ type SetNoteAction = {
 
 type SetSignatureAction = {
   type: 'SET_SIGNATURE';
-  payload: TimeSignature;
+  payload: TimeSignature & {
+    barIndex: number;
+    timeDivision: number;
+  };
 };
 
 type SetTempoAction = {
@@ -46,68 +46,99 @@ type Actions =
   | AddBarAction
   | RemoveBarAction
   | SetGrooveFromStringAction
-  | SetMetronomeFrequencyAction
   | SetNoteAction
   | SetSignatureAction
   | SetTempoAction;
 
-export const addBarAction = createAction<AddBarAction>('ADD_MEASURE');
-export const removeBarAction = createAction<RemoveBarAction>('REMOVE_MEASURE');
+/* Actions */
+
+export const addBarAction = createAction<AddBarAction>('ADD_BAR');
+export const removeBarAction = createAction<RemoveBarAction>('REMOVE_BAR');
 export const setGrooveFromStringAction =
   createAction<SetGrooveFromStringAction>('SET_GROOVE_FROM_STRING');
-export const setMetronomeFrequencyAction =
-  createAction<SetMetronomeFrequencyAction>('SET_METRONOME_FREQUENCY');
+export const setNoteAction = createAction<SetNoteAction>('SET_NOTE');
 export const setSignatureAction = createAction<SetSignatureAction>('SET_SIGNATURE');
 export const setTempoAction = createAction<SetTempoAction>('SET_TEMPO');
 
-type State = {
-  tempo: number;
-  bars: Bar[];
-  metronomeFrequency: MetronomeFrequency;
-};
+/* Reducer */
+
+type State = Groove;
 
 const defaultState: State = {
   tempo: 80,
   bars: [],
-  metronomeFrequency: 4,
+  groups: {},
 };
 
 const reducer = (state: State, action: Actions): State => {
   switch (action.type) {
-    case 'ADD_MEASURE': {
-      const bars = [...state.bars];
-
-      return state;
+    case 'ADD_BAR': {
+      const insertAfterBarIdx = action.payload;
+      const bars = [...state.bars].splice(
+        insertAfterBarIdx + 1,
+        0,
+        cloneBar(state.bars[insertAfterBarIdx])
+      );
+      return { ...state, bars };
     }
 
-    case 'REMOVE_MEASURE': {
-      return state;
+    case 'REMOVE_BAR': {
+      const removeBarIdx = action.payload;
+      const bars = state.bars.filter((_, idx) => removeBarIdx !== idx);
+      return { ...state, bars };
     }
 
     case 'SET_GROOVE_FROM_STRING': {
-      return state;
-    }
+      let groove: Groove;
 
-    case 'SET_METRONOME_FREQUENCY': {
-      return state;
+      try {
+        groove = createGrooveFromString(action.payload);
+      } catch (err) {
+        alert('Groove damaged');
+        groove = createGrooveFromString(grooveDefault);
+      }
+
+      return groove;
     }
 
     case 'SET_NOTE': {
-      return state;
+      const { rhythmIndex, instrument, barIndex, value } = action.payload;
+
+      const clonedBar = cloneBar(state.bars[barIndex]);
+      clonedBar.instruments[instrument][rhythmIndex] = value;
+      const bars = [...state.bars].splice(barIndex, 1, clonedBar);
+
+      return { ...state, bars };
     }
 
     case 'SET_SIGNATURE': {
-      return state;
+      const { barIndex, noteValue, beatsPerBar, timeDivision } = action.payload;
+      const bar = state.bars[barIndex];
+
+      if (
+        beatsPerBar === bar.beatsPerBar &&
+        noteValue === bar.noteValue &&
+        timeDivision === bar.timeDivision
+      ) {
+        return state;
+      }
+
+      const newBar = scaleBar(bar, noteValue, beatsPerBar, timeDivision);
+      const bars = [...state.bars].splice(barIndex, 1, newBar);
+
+      return { ...state, bars };
     }
 
     case 'SET_TEMPO': {
-      return state;
+      return { ...state, tempo: action.payload };
     }
   }
 
   exhaustiveCheck(action);
   return state;
 };
+
+/* Context */
 
 const GrooveContext = createContext({
   groove: defaultState,
@@ -125,6 +156,8 @@ export const GrooveProvider: FC<{ children: ReactNode; initial?: State }> = ({
 
   return <GrooveContext.Provider value={{ groove, dispatch }}>{children}</GrooveContext.Provider>;
 };
+
+/* Hooks */
 
 export const useGrooveContext = () => {
   return useContext(GrooveContext);

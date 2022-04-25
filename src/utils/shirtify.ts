@@ -1,5 +1,5 @@
 import type { Groove, Bar } from '../types';
-import { createEmptyBar, getInstrumentsByIndex } from './groove';
+import { createEmptyBar, getInstrumentsByIndex, getUsedGroups } from './groove';
 import { isInstrument } from './guards';
 import { longInstrumentMap, shirtInstrumentMap, shirtSymbolsMap as symbols } from './maps';
 
@@ -9,9 +9,7 @@ export const readStringParamValue = (settingsString: string, shirtParam: string)
   return matches[0].substring(1);
 };
 
-export const readStringTimeSignature = (
-  param: string
-): [beatsCount: number, beatsPerFullNote: number] =>
+export const readStringTimeSignature = (param: string): [beatsPerBar: number, noteValue: number] =>
   Number(param.slice(0, 2)) > 16
     ? [Number(param.slice(0, 1)), Number(param.slice(1))]
     : [Number(param.slice(0, 2)), Number(param.slice(2))];
@@ -21,7 +19,7 @@ export const readStringTimeSignature = (
  */
 
 export const createStringBar = (bar: Bar) => {
-  const signature = symbols.timeSignature + bar.beatsCount + bar.beatsPerFullNote;
+  const signature = symbols.timeSignature + bar.beatsPerBar + bar.noteValue;
   const timeDivision = symbols.timeDivision + bar.timeDivision;
   const settings = signature + timeDivision;
 
@@ -58,9 +56,9 @@ export const createBarFromString = (str: string): Bar[] => {
 
     const signature = readStringParamValue(barSettingsString, symbols.timeSignature);
     const timeDivision = Number(readStringParamValue(barSettingsString, symbols.timeDivision));
-    const [beatsCount, beatsPerFullNote] = readStringTimeSignature(signature);
+    const [beatsPerBar, noteValue] = readStringTimeSignature(signature);
     const beats = notesStr.split(symbols.beatDelimiter);
-    const bar = createEmptyBar(timeDivision, beatsCount, beatsPerFullNote);
+    const bar = createEmptyBar(timeDivision, beatsPerBar, noteValue);
     const slicedBeats = beats.slice(0, bar.length);
 
     slicedBeats.forEach((insStr, rhythmIndex) => {
@@ -69,9 +67,7 @@ export const createBarFromString = (str: string): Bar[] => {
       matches.forEach((ins) => {
         const instrument = longInstrumentMap[ins];
         if (isInstrument(instrument)) {
-          const instrumentNotes = bar.instruments[instrument] || [];
-          instrumentNotes[rhythmIndex] = true;
-          bar.instruments[instrument] = instrumentNotes;
+          bar.instruments[instrument][rhythmIndex] = true;
         }
       });
     });
@@ -85,5 +81,7 @@ export const createGrooveFromString = (str: string): Groove => {
   const [settingsString, barsStr] = str.split(symbols.grooveSettingsDelimiter);
   const tempo = Number(readStringParamValue(settingsString, symbols.tempo));
   const bars = createBarFromString(barsStr);
-  return { tempo, bars };
+  const groups = getUsedGroups(bars);
+
+  return { tempo, bars, groups };
 };

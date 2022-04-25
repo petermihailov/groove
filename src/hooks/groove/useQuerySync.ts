@@ -1,38 +1,24 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { grooveDefault } from '../../constants';
-import type { Groove } from '../../types';
-import {
-  getQuery,
-  modifyQuery,
-  updateQuery,
-  createGrooveFromString,
-  createStringGroove,
-} from '../../utils';
+import { setGrooveFromStringAction, useGrooveContext } from '../../context/GrooveContext';
+import { getQuery, modifyQuery, updateQuery, createStringGroove } from '../../utils';
 
-export function useQuerySync(groove: Groove) {
-  const getGrooveFromQuery = useCallback(() => {
+export function useQuerySync() {
+  const { groove, dispatch } = useGrooveContext();
+
+  // set groove from query
+  useEffect(() => {
     const queryParams = getQuery();
-    let grooveStr = queryParams.g || grooveDefault;
-    let grooveFromQuery: Groove;
+    const grooveStr = queryParams.g || grooveDefault;
+    dispatch(setGrooveFromStringAction(grooveStr));
+  }, [dispatch]);
 
-    try {
-      grooveFromQuery = createGrooveFromString(grooveStr);
-    } catch (err) {
-      alert('Groove damaged');
-      grooveStr = grooveDefault;
-      grooveFromQuery = createGrooveFromString(grooveStr);
-    }
-
-    return grooveFromQuery;
-  }, []);
-
+  // update query
   useEffect(() => {
     if (groove.bars.length) {
       const qs = modifyQuery({ g: createStringGroove(groove) });
       updateQuery(qs);
     }
   }, [groove]);
-
-  return getGrooveFromQuery;
 }

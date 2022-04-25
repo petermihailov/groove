@@ -1,10 +1,9 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 
-import { useGrooveContext } from '../../context/GrooveContext';
+import { setNoteAction, setTempoAction, useGrooveContext } from '../../context/GrooveContext';
 import { usePlayer, useQuerySync } from '../../hooks';
 import { Icon } from '../../icons/Icon';
-import type { Groove, InstrumentGroupEnabled, Note } from '../../types';
-import { getGrooveGroups } from '../../utils';
+import type { InstrumentGroupEnabled, Note } from '../../types';
 import { ButtonIcon } from '../ButtonIcon';
 import { ButtonPlay } from '../ButtonPlay';
 import { Drawer } from '../Drawer';
@@ -18,17 +17,12 @@ import { useStyles } from './App.styles';
 export const App = memo(function App() {
   const classes = useStyles();
 
-  // const {groove, dispatch} = useGrooveContext()
+  const { groove, dispatch } = useGrooveContext();
 
   const [metronome, setMetronome] = useState(false);
   const [settings, setSettings] = useState(false);
   const [enabledGroups, setEnabledGroups] = useState<InstrumentGroupEnabled>({});
-  const [groove, setGroove] = useState<Groove>({
-    tempo: 80,
-    bars: [],
-  });
 
-  const getGrooveFromQuery = useQuerySync(groove);
   const { beat, play, playing, stop } = usePlayer(groove);
 
   const togglePlaying = () => (playing ? stop() : play());
@@ -36,35 +30,25 @@ export const App = memo(function App() {
   const openSettings = () => setSettings(true);
   const closeSettings = () => setSettings(false);
 
-  const setTempo = useCallback((tempo: number) => {
-    setGroove((prev) => ({ ...prev, tempo }));
-  }, []);
+  const setTempo = useCallback(
+    (tempo: number) => {
+      dispatch(setTempoAction(tempo));
+    },
+    [dispatch]
+  );
 
-  const setNote = useCallback((note: Note) => {
-    setGroove((prev) => {
-      const { value, instrument, barIndex, rhythmIndex } = note;
-      const notes = prev.bars[barIndex].instruments[instrument] || [];
+  const setNote = useCallback(
+    (note: Note) => {
+      dispatch(setNoteAction(note));
+    },
+    [dispatch]
+  );
 
-      console.log(note, notes[rhythmIndex]);
+  useQuerySync();
 
-      if (Boolean(notes[rhythmIndex]) !== value) {
-        const bars = [...prev.bars];
-        bars[barIndex].instruments[instrument] = [...notes];
-        (bars[barIndex].instruments[instrument] || [])[rhythmIndex] = value;
-
-        return { ...prev, bars };
-      }
-
-      return prev;
-    });
-  }, []);
-
-  // initialize
   useEffect(() => {
-    const grooveFromQuery = getGrooveFromQuery();
-    setEnabledGroups(getGrooveGroups(grooveFromQuery));
-    setGroove(grooveFromQuery);
-  }, [getGrooveFromQuery]);
+    setEnabledGroups(groove.groups);
+  }, [groove.groups]);
 
   return (
     <>

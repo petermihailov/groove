@@ -1,8 +1,14 @@
-import { instruments } from '../constants';
-import type { Bar, Instrument, InstrumentGroup, Groove, InstrumentGroupEnabled } from '../types';
+import { barInstrumentsEmpty, instruments } from '../constants';
+import type {
+  Bar,
+  Instrument,
+  InstrumentGroup,
+  InstrumentGroupEnabled,
+  BarInstruments,
+} from '../types';
 import { safeKeys } from './safe-keys';
 
-export const getGrooveGroups = (groove: Groove) => {
+export const getUsedGroups = (bars: Bar[]) => {
   const groups: InstrumentGroupEnabled = {
     cy: false,
     hh: false,
@@ -13,7 +19,7 @@ export const getGrooveGroups = (groove: Groove) => {
     t3: false,
   };
 
-  for (const bar of groove.bars) {
+  for (const bar of bars) {
     for (const instrument in bar.instruments) {
       const group = getGroupByInstrument(instrument as Instrument);
 
@@ -28,15 +34,15 @@ export const getGrooveGroups = (groove: Groove) => {
 
 export const createEmptyBar = (
   timeDivision: number,
-  beatsCount: number,
-  beatsPerFullNote: number
+  beatsPerBar: number,
+  noteValue: number
 ): Bar => {
   return {
-    beatsCount,
-    beatsPerFullNote,
+    beatsPerBar,
+    noteValue,
     timeDivision,
-    length: (timeDivision / beatsPerFullNote) * beatsCount,
-    instruments: {},
+    length: (timeDivision / noteValue) * beatsPerBar,
+    instruments: barInstrumentsEmpty,
   };
 };
 
@@ -50,9 +56,45 @@ export const getInstrumentsByGroup = (group: InstrumentGroup) => {
 
 export const getInstrumentsByIndex = (bar: Bar, rhythmIndex: number): Instrument[] => {
   return safeKeys(bar.instruments).filter((key) => {
-    const notes = bar.instruments[key] || [];
-    return notes[rhythmIndex];
+    return bar.instruments[key][rhythmIndex];
   });
+};
+
+export const cloneBar = (bar: Bar): Bar => {
+  const instruments = safeKeys(bar.instruments).reduce<BarInstruments>((res, key) => {
+    res[key] = [...bar.instruments[key]];
+    return res;
+  }, barInstrumentsEmpty);
+
+  return {
+    beatsPerBar: bar.beatsPerBar,
+    noteValue: bar.noteValue,
+    timeDivision: bar.timeDivision,
+    length: bar.length,
+    instruments,
+  };
+};
+
+export const scaleBar = (
+  bar: Bar,
+  noteValue: number,
+  beatsPerBar: number,
+  timeDivision: number
+): Bar => {
+  const scale = timeDivision / bar.timeDivision;
+  const newBar = createEmptyBar(timeDivision, beatsPerBar, noteValue);
+
+  newBar.instruments = safeKeys(bar.instruments).reduce<BarInstruments>((res, key) => {
+    bar.instruments[key].forEach((note, rhythmIndex) => {
+      if (note) {
+        res[key][Math.floor(rhythmIndex * scale)] = note;
+      }
+    });
+
+    return res;
+  }, barInstrumentsEmpty);
+
+  return newBar;
 };
 
 // export const isTriplet = (timeDivision: number) => {

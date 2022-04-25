@@ -76,7 +76,7 @@ export class Player {
     const nextBar = this.bars[nextBarIndex];
 
     this.nextBeatAt +=
-      (1000 * 60) / ((this.tempo * currentBar.timeDivision) / currentBar.beatsPerFullNote);
+      (1000 * 60) / ((this.tempo * currentBar.timeDivision) / currentBar.noteValue);
 
     const instruments = getInstrumentsByIndex(nextBar, nextRhythmIndex);
     this.playNotesAtTime(instruments, this.nextBeatAt);
