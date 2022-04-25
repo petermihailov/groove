@@ -1,19 +1,20 @@
 import clsx from 'clsx';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
-import { useClickOutside, useMeasure } from '../../hooks';
+import { useClickOutside } from '../../hooks';
 import { Icon } from '../../icons/Icon';
 import type {
   Beat,
   Instrument,
-  Measure as MeasureType,
+  Bar as BarType,
   InstrumentGroup,
   MouseEventHandler,
   InstrumentGroupEnabled,
+  Note,
 } from '../../types';
-import { defaultGroupNoteMap, isInstrumentGroup } from '../../utils';
+import { defaultGroupNoteMap, isInstrument, isInstrumentGroup } from '../../utils';
+import { Bar } from './Bar';
 import { Groups } from './Groups';
-import { Measure } from './Measure';
 import { getDataFromNoteElement } from './Note/Note.utils';
 import { Picker } from './Picker';
 
@@ -22,16 +23,17 @@ import { useStyles } from './Editor.styles';
 type EditorProps = {
   beat: Beat;
   enabledGroups: InstrumentGroupEnabled;
-  measures: MeasureType[];
+  bars: BarType[];
   playing: boolean;
-  setMeasures: (measures: MeasureType[]) => void;
+  setNote: (note: Note) => void;
 };
 
 export const Editor = memo(function Editor({
   beat,
-  measures,
+  bars,
   playing,
   enabledGroups,
+  setNote,
 }: EditorProps) {
   const classes = useStyles();
 
@@ -43,94 +45,86 @@ export const Editor = memo(function Editor({
       highlightBeat.current = beat;
     }
     if (!playing) {
-      highlightBeat.current = { measureIndex: 0, rhythmIndex: 0, playNote: false };
+      highlightBeat.current = { barIndex: 0, rhythmIndex: 0, playNote: false };
     }
   }, [beat, playing]);
 
-  // const {measure, updateMeasure} = useMeasure();
-
-  // const [defaults, setDefaults] = useState(defaultGroupNoteMap);
-  // const [focusedNote, setFocusedNote] = useState({
-  //   measureIndex: null,
-  //   rhythmIndex: null,
-  //   group: null,
-  //   instrument: null,
-  // });
+  const [defaults, setDefaults] = useState(defaultGroupNoteMap);
+  const [focusedNote, setFocusedNote] = useState<Note | null>(null);
 
   // const editNote = useCallback(
-  //   (measureIndex: number, rhythmIndex: number, group: InstrumentGroup, instrument: Instrument) => {
-  //     groove.editNote(measureIndex, rhythmIndex, group, instrument);
-  //     setFocusedNote({ measureIndex, rhythmIndex, group, instrument });
+  //   (barIndex: number, rhythmIndex: number, group: InstrumentGroup, instrument: Instrument) => {
+  //     groove.editNote(barIndex, rhythmIndex, group, instrument);
+  //     setFocusedNote({ barIndex, rhythmIndex, group, instrument });
   //     onUpdate();
   //     forceUpdate(); // update state
   //   },
   //   [forceUpdate, groove, onUpdate]
   // );
 
-  // const handleEdit: MouseEventHandler<HTMLDivElement> = useCallback(
-  //   ({ currentTarget, target }) => {
-  //     const measureIndex = Number(currentTarget.dataset.index);
-  //     const noteElement = target.closest('button');
-  //
-  //     if (noteElement) {
-  //       const { rhythmIndex, group, instrument } = getDataFromNoteElement(noteElement);
-  //
-  //       if (isInstrumentGroup(group)) {
-  //         const newInstrument = !instrument ? defaults[group] : null;
-  //         editNote(measureIndex, rhythmIndex, group, newInstrument);
-  //
-  //         setFocusedNote({
-  //           measureIndex,
-  //           rhythmIndex,
-  //           group,
-  //           instrument: newInstrument,
-  //         });
-  //       }
-  //     }
-  //   },
-  //   [defaults, editNote]
-  // );
+  const toggleNote: MouseEventHandler<HTMLDivElement> = useCallback(
+    ({ currentTarget, target }) => {
+      const barIndex = Number(currentTarget.dataset.index);
+      const noteElement = target.closest('button');
 
-  // const handlePickNote = useCallback(
-  //   (measureIndex: number, rhythmIndex: number, group: InstrumentGroup, instrument: Instrument) => {
-  //     editNote(measureIndex, rhythmIndex, group, instrument);
-  //     setDefaults((prev) => ({ ...prev, [group]: instrument }));
-  //   },
-  //   [editNote]
-  // );
+      if (noteElement) {
+        const { rhythmIndex, group, instrument } = getDataFromNoteElement(noteElement);
 
-  // useClickOutside(editorRef, () => {
-  //   setFocusedNote({
-  //     measureIndex: null,
-  //     rhythmIndex: null,
-  //     group: null,
-  //     instrument: null,
-  //   });
-  // });
+        if (isInstrumentGroup(group)) {
+          const instrumentOrDefaults = isInstrument(instrument) ? instrument : defaults[group];
+          const value = !instrument;
+
+          const note: Note = {
+            group,
+            instrument: instrumentOrDefaults,
+            barIndex,
+            rhythmIndex,
+            value,
+          };
+
+          setNote(note);
+          // setFocusedNote(note);
+        }
+      }
+    },
+    [defaults, setNote]
+  );
+
+  const handlePickNote = useCallback((note: Note) => {
+    console.log(note);
+    // editNote(barIndex, rhythmIndex, group, instrument);
+    // setDefaults((prev) => ({ ...prev, [group]: instrument }));
+  }, []);
+
+  useClickOutside(editorRef, () => {
+    setFocusedNote(null);
+  });
 
   return (
     <div ref={editorRef} className={classes.root}>
       <Groups className={clsx(classes.item, classes.groups)} enabledGroups={enabledGroups} />
-      {measures.map((measure, idx) => (
-        <Measure
+
+      {bars.map((bar, idx) => (
+        <Bar
           key={idx}
           className={classes.item}
           enabledGroups={enabledGroups}
-          // onClick={handleEdit}
-          measure={measure}
+          onClick={toggleNote}
+          bar={bar}
           data-index={idx}
           highlightIndex={
-            playing && highlightBeat.current.measureIndex === idx
+            playing && highlightBeat.current.barIndex === idx
               ? highlightBeat.current.rhythmIndex
               : undefined
           }
         />
       ))}
-      {/*<Picker*/}
-      {/*  className={clsx(classes.picker, { [classes.pickerHidden]: !focusedNote.instrument })}*/}
-      {/*  onChange={handlePickNote}*/}
-      {/*  {...focusedNote}*/}
-      {/*/>*/}
+
+      <Picker
+        className={clsx(classes.picker, { [classes.pickerHidden]: !focusedNote?.instrument })}
+        onChange={handlePickNote}
+        note={focusedNote}
+      />
     </div>
   );
 });

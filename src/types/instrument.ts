@@ -31,7 +31,7 @@ export type Instrument =
 
 export type DrumKit = Record<Instrument, AudioBuffer>;
 
-export type Measure = {
+export type Bar = {
   timeDivision: number;
   beatsCount: number;
   beatsPerFullNote: number;
@@ -40,7 +40,7 @@ export type Measure = {
 };
 
 export type Beat = {
-  measureIndex: number;
+  barIndex: number;
   rhythmIndex: number;
   playNote: boolean;
 };
@@ -48,11 +48,19 @@ export type Beat = {
 export type Note = {
   group: InstrumentGroup;
   instrument: Instrument;
-  measureIndex: number;
+  barIndex: number;
   rhythmIndex: number;
+  value: boolean;
 };
 
 export type Groove = {
   tempo: number;
-  measures: Measure[];
+  bars: Bar[];
+};
+
+export type MetronomeFrequency = 4 | 8 | 16 | 32;
+
+export type TimeSignature = {
+  beatsCount: number;
+  beatsPerFullNote: number;
 };

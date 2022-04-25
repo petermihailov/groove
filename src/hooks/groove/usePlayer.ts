@@ -5,14 +5,14 @@ import type { Beat, Groove } from '../../types';
 import { useDrumKit } from './useDrumKit';
 
 export function usePlayer(groove: Groove) {
-  const { tempo, measures } = groove;
+  const { tempo, bars } = groove;
 
   const kit = useDrumKit();
   const player = useRef(new Player());
 
   const [playing, setPlaying] = useState(false);
   const [beat, setBeat] = useState<Beat>({
-    measureIndex: 0,
+    barIndex: 0,
     rhythmIndex: 0,
     playNote: false,
   });
@@ -25,10 +25,10 @@ export function usePlayer(groove: Groove) {
     }
   }, [kit]);
 
-  // Update measures
+  // Update bars
   useEffect(() => {
-    player.current.setMeasures(measures);
-  }, [measures]);
+    player.current.setBars(bars);
+  }, [bars]);
 
   // Update tempo
   useEffect(() => {
@@ -47,7 +47,7 @@ export function usePlayer(groove: Groove) {
 
   return {
     beat,
-    measures,
+    bars,
     play,
     playing,
     stop,

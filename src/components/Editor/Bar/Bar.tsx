@@ -6,39 +6,39 @@ import { theme } from '../../../styles';
 import { sizes, spacing } from '../../../styles/tokens';
 import type {
   Instrument,
-  Measure as MeasureType,
+  Bar as BarType,
   InstrumentGroup,
   InstrumentGroupEnabled,
 } from '../../../types';
 import { getGroupByInstrument, safeKeys } from '../../../utils';
 import { Note } from '../Note';
 
-import { useStyles } from './Measure.styles';
+import { useStyles } from './Bar.styles';
 
-type MeasureProps = {
+type BarProps = {
   className?: string;
   enabledGroups: InstrumentGroupEnabled;
-  measure: MeasureType;
+  bar: BarType;
   highlightIndex?: number;
   onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
-export const Measure = memo(function Measure({
+export const Bar = memo(function Bar({
   className,
   enabledGroups,
-  measure,
+  bar,
   highlightIndex,
   ...delegated
-}: MeasureProps) {
+}: BarProps) {
   const classes = useStyles();
 
   const convertedByGroups = useMemo(() => {
-    return safeKeys(measure.instruments).reduce<
+    return safeKeys(bar.instruments).reduce<
       Partial<Record<InstrumentGroup, (Instrument | undefined)[]>>
     >((res, key) => {
       const groupName = getGroupByInstrument(key);
       const group = res[groupName] || [];
-      const notes = (measure.instruments[key] || []).map((hasNote) => (hasNote ? key : undefined));
+      const notes = (bar.instruments[key] || []).map((hasNote) => (hasNote ? key : undefined));
 
       notes.forEach((instrument, rhythmIndex) => {
         group[rhythmIndex] = instrument;
@@ -47,7 +47,7 @@ export const Measure = memo(function Measure({
       res[groupName] = group;
       return res;
     }, {});
-  }, [measure]);
+  }, [bar]);
 
   const renderNotesByGroup = useCallback(
     (group: InstrumentGroup) => {
@@ -57,7 +57,7 @@ export const Measure = memo(function Measure({
 
       const renderGroup = [];
 
-      for (let idx = 0; idx < measure.length; idx++) {
+      for (let idx = 0; idx < bar.length; idx++) {
         const instruments = convertedByGroups[group] || [];
         const instrument = instruments[idx] || null;
         let footStyle;
@@ -78,13 +78,13 @@ export const Measure = memo(function Measure({
 
       return renderGroup;
     },
-    [convertedByGroups, measure.length, enabledGroups]
+    [convertedByGroups, bar.length, enabledGroups]
   );
 
   return (
     <div
       className={clsx(className, classes.root)}
-      style={{ gridTemplateColumns: `repeat(${measure.length}, auto)` }}
+      style={{ gridTemplateColumns: `repeat(${bar.length}, auto)` }}
       {...delegated}
     >
       {highlightIndex !== undefined && (

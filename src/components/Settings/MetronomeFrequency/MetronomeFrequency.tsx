@@ -1,13 +1,12 @@
 import { Icon } from '../../../icons/Icon';
+import type { MetronomeFrequency as MetronomeFrequencyType } from '../../../types';
 import { ButtonIcon } from '../../ButtonIcon';
 
 import { useStyles } from './MetronomeFrequency.styles';
 
-type Frequency = 4 | 8 | 16 | 32;
-
 export type MetronomeFrequencyProps = {
-  metronomeFrequency?: Frequency;
-  setMetronomeFrequency?: (frequency: Frequency) => void;
+  metronomeFrequency?: MetronomeFrequencyType;
+  setMetronomeFrequency?: (frequency: MetronomeFrequencyType) => void;
 };
 
 export function MetronomeFrequency({
@@ -16,7 +15,7 @@ export function MetronomeFrequency({
 }: MetronomeFrequencyProps) {
   const classes = useStyles();
 
-  const handleSetFrequency = (frequency: Frequency) => () => {
+  const handleSetFrequency = (frequency: MetronomeFrequencyType) => () => {
     setMetronomeFrequency?.(frequency);
   };
 

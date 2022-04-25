@@ -1,11 +1,5 @@
 import { instruments } from '../constants';
-import type {
-  Measure,
-  Instrument,
-  InstrumentGroup,
-  Groove,
-  InstrumentGroupEnabled,
-} from '../types';
+import type { Bar, Instrument, InstrumentGroup, Groove, InstrumentGroupEnabled } from '../types';
 import { safeKeys } from './safe-keys';
 
 export const getGrooveGroups = (groove: Groove) => {
@@ -19,11 +13,11 @@ export const getGrooveGroups = (groove: Groove) => {
     t3: false,
   };
 
-  for (const measure of groove.measures) {
-    for (const instrument in measure.instruments) {
+  for (const bar of groove.bars) {
+    for (const instrument in bar.instruments) {
       const group = getGroupByInstrument(instrument as Instrument);
 
-      if (!groups[group] && measure.instruments[instrument as Instrument]?.some(Boolean)) {
+      if (!groups[group] && bar.instruments[instrument as Instrument]?.some(Boolean)) {
         groups[group] = true;
       }
     }
@@ -32,11 +26,11 @@ export const getGrooveGroups = (groove: Groove) => {
   return groups;
 };
 
-export const createEmptyMeasure = (
+export const createEmptyBar = (
   timeDivision: number,
   beatsCount: number,
   beatsPerFullNote: number
-): Measure => {
+): Bar => {
   return {
     beatsCount,
     beatsPerFullNote,
@@ -54,9 +48,9 @@ export const getInstrumentsByGroup = (group: InstrumentGroup) => {
   return instruments.filter((instrument) => instrument.startsWith(group));
 };
 
-export const getInstrumentsByIndex = (measure: Measure, rhythmIndex: number): Instrument[] => {
-  return safeKeys(measure.instruments).filter((key) => {
-    const notes = measure.instruments[key] || [];
+export const getInstrumentsByIndex = (bar: Bar, rhythmIndex: number): Instrument[] => {
+  return safeKeys(bar.instruments).filter((key) => {
+    const notes = bar.instruments[key] || [];
     return notes[rhythmIndex];
   });
 };

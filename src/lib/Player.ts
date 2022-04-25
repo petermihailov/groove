@@ -1,4 +1,4 @@
-import type { Beat, Instrument, Measure, DrumKit } from '../types';
+import type { Beat, Instrument, Bar, DrumKit } from '../types';
 import { getAudioContext, getInstrumentsByIndex } from '../utils';
 
 const safetyBuffer = 0.25; // seconds
@@ -6,7 +6,7 @@ const safetyBuffer = 0.25; // seconds
 export class Player {
   private readonly audioCtx: AudioContext;
   private kit: DrumKit;
-  private measures: Measure[];
+  private bars: Bar[];
   private tempo: number;
   private nextBeatAt: number;
   private scheduledBuffers: AudioBufferSourceNode[];
@@ -16,7 +16,7 @@ export class Player {
 
   constructor() {
     this.kit = {} as DrumKit;
-    this.measures = [];
+    this.bars = [];
     this.tempo = 80;
     this.nextBeatAt = 0;
     this.onBeat = () => undefined;
@@ -29,8 +29,8 @@ export class Player {
     this.kit = kit;
   }
 
-  setMeasures(measures: Measure[]) {
-    this.measures = measures;
+  setBars(bars: Bar[]) {
+    this.bars = bars;
   }
 
   setTempo(tempo: number) {
@@ -69,20 +69,16 @@ export class Player {
   schedule(currentBeat: Beat) {
     this.scheduledBuffers = [];
 
-    const { measureIndex, rhythmIndex } = currentBeat;
-    const { nextMeasureIndex, nextRhythmIndex } = getNextBeatPosition(
-      this.measures,
-      measureIndex,
-      rhythmIndex
-    );
+    const { barIndex, rhythmIndex } = currentBeat;
+    const { nextBarIndex, nextRhythmIndex } = getNextBeatPosition(this.bars, barIndex, rhythmIndex);
 
-    const currentMeasure = this.measures[measureIndex];
-    const nextMeasure = this.measures[nextMeasureIndex];
+    const currentBar = this.bars[barIndex];
+    const nextBar = this.bars[nextBarIndex];
 
     this.nextBeatAt +=
-      (1000 * 60) / ((this.tempo * currentMeasure.timeDivision) / currentMeasure.beatsPerFullNote);
+      (1000 * 60) / ((this.tempo * currentBar.timeDivision) / currentBar.beatsPerFullNote);
 
-    const instruments = getInstrumentsByIndex(nextMeasure, nextRhythmIndex);
+    const instruments = getInstrumentsByIndex(nextBar, nextRhythmIndex);
     this.playNotesAtTime(instruments, this.nextBeatAt);
 
     this.onBeat(currentBeat);
@@ -90,7 +86,7 @@ export class Player {
     this.timeoutId = window.setTimeout(
       () =>
         this.schedule({
-          measureIndex: nextMeasureIndex,
+          barIndex: nextBarIndex,
           rhythmIndex: nextRhythmIndex,
           playNote: Boolean(instruments.length),
         }),
@@ -99,14 +95,14 @@ export class Player {
   }
 
   play() {
-    const measure = this.measures[0];
+    const bar = this.bars[0];
 
     this.nextBeatAt = (this.audioCtx.currentTime + safetyBuffer) * 1000;
-    const instruments = getInstrumentsByIndex(measure, 0);
+    const instruments = getInstrumentsByIndex(bar, 0);
     this.playNotesAtTime(instruments, this.nextBeatAt);
 
     this.schedule({
-      measureIndex: 0,
+      barIndex: 0,
       rhythmIndex: 0,
       playNote: Boolean(instruments.length),
     });
@@ -119,7 +115,7 @@ export class Player {
     this.hhOpenBuffers.forEach((buffer) => buffer.stop());
     this.hhOpenBuffers = [];
     this.onBeat({
-      measureIndex: 0,
+      barIndex: 0,
       rhythmIndex: 0,
       playNote: false,
     });
@@ -128,20 +124,20 @@ export class Player {
 
 /* Utils */
 
-function getNextBeatPosition(measures: Measure[], measureIndex: number, rhythmIndex: number) {
-  const isLastRhythmIndex = rhythmIndex === measures[measureIndex].length - 1;
-  const isLastMeasureIndex = measureIndex === measures.length - 1;
+function getNextBeatPosition(bars: Bar[], barIndex: number, rhythmIndex: number) {
+  const isLastRhythmIndex = rhythmIndex === bars[barIndex].length - 1;
+  const isLastBarIndex = barIndex === bars.length - 1;
   const nextRhythmIndex = isLastRhythmIndex ? 0 : rhythmIndex + 1;
 
-  let nextMeasureIndex = measureIndex;
+  let nextBarIndex = barIndex;
 
   if (isLastRhythmIndex) {
-    if (isLastMeasureIndex) {
-      nextMeasureIndex = 0;
+    if (isLastBarIndex) {
+      nextBarIndex = 0;
     } else {
-      nextMeasureIndex += 1;
+      nextBarIndex += 1;
     }
   }
 
-  return { nextMeasureIndex, nextRhythmIndex };
+  return { nextBarIndex, nextRhythmIndex };
 }

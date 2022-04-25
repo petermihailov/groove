@@ -1,8 +1,9 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 
+import { useGrooveContext } from '../../context/GrooveContext';
 import { usePlayer, useQuerySync } from '../../hooks';
 import { Icon } from '../../icons/Icon';
-import type { Groove, Measure, InstrumentGroupEnabled } from '../../types';
+import type { Groove, InstrumentGroupEnabled, Note } from '../../types';
 import { getGrooveGroups } from '../../utils';
 import { ButtonIcon } from '../ButtonIcon';
 import { ButtonPlay } from '../ButtonPlay';
@@ -17,12 +18,14 @@ import { useStyles } from './App.styles';
 export const App = memo(function App() {
   const classes = useStyles();
 
+  // const {groove, dispatch} = useGrooveContext()
+
   const [metronome, setMetronome] = useState(false);
   const [settings, setSettings] = useState(false);
   const [enabledGroups, setEnabledGroups] = useState<InstrumentGroupEnabled>({});
   const [groove, setGroove] = useState<Groove>({
     tempo: 80,
-    measures: [],
+    bars: [],
   });
 
   const getGrooveFromQuery = useQuerySync(groove);
@@ -37,8 +40,23 @@ export const App = memo(function App() {
     setGroove((prev) => ({ ...prev, tempo }));
   }, []);
 
-  const setMeasures = useCallback((measures: Measure[]) => {
-    setGroove((prev) => ({ ...prev, measures }));
+  const setNote = useCallback((note: Note) => {
+    setGroove((prev) => {
+      const { value, instrument, barIndex, rhythmIndex } = note;
+      const notes = prev.bars[barIndex].instruments[instrument] || [];
+
+      console.log(note, notes[rhythmIndex]);
+
+      if (Boolean(notes[rhythmIndex]) !== value) {
+        const bars = [...prev.bars];
+        bars[barIndex].instruments[instrument] = [...notes];
+        (bars[barIndex].instruments[instrument] || [])[rhythmIndex] = value;
+
+        return { ...prev, bars };
+      }
+
+      return prev;
+    });
   }, []);
 
   // initialize
@@ -53,8 +71,8 @@ export const App = memo(function App() {
       <Editor
         playing={playing}
         beat={beat}
-        measures={groove.measures}
-        setMeasures={setMeasures}
+        bars={groove.bars}
+        setNote={setNote}
         enabledGroups={enabledGroups}
       />
 

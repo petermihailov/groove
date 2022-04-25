@@ -2,8 +2,13 @@ import { useCallback, useEffect } from 'react';
 
 import { grooveDefault } from '../../constants';
 import type { Groove } from '../../types';
-import { getQuery, modifyQuery, updateQuery } from '../../utils';
-import { createGrooveFromString, createStringGroove } from '../../utils/shirtify';
+import {
+  getQuery,
+  modifyQuery,
+  updateQuery,
+  createGrooveFromString,
+  createStringGroove,
+} from '../../utils';
 
 export function useQuerySync(groove: Groove) {
   const getGrooveFromQuery = useCallback(() => {
@@ -23,7 +28,7 @@ export function useQuerySync(groove: Groove) {
   }, []);
 
   useEffect(() => {
-    if (groove.measures.length) {
+    if (groove.bars.length) {
       const qs = modifyQuery({ g: createStringGroove(groove) });
       updateQuery(qs);
     }
