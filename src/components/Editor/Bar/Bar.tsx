@@ -18,8 +18,6 @@ type BarProps = {
 export const Bar = memo(function Bar({ className, bar, enabledGroups, ...delegated }: BarProps) {
   const classes = useStyles();
 
-  console.log('render');
-
   const instrumentsByGroups = useMemo(() => {
     return convertBarInstrumentsByGroups(bar);
   }, [bar]);
