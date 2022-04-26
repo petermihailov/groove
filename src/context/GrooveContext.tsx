@@ -2,7 +2,7 @@ import { createContext, useContext, useReducer } from 'react';
 import type { Dispatch, FC, ReactNode } from 'react';
 
 import { grooveDefault } from '../constants';
-import type { Groove, Note, TimeSignature } from '../types';
+import type { Bar, Groove, Note, TimeSignature } from '../types';
 import { exhaustiveCheck } from '../types';
 import { cloneBar, createAction, createGrooveFromString, scaleBar } from '../utils';
 
@@ -93,6 +93,8 @@ const reducer = (state: State, action: Actions): State => {
 
       try {
         groove = createGrooveFromString(action.payload);
+        const damageCheck = !groove.bars.every((bar) => Object.values(bar).every(Boolean));
+        if (damageCheck) throw new Error();
       } catch (err) {
         alert('Groove damaged');
         groove = createGrooveFromString(grooveDefault);
@@ -104,9 +106,10 @@ const reducer = (state: State, action: Actions): State => {
     case 'SET_NOTE': {
       const { rhythmIndex, instrument, barIndex, value } = action.payload;
 
+      const bars = [...state.bars];
       const clonedBar = cloneBar(state.bars[barIndex]);
       clonedBar.instruments[instrument][rhythmIndex] = value;
-      const bars = [...state.bars].splice(barIndex, 1, clonedBar);
+      bars[barIndex] = clonedBar;
 
       return { ...state, bars };
     }
@@ -123,8 +126,9 @@ const reducer = (state: State, action: Actions): State => {
         return state;
       }
 
-      const newBar = scaleBar(bar, noteValue, beatsPerBar, timeDivision);
-      const bars = [...state.bars].splice(barIndex, 1, newBar);
+      const scaledBar = scaleBar(bar, noteValue, beatsPerBar, timeDivision);
+      const bars = [...state.bars];
+      bars[barIndex] = scaledBar;
 
       return { ...state, bars };
     }

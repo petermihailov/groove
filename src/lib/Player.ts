@@ -117,7 +117,7 @@ export class Player {
     this.onBeat({
       barIndex: 0,
       rhythmIndex: 0,
-      playNote: false,
+      playNote: true,
     });
   }
 }

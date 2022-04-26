@@ -1,17 +1,10 @@
 import clsx from 'clsx';
 import type { MouseEventHandler } from 'react';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 
-import { theme } from '../../../styles';
-import { sizes, spacing } from '../../../styles/tokens';
-import type {
-  Instrument,
-  Bar as BarType,
-  InstrumentGroup,
-  InstrumentGroupEnabled,
-} from '../../../types';
-import { getGroupByInstrument, safeKeys } from '../../../utils';
-import { Note } from '../Note';
+import type { Bar as BarType, InstrumentGroupEnabled } from '../../../types';
+import { convertBarInstrumentsByGroups } from '../../../utils';
+import { BarLine } from '../BarLine';
 
 import { useStyles } from './Bar.styles';
 
@@ -19,69 +12,17 @@ type BarProps = {
   className?: string;
   bar: BarType;
   enabledGroups: InstrumentGroupEnabled;
-  highlightIndex?: number;
   onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
-export const Bar = memo(function Bar({
-  className,
-  bar,
-  enabledGroups,
-  highlightIndex,
-  ...delegated
-}: BarProps) {
+export const Bar = memo(function Bar({ className, bar, enabledGroups, ...delegated }: BarProps) {
   const classes = useStyles();
 
   console.log('render');
 
-  const convertedByGroups = useMemo(() => {
-    return safeKeys(bar.instruments).reduce<
-      Partial<Record<InstrumentGroup, (Instrument | undefined)[]>>
-    >((res, key) => {
-      const groupName = getGroupByInstrument(key);
-      const group = res[groupName] || [];
-      const notes = bar.instruments[key].map((hasNote) => (hasNote ? key : undefined));
-
-      notes.forEach((instrument, rhythmIndex) => {
-        group[rhythmIndex] = instrument;
-      });
-
-      res[groupName] = group;
-      return res;
-    }, {});
+  const instrumentsByGroups = useMemo(() => {
+    return convertBarInstrumentsByGroups(bar);
   }, [bar]);
-
-  const renderNotesByGroup = useCallback(
-    (group: InstrumentGroup) => {
-      if (!enabledGroups[group]) {
-        return null;
-      }
-
-      const renderGroup = [];
-
-      for (let idx = 0; idx < bar.length; idx++) {
-        const instruments = convertedByGroups[group] || [];
-        const instrument = instruments[idx] || null;
-        let footStyle;
-
-        if (instrument === 'hhFootRegular') {
-          const offsetGroups =
-            Object.values(enabledGroups).filter(Boolean).length - Number(enabledGroups.cy);
-
-          footStyle = {
-            transform: `translateY(calc(${sizes.sizeNote} * ${offsetGroups} + ${spacing.spacingNote} * ${offsetGroups})) rotate(180deg)`,
-          };
-        }
-
-        renderGroup.push(
-          <Note key={idx} group={group} index={idx} instrument={instrument} style={footStyle} />
-        );
-      }
-
-      return renderGroup;
-    },
-    [convertedByGroups, bar.length, enabledGroups]
-  );
 
   return (
     <div
@@ -89,21 +30,13 @@ export const Bar = memo(function Bar({
       style={{ gridTemplateColumns: `repeat(${bar.length}, auto)` }}
       {...delegated}
     >
-      {highlightIndex !== undefined && (
-        <div
-          className={classes.highlight}
-          style={{
-            transform: `translateX(calc(${highlightIndex} * (${theme.sizeNote} + ${theme.spacingNote})))`,
-          }}
-        />
-      )}
-      {renderNotesByGroup('cy')}
-      {renderNotesByGroup('hh')}
-      {renderNotesByGroup('t1')}
-      {renderNotesByGroup('sn')}
-      {renderNotesByGroup('t2')}
-      {renderNotesByGroup('t3')}
-      {renderNotesByGroup('ki')}
+      {enabledGroups.cy && <BarLine group="cy" line={instrumentsByGroups.cy} />}
+      {enabledGroups.hh && <BarLine group="hh" line={instrumentsByGroups.hh} />}
+      {enabledGroups.t1 && <BarLine group="t1" line={instrumentsByGroups.t1} />}
+      {enabledGroups.sn && <BarLine group="sn" line={instrumentsByGroups.sn} />}
+      {enabledGroups.t2 && <BarLine group="t2" line={instrumentsByGroups.t2} />}
+      {enabledGroups.t3 && <BarLine group="t3" line={instrumentsByGroups.t3} />}
+      {enabledGroups.ki && <BarLine group="ki" line={instrumentsByGroups.ki} />}
     </div>
   );
 });

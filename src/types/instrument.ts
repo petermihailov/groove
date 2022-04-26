@@ -38,6 +38,10 @@ export type TimeSignature = {
 
 export type BarInstruments = Record<Instrument, boolean[]>;
 
+export type BarLine = (Instrument | null)[];
+
+export type BarInstrumentsByGroups = Record<InstrumentGroup, BarLine>;
+
 export type Bar = TimeSignature & {
   timeDivision: number;
   length: number;

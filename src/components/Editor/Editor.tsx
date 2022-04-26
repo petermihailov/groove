@@ -2,15 +2,17 @@ import clsx from 'clsx';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import { useClickOutside } from '../../hooks';
+import { theme } from '../../styles';
 import type {
-  Beat,
   Bar as BarType,
-  MouseEventHandler,
+  Beat,
   InstrumentGroupEnabled,
+  MouseEventHandler,
   Note,
 } from '../../types';
 import { defaultGroupNoteMap, isInstrument, isInstrumentGroup } from '../../utils';
 import { Bar } from './Bar';
+import { useHighlightStyles } from './Editor.hooks';
 import { Groups } from './Groups';
 import { getDataFromNoteElement } from './Note/Note.utils';
 import { Picker } from './Picker';
@@ -35,16 +37,7 @@ export const Editor = memo(function Editor({
   const classes = useStyles();
 
   const editorRef = useRef<HTMLDivElement>(null);
-  const highlightBeat = useRef(beat);
-
-  useEffect(() => {
-    if (beat.playNote) {
-      highlightBeat.current = beat;
-    }
-    if (!playing) {
-      highlightBeat.current = { barIndex: 0, rhythmIndex: 0, playNote: false };
-    }
-  }, [beat, playing]);
+  const highlightBeatStyles = useHighlightStyles(beat);
 
   const [defaults, setDefaults] = useState(defaultGroupNoteMap);
   const [focusedNote, setFocusedNote] = useState<Note | null>(null);
@@ -108,14 +101,11 @@ export const Editor = memo(function Editor({
           className={classes.item}
           data-index={idx}
           enabledGroups={enabledGroups}
-          highlightIndex={
-            playing && highlightBeat.current.barIndex === idx
-              ? highlightBeat.current.rhythmIndex
-              : undefined
-          }
           onClick={toggleNote}
         />
       ))}
+
+      <div className={classes.highlight} style={highlightBeatStyles} />
 
       <Picker
         className={clsx(classes.picker, { [classes.pickerHidden]: !focusedNote?.instrument })}

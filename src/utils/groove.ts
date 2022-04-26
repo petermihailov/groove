@@ -5,6 +5,7 @@ import type {
   InstrumentGroup,
   InstrumentGroupEnabled,
   BarInstruments,
+  BarInstrumentsByGroups,
 } from '../types';
 import { safeKeys } from './safe-keys';
 
@@ -95,6 +96,21 @@ export const scaleBar = (
   }, barInstrumentsEmpty);
 
   return newBar;
+};
+
+export const convertBarInstrumentsByGroups = (bar: Bar): BarInstrumentsByGroups => {
+  return safeKeys(bar.instruments).reduce<BarInstrumentsByGroups>((res, key) => {
+    const groupName = getGroupByInstrument(key);
+    res[groupName] = res[groupName] || new Array(bar.length).fill(null);
+
+    const notes = bar.instruments[key].map((hasNote) => (hasNote ? key : null));
+
+    notes.forEach((instrument, rhythmIndex) => {
+      res[groupName][rhythmIndex] = instrument;
+    });
+
+    return res;
+  }, {} as BarInstrumentsByGroups);
 };
 
 // export const isTriplet = (timeDivision: number) => {

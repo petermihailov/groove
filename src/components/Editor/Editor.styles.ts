@@ -2,6 +2,7 @@ import { createUseStyles, theme } from '../../styles';
 
 export const useStyles = createUseStyles('Editor', {
   root: {
+    position: 'relative',
     display: 'flex',
     overflow: 'auto',
     backgroundColor: theme.colorSurface2,
@@ -24,6 +25,14 @@ export const useStyles = createUseStyles('Editor', {
   item: {
     paddingTop: theme.spacingXSmall,
     paddingBottom: `calc(${theme.sizeNote} + ${theme.spacingNote})`,
+  },
+
+  highlight: {
+    pointerEvents: 'none',
+    position: 'absolute',
+    width: theme.sizeNote,
+    height: '100%',
+    backgroundColor: theme.colorHighlight,
   },
 
   picker: {
