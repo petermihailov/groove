@@ -11,19 +11,26 @@ import { Picker } from './Picker';
 import { useStyles } from './Editor.styles';
 
 type EditorProps = {
+  bars: BarType[];
   beat: Beat;
   enabledGroups: InstrumentGroupEnabled;
-  bars: BarType[];
+  onAddBar: (barIndex: number) => void;
+  onSetNote: (note: Note) => void;
   playing: boolean;
-  setNote: (note: Note) => void;
 };
 
-export const Editor = memo(function Editor({ beat, bars, enabledGroups, setNote }: EditorProps) {
+export const Editor = memo(function Editor({
+  beat,
+  bars,
+  enabledGroups,
+  onAddBar,
+  onSetNote,
+}: EditorProps) {
   const classes = useStyles();
 
   const editorRef = useRef<HTMLDivElement>(null);
   const highlightBeatStyles = useHighlightStyles(beat);
-  const { blurNote, changeNote, focusedNote, toggleNote } = useNoteEditor(setNote);
+  const { blurNote, changeNote, focusedNote, toggleNote } = useNoteEditor(onSetNote);
 
   useClickOutside(editorRef, blurNote);
 
@@ -35,17 +42,22 @@ export const Editor = memo(function Editor({ beat, bars, enabledGroups, setNote 
         <Bar
           key={idx}
           bar={bar}
+          barIndex={idx}
           className={classes.item}
-          data-index={idx}
           enabledGroups={enabledGroups}
+          onAddBar={onAddBar}
           onClick={toggleNote}
         />
       ))}
 
       <div className={classes.highlight} style={highlightBeatStyles} />
 
-      <div className={clsx(classes.picker, { [classes.pickerHidden]: !focusedNote?.instrument })}>
-        <Picker note={focusedNote} onChange={changeNote} />
+      <div
+        className={clsx(classes.pickerWrapper, {
+          [classes.pickerHidden]: !focusedNote?.instrument,
+        })}
+      >
+        <Picker className={classes.picker} note={focusedNote} onChange={changeNote} />
       </div>
     </div>
   );

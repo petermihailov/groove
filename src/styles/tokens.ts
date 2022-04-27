@@ -46,6 +46,7 @@ export const spacing = {
   spacingXxxLarge: '3rem',
   spacingXxxxLarge: '4.5rem',
   spacingNote: '0.25rem',
+  spacingBars: '3rem',
 } as const;
 
 export const sizes = {

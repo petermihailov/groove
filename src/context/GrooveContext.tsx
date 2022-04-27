@@ -80,11 +80,8 @@ const reducer = (state: State, action: Actions): State => {
   switch (action.type) {
     case 'ADD_BAR': {
       const insertAfterBarIdx = action.payload;
-      const bars = [...state.bars].splice(
-        insertAfterBarIdx + 1,
-        0,
-        cloneBar(state.bars[insertAfterBarIdx])
-      );
+      const bars = [...state.bars];
+      bars.push(cloneBar(state.bars[insertAfterBarIdx]));
       return { ...state, bars };
     }
 

@@ -5,7 +5,6 @@ export const useStyles = createUseStyles('Picker', {
     overflow: 'auto',
     display: 'flex',
     gap: theme.spacingXSmall,
-    maxWidth: `calc(100% - 2 * ${theme.sizeHorizontalPadding})`,
     padding: [theme.spacingXSmall, theme.spacingMedium],
     backgroundColor: theme.colorSurface2,
     borderRadius: theme.radiusPill,

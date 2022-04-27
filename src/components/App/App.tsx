@@ -1,6 +1,11 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 
-import { setNoteAction, setTempoAction, useGrooveContext } from '../../context/GrooveContext';
+import {
+  addBarAction,
+  setNoteAction,
+  setTempoAction,
+  useGrooveContext,
+} from '../../context/GrooveContext';
 import { usePlayer, useQuerySync } from '../../hooks';
 import type { InstrumentGroupEnabled, Note } from '../../types';
 import { Controls } from '../Controls';
@@ -32,6 +37,13 @@ export const App = memo(function App() {
     [dispatch]
   );
 
+  const addBar = useCallback(
+    (barIndex: number) => {
+      dispatch(addBarAction(barIndex));
+    },
+    [dispatch]
+  );
+
   const setNote = useCallback(
     (note: Note) => {
       dispatch(setNoteAction(note));
@@ -52,7 +64,8 @@ export const App = memo(function App() {
         beat={beat}
         enabledGroups={enabledGroups}
         playing={playing}
-        setNote={setNote}
+        onAddBar={addBar}
+        onSetNote={setNote}
       />
 
       <div className={classes.controlsWrapper}>

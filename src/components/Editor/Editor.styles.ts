@@ -35,7 +35,7 @@ export const useStyles = createUseStyles('Editor', {
     backgroundColor: theme.colorHighlight,
   },
 
-  picker: {
+  pickerWrapper: {
     position: 'fixed',
     bottom: theme.spacingLarge,
     left: 0,
@@ -47,5 +47,9 @@ export const useStyles = createUseStyles('Editor', {
 
   pickerHidden: {
     transform: `translateY(calc(100% + ${theme.spacingLarge}))`,
+  },
+
+  picker: {
+    maxWidth: `calc(100% - 2 * ${theme.sizeHorizontalPadding})`,
   },
 });

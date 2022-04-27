@@ -14,7 +14,7 @@ export const shirtSymbolsMap = {
   tempo: 't',
   timeSignature: 's',
   timeDivision: 'd',
-  barDelimiter: '+',
+  barDelimiter: '_',
   barSettingsDelimiter: ':',
   grooveSettingsDelimiter: '|',
   beatDelimiter: '-',

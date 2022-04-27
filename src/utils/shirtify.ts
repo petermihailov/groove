@@ -48,8 +48,9 @@ export const createStringGroove = (groove: Groove) => {
  * FROM string
  */
 
-export const createBarFromString = (str: string): Bar[] => {
+export const createBarsFromString = (str: string): Bar[] => {
   const barsStrArr = str.split(symbols.barDelimiter);
+  console.log(str, barsStrArr);
 
   return barsStrArr.reduce<Bar[]>((bars, barStr) => {
     const [barSettingsString = '', notesStr = ''] = barStr.split(symbols.barSettingsDelimiter);
@@ -80,7 +81,7 @@ export const createBarFromString = (str: string): Bar[] => {
 export const createGrooveFromString = (str: string): Groove => {
   const [settingsString, barsStr] = str.split(symbols.grooveSettingsDelimiter);
   const tempo = Number(readStringParamValue(settingsString, symbols.tempo));
-  const bars = createBarFromString(barsStr);
+  const bars = createBarsFromString(barsStr);
   const groups = getUsedGroups(bars);
 
   return { tempo, bars, groups };
