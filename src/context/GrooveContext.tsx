@@ -2,7 +2,7 @@ import { createContext, useContext, useReducer } from 'react';
 import type { Dispatch, FC, ReactNode } from 'react';
 
 import { grooveDefault } from '../constants';
-import type { Bar, Groove, Note, TimeSignature } from '../types';
+import type { Groove, Note, TimeSignature } from '../types';
 import { exhaustiveCheck } from '../types';
 import {
   cloneBar,

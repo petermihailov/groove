@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "clsx": "^1.1.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "react-jss": "^10.9.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.7",
+    "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.1",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
@@ -30,7 +30,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.4.0",
+    "eslint-plugin-react-hooks": "^4.5.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.4.1",

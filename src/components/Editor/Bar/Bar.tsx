@@ -22,6 +22,10 @@ export const Bar = memo(function Bar({ className, bar, enabledGroups, ...delegat
     return convertBarInstrumentsByGroups(bar);
   }, [bar]);
 
+  const hhFootOffsetGroups = useMemo(() => {
+    return Object.values(enabledGroups).filter(Boolean).length - Number(enabledGroups.cy);
+  }, [enabledGroups]);
+
   return (
     <div
       className={clsx(className, classes.root)}
@@ -29,7 +33,9 @@ export const Bar = memo(function Bar({ className, bar, enabledGroups, ...delegat
       {...delegated}
     >
       {enabledGroups.cy && <BarLine group="cy" line={instrumentsByGroups.cy} />}
-      {enabledGroups.hh && <BarLine group="hh" line={instrumentsByGroups.hh} />}
+      {enabledGroups.hh && (
+        <BarLine group="hh" hhFootOffsetGroups={hhFootOffsetGroups} line={instrumentsByGroups.hh} />
+      )}
       {enabledGroups.t1 && <BarLine group="t1" line={instrumentsByGroups.t1} />}
       {enabledGroups.sn && <BarLine group="sn" line={instrumentsByGroups.sn} />}
       {enabledGroups.t2 && <BarLine group="t2" line={instrumentsByGroups.t2} />}
