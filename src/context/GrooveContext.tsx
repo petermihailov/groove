@@ -81,7 +81,9 @@ const reducer = (state: State, action: Actions): State => {
     case 'ADD_BAR': {
       const insertAfterBarIdx = action.payload;
       const bars = [...state.bars];
-      bars.push(cloneBar(state.bars[insertAfterBarIdx]));
+
+      bars.splice(insertAfterBarIdx + 1, 0, cloneBar(state.bars[insertAfterBarIdx]));
+
       return { ...state, bars };
     }
 

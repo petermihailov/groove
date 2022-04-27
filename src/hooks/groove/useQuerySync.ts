@@ -17,6 +17,7 @@ export function useQuerySync() {
   // update query
   useEffect(() => {
     if (groove.bars.length) {
+      // console.log(groove.bars)
       const qs = modifyQuery({ g: createStringGroove(groove) });
       updateQuery(qs);
     }

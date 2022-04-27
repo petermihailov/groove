@@ -29,7 +29,7 @@ export const Editor = memo(function Editor({
   const classes = useStyles();
 
   const editorRef = useRef<HTMLDivElement>(null);
-  const highlightBeatStyles = useHighlightStyles(beat);
+  const highlightBeatStyles = useHighlightStyles(beat, bars);
   const { blurNote, changeNote, focusedNote, toggleNote } = useNoteEditor(onSetNote);
 
   useClickOutside(editorRef, blurNote);

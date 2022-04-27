@@ -50,7 +50,6 @@ export const createStringGroove = (groove: Groove) => {
 
 export const createBarsFromString = (str: string): Bar[] => {
   const barsStrArr = str.split(symbols.barDelimiter);
-  console.log(str, barsStrArr);
 
   return barsStrArr.reduce<Bar[]>((bars, barStr) => {
     const [barSettingsString = '', notesStr = ''] = barStr.split(symbols.barSettingsDelimiter);

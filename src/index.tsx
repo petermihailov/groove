@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from './components/App';
@@ -11,11 +10,11 @@ if (container) {
   const root = createRoot(container);
 
   root.render(
-    <React.StrictMode>
+    <>
       <GrooveProvider>
         <App />
       </GrooveProvider>
       <Sprite />
-    </React.StrictMode>
+    </>
   );
 }

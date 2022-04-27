@@ -1,4 +1,4 @@
-import type { InstrumentGroup, Instrument, BarInstruments } from './types';
+import type { InstrumentGroup, Instrument } from './types';
 
 export const instrumentGroups: InstrumentGroup[] = ['cy', 'hh', 'sn', 't1', 't2', 't3', 'ki'];
 
@@ -32,11 +32,6 @@ export const instruments: Instrument[] = [
 
 export const tempoMin = 20;
 export const tempoMax = 240;
-
-export const barInstrumentsEmpty = instruments.reduce<BarInstruments>((res, key) => {
-  res[key] = [];
-  return res;
-}, {} as BarInstruments);
 
 export const grooveDefault = 't80|s44d16:hcrkkr--hcr--hcrssr--hcr--hcr--hcrkkr-kkr-hcrssr--hcr-hcr';
 

@@ -1,4 +1,4 @@
-import { barInstrumentsEmpty, instruments } from '../constants';
+import { instruments } from '../constants';
 import type {
   Bar,
   Instrument,
@@ -33,6 +33,12 @@ export const getUsedGroups = (bars: Bar[]) => {
   return groups;
 };
 
+export const createEmptyInstruments = () =>
+  instruments.reduce<BarInstruments>((res, key) => {
+    res[key] = [];
+    return res;
+  }, {} as BarInstruments);
+
 export const createEmptyBar = (
   timeDivision: number,
   beatsPerBar: number,
@@ -43,7 +49,7 @@ export const createEmptyBar = (
     noteValue,
     timeDivision,
     length: (timeDivision / noteValue) * beatsPerBar,
-    instruments: barInstrumentsEmpty,
+    instruments: createEmptyInstruments(),
   };
 };
 
@@ -63,9 +69,9 @@ export const getInstrumentsByIndex = (bar: Bar, rhythmIndex: number): Instrument
 
 export const cloneBar = (bar: Bar): Bar => {
   const instruments = safeKeys(bar.instruments).reduce<BarInstruments>((res, key) => {
-    res[key] = [...bar.instruments[key]];
+    res[key] = bar.instruments[key].slice();
     return res;
-  }, barInstrumentsEmpty);
+  }, createEmptyInstruments());
 
   return {
     beatsPerBar: bar.beatsPerBar,
@@ -93,7 +99,7 @@ export const scaleBar = (
     });
 
     return res;
-  }, barInstrumentsEmpty);
+  }, createEmptyInstruments());
 
   return newBar;
 };
