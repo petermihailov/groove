@@ -30,6 +30,9 @@ export const instruments: Instrument[] = [
   't3LowRegular',
 ];
 
+export const tempoMin = 20;
+export const tempoMax = 240;
+
 export const barInstrumentsEmpty = instruments.reduce<BarInstruments>((res, key) => {
   res[key] = [];
   return res;

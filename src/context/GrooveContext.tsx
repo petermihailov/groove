@@ -1,7 +1,7 @@
 import { createContext, useContext, useReducer } from 'react';
 import type { Dispatch, FC, ReactNode } from 'react';
 
-import { grooveDefault } from '../constants';
+import { grooveDefault, tempoMax, tempoMin } from '../constants';
 import type { Groove, Note, TimeSignature } from '../types';
 import { exhaustiveCheck } from '../types';
 import {
@@ -99,8 +99,10 @@ const reducer = (state: State, action: Actions): State => {
 
       try {
         groove = createGrooveFromString(action.payload);
-        const damageCheck = !groove.bars.every((bar) => Object.values(bar).every(Boolean));
-        if (damageCheck) throw new Error();
+        groove.tempo = Math.min(tempoMax, Math.max(tempoMin, Number(groove.tempo)));
+
+        const damageCheck = groove.bars.every((bar) => Object.values(bar).every(Boolean));
+        if (!damageCheck) throw new Error();
       } catch (err) {
         alert('Groove damaged');
         groove = createGrooveFromString(grooveDefault);

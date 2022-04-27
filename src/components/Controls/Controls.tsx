@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 
+import { tempoMax, tempoMin } from '../../constants';
 import { Icon } from '../../icons/Icon';
 import type { Groove } from '../../types';
 import { ButtonIcon } from '../ButtonIcon';
@@ -48,8 +49,8 @@ export function Controls({
       <Range
         className={classes.bpm}
         label="BPM"
-        max={240}
-        min={20}
+        max={tempoMax}
+        min={tempoMin}
         value={groove.tempo}
         onChange={onSetTempo}
       />

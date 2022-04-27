@@ -20,6 +20,14 @@ export function UI() {
       <symbol id="ui-stop">
         <rect height="18" rx="2" width="18" x="3" y="3" />
       </symbol>
+
+      <symbol id="ui-add">
+        <path
+          clipRule="evenodd"
+          d="M12 2a1 1 0 0 1 1 1v8h8a1 1 0 1 1 0 2h-8v8a1 1 0 1 1-2 0v-8H3a1 1 0 1 1 0-2h8V3a1 1 0 0 1 1-1Z"
+          fillRule="evenodd"
+        />
+      </symbol>
     </>
   );
 }
