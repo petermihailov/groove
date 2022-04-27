@@ -17,18 +17,14 @@ export const useStyles = createUseStyles('App', {
     },
   },
 
-  controls: {
+  controlsWrapper: {
     position: 'sticky',
     bottom: 0,
-    display: 'flex',
-    alignItems: 'center',
-    gap: theme.spacingXSmall,
-    padding: [theme.spacingMedium, theme.sizeHorizontalPadding],
     backgroundColor: theme.colorSurface1,
     boxShadow: theme.shadowSmallInvert,
   },
 
-  bpm: {
-    flex: 1,
+  controls: {
+    maxWidth: '50rem',
   },
 });

@@ -2,15 +2,11 @@ import { memo, useCallback, useEffect, useState } from 'react';
 
 import { setNoteAction, setTempoAction, useGrooveContext } from '../../context/GrooveContext';
 import { usePlayer, useQuerySync } from '../../hooks';
-import { Icon } from '../../icons/Icon';
 import type { InstrumentGroupEnabled, Note } from '../../types';
-import { ButtonIcon } from '../ButtonIcon';
-import { ButtonPlay } from '../ButtonPlay';
+import { Controls } from '../Controls';
 import { Drawer } from '../Drawer';
 import { Editor } from '../Editor';
-import { Range } from '../Range';
 import { Settings } from '../Settings';
-import { ThemeSwitcher } from '../ThemeSwitcher';
 
 import { useStyles } from './App.styles';
 
@@ -59,29 +55,18 @@ export const App = memo(function App() {
         setNote={setNote}
       />
 
-      <div className={classes.controls}>
-        <ButtonPlay active playing={playing} onClick={togglePlaying} />
-        <ButtonIcon
-          active={metronome}
-          aria-label={`metronome ${metronome ? 'enabled' : 'disabled'}`}
-          onClick={toggleMetronome}
-        >
-          <Icon name="ui-metronome" />
-        </ButtonIcon>
-
-        <Range
-          className={classes.bpm}
-          label="BPM"
-          max={240}
-          min={20}
-          value={groove.tempo}
-          onChange={setTempo}
+      <div className={classes.controlsWrapper}>
+        <Controls
+          className={classes.controls}
+          groove={groove}
+          metronomeEnabled={metronome}
+          playing={playing}
+          settingsOpened={settings}
+          onOpenSettings={openSettings}
+          onSetTempo={setTempo}
+          onToggleMetronome={toggleMetronome}
+          onTogglePlaying={togglePlaying}
         />
-
-        <ButtonIcon active={settings} aria-label="open settings" onClick={openSettings}>
-          <Icon name="ui-settings" />
-        </ButtonIcon>
-        <ThemeSwitcher />
       </div>
 
       <Drawer open={settings} onClose={closeSettings}>

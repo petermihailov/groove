@@ -44,11 +44,9 @@ export const Editor = memo(function Editor({ beat, bars, enabledGroups, setNote 
 
       <div className={classes.highlight} style={highlightBeatStyles} />
 
-      <Picker
-        className={clsx(classes.picker, { [classes.pickerHidden]: !focusedNote?.instrument })}
-        note={focusedNote}
-        onChange={changeNote}
-      />
+      <div className={clsx(classes.picker, { [classes.pickerHidden]: !focusedNote?.instrument })}>
+        <Picker note={focusedNote} onChange={changeNote} />
+      </div>
     </div>
   );
 });
