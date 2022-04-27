@@ -13,15 +13,8 @@ export const useStyles = createUseStyles('Groups', {
   },
 
   foot: {
-    userSelect: 'none',
     position: 'absolute',
     bottom: theme.spacingXxSmall,
     left: theme.sizeHorizontalPadding,
-    width: theme.sizeIcon,
-    height: theme.sizeIcon,
-    fontSize: theme.fontSizeXxSmall,
-    fontWeight: 'bold',
-    lineHeight: theme.sizeIcon,
-    textAlign: 'center',
   },
 });

@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'react';
 import { memo } from 'react';
 
 import { Icon } from '../../../icons/Icon';
-import type { Instrument, InstrumentGroup } from '../../../types';
+import type { IconName, Instrument, InstrumentGroup } from '../../../types';
 import { ButtonIcon } from '../../ButtonIcon';
 import { getIconName, getNoteLabel } from './Note.utils';
 
@@ -11,6 +11,7 @@ import { useStyles } from './Note.styles';
 
 interface NoteProps extends HTMLAttributes<HTMLButtonElement> {
   group: InstrumentGroup;
+  icon?: IconName;
   index: number;
   instrument: Instrument | null;
 }
@@ -18,6 +19,7 @@ interface NoteProps extends HTMLAttributes<HTMLButtonElement> {
 export const Note = memo(function Note({
   className,
   group,
+  icon,
   index,
   instrument,
   ...delegated
@@ -25,7 +27,7 @@ export const Note = memo(function Note({
   const classes = useStyles();
 
   const isEmpty = !instrument;
-  const iconName = getIconName(instrument, group);
+  const iconName = icon || getIconName(instrument, group);
   const label = getNoteLabel(instrument, group);
 
   return (

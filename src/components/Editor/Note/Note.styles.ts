@@ -9,10 +9,6 @@ export const useStyles = createUseStyles('Note', {
 
   empty: {
     opacity: 0.15,
-
-    '&:active': {
-      opacity: 0.5,
-    },
   },
 
   emptyCymbal: {

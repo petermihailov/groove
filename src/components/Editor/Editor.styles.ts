@@ -37,11 +37,14 @@ export const useStyles = createUseStyles('Editor', {
 
   picker: {
     position: 'fixed',
-    bottom: 0,
+    bottom: theme.spacingLarge,
+    maxWidth: `calc(100% - 2 * ${theme.sizeHorizontalPadding})`,
+    left: '50%',
+    transform: 'translateX(-50%)',
     transition: `transform ${theme.transitionSlow} ${theme.easeSquish5}`,
   },
 
   pickerHidden: {
-    transform: 'translateY(100%)',
+    transform: `translateX(-50%) translateY(calc(100% + ${theme.spacingLarge}))`,
   },
 });

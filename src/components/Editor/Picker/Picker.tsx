@@ -1,13 +1,8 @@
 import clsx from 'clsx';
 import { memo, useEffect, useState } from 'react';
 
-import type { InstrumentGroup, MouseEventHandler, Note as NoteType } from '../../../types';
-import {
-  getGroupByInstrument,
-  getInstrumentsByGroup,
-  isInstrument,
-  isInstrumentGroup,
-} from '../../../utils';
+import type { MouseEventHandler, Note as NoteType } from '../../../types';
+import { getInstrumentsByGroup, isInstrument, isInstrumentGroup } from '../../../utils';
 import { Note } from '../Note';
 import { getDataFromNoteElement } from '../Note/Note.utils';
 
@@ -21,7 +16,7 @@ type PickerProps = {
 
 export const Picker = memo(function Picker({ className, note, onChange }: PickerProps) {
   const classes = useStyles();
-  const [cachedGroup, cacheGroup] = useState<InstrumentGroup | null>(null);
+  const [cachedNote, setCachedNote] = useState<NoteType | null>(note);
 
   const handleChange: MouseEventHandler<HTMLButtonElement> = (e) => {
     const { group, instrument } = getDataFromNoteElement(e.currentTarget);
@@ -31,27 +26,29 @@ export const Picker = memo(function Picker({ className, note, onChange }: Picker
   };
 
   useEffect(() => {
-    if (note?.instrument) {
-      cacheGroup(getGroupByInstrument(note.instrument));
+    if (note) {
+      setCachedNote(note);
     }
-  }, [note?.instrument]);
+  }, [note]);
 
   return (
     <div className={clsx(className, classes.root)}>
-      <div className={classes.content}>
-        {note &&
-          cachedGroup !== null &&
-          getInstrumentsByGroup(cachedGroup).map((instrument) => (
-            <Note
-              key={instrument}
-              className={clsx({ [classes.selected]: instrument === note.instrument })}
-              group={cachedGroup}
-              index={note.rhythmIndex}
-              instrument={instrument}
-              onClick={handleChange}
-            />
-          ))}
-      </div>
+      {cachedNote &&
+        getInstrumentsByGroup(cachedNote.group).map((instrument) => (
+          <Note
+            key={instrument}
+            className={clsx({
+              [classes.selected]: instrument === cachedNote.instrument,
+              [classes.iconCenter]: cachedNote.group === 'cy' || cachedNote.group === 'hh',
+              [classes.iconHhFoot]: instrument === 'hhFootRegular',
+            })}
+            group={cachedNote.group}
+            icon={instrument === 'hhFootRegular' ? 'group-hh-foot' : undefined}
+            index={cachedNote.rhythmIndex}
+            instrument={instrument}
+            onClick={handleChange}
+          />
+        ))}
     </div>
   );
 });

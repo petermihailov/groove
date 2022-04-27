@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import type { Beat, Note, MouseEventHandler } from '../../../types';
+import type { Note, MouseEventHandler } from '../../../types';
 import { defaultGroupNoteMap, isInstrument, isInstrumentGroup } from '../../../utils';
 import { getDataFromNoteElement } from '../Note/Note.utils';
 
@@ -47,9 +47,9 @@ export function useNoteEditor(setNote: (note: Note) => void) {
 
   const changeNote = useCallback(
     (note: Note) => {
-      console.log(note);
       setNote(note);
       setDefaults((prev) => ({ ...prev, [note.group]: note.instrument }));
+      setFocusedNote(null);
     },
     [setNote]
   );

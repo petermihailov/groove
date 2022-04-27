@@ -27,6 +27,7 @@ export type IconName =
   | 'note-duration-32'
   | 'group-cy'
   | 'group-hh'
+  | 'group-hh-foot'
   | 'group-sn'
   | 'group-t1'
   | 'group-t2'

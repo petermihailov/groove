@@ -4,7 +4,13 @@ import type { Dispatch, FC, ReactNode } from 'react';
 import { grooveDefault } from '../constants';
 import type { Bar, Groove, Note, TimeSignature } from '../types';
 import { exhaustiveCheck } from '../types';
-import { cloneBar, createAction, createGrooveFromString, scaleBar } from '../utils';
+import {
+  cloneBar,
+  createAction,
+  createGrooveFromString,
+  getInstrumentsByGroup,
+  scaleBar,
+} from '../utils';
 
 type AddBarAction = {
   type: 'ADD_BAR';
@@ -104,10 +110,18 @@ const reducer = (state: State, action: Actions): State => {
     }
 
     case 'SET_NOTE': {
-      const { rhythmIndex, instrument, barIndex, value } = action.payload;
+      const { rhythmIndex, instrument, group, barIndex, value } = action.payload;
 
       const bars = [...state.bars];
       const clonedBar = cloneBar(state.bars[barIndex]);
+
+      // disable all group
+      const instruments = getInstrumentsByGroup(group);
+      instruments.forEach((ins) => {
+        clonedBar.instruments[ins][rhythmIndex] = false;
+      });
+
+      // set value
       clonedBar.instruments[instrument][rhythmIndex] = value;
       bars[barIndex] = clonedBar;
 
