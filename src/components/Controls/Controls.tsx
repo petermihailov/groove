@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { memo } from 'react';
 
 import { Icon } from '../../icons/Icon';
 import type { Groove } from '../../types';
@@ -22,7 +21,7 @@ type ControlsProps = {
   settingsOpened: boolean;
 };
 
-export const Controls = memo(function Controls({
+export function Controls({
   className,
   groove,
   metronomeEnabled,
@@ -61,4 +60,4 @@ export const Controls = memo(function Controls({
       <ThemeSwitcher />
     </div>
   );
-});
+}
