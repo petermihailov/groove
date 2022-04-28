@@ -4,9 +4,12 @@ export const useStyles = createUseStyles('Editor', {
   root: {
     position: 'relative',
     display: 'flex',
+    alignItems: 'flex-start',
     overflow: 'auto',
-    backgroundColor: theme.colorSurface2,
     paddingRight: theme.sizeHorizontalPadding,
+    paddingTop: theme.spacingXSmall,
+    paddingBottom: theme.spacingBarBottom,
+    backgroundColor: theme.colorSurface2,
   },
 
   groups: {
@@ -17,19 +20,26 @@ export const useStyles = createUseStyles('Editor', {
     marginRight: theme.spacingSmall,
     paddingLeft: theme.sizeHorizontalPadding,
     paddingRight: theme.spacingSmall,
-    backgroundColor: theme.colorHighlight,
-    backdropFilter: 'blur(20px)',
-    boxShadow: theme.shadowSmall,
-  },
+    paddingBottom: 0,
 
-  item: {
-    paddingTop: theme.spacingXSmall,
-    paddingBottom: `calc(${theme.sizeNote} + ${theme.spacingNote})`,
+    '&::before': {
+      content: '""',
+      zIndex: -1,
+      position: 'absolute',
+      top: `calc(-1 * ${theme.spacingXSmall})`,
+      bottom: `calc(-1 * ${theme.spacingBarBottom})`,
+      left: 0,
+      width: '100%',
+      backgroundColor: theme.colorHighlight,
+      backdropFilter: 'blur(20px)',
+      boxShadow: theme.shadowSmall,
+    },
   },
 
   highlight: {
     pointerEvents: 'none',
     position: 'absolute',
+    top: 0,
     width: theme.sizeNote,
     height: '100%',
     backgroundColor: theme.colorHighlight,

@@ -1,12 +1,13 @@
 import clsx from 'clsx';
 import type { MouseEventHandler } from 'react';
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useState } from 'react';
 
 import { Icon } from '../../../icons/Icon';
 import type { Bar as BarType, InstrumentGroupEnabled } from '../../../types';
 import { convertBarInstrumentsByGroups } from '../../../utils';
 import { ButtonIcon } from '../../ButtonIcon';
 import { BarLine } from '../BarLine';
+import { Pill } from '../Pill';
 
 import { useStyles } from './Bar.styles';
 
@@ -16,6 +17,8 @@ type BarProps = {
   barIndex: number;
   enabledGroups: InstrumentGroupEnabled;
   onAddBar: (barIndex: number) => void;
+  onClearBar: (barIndex: number) => void;
+  onRemoveBar: (barIndex: number) => void;
   onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
@@ -25,9 +28,13 @@ export const Bar = memo(function Bar({
   barIndex,
   enabledGroups,
   onAddBar,
+  onClearBar,
+  onRemoveBar,
   onClick,
 }: BarProps) {
   const classes = useStyles();
+
+  const [actions, setActions] = useState(false);
 
   const instrumentsByGroups = useMemo(() => {
     return convertBarInstrumentsByGroups(bar);
@@ -37,9 +44,13 @@ export const Bar = memo(function Bar({
     return Object.values(enabledGroups).filter(Boolean).length - Number(enabledGroups.cy);
   }, [enabledGroups]);
 
-  const addBar = () => {
-    onAddBar(barIndex);
-  };
+  const toggleActions = () => setActions((prev) => !prev);
+
+  const addBar = () => onAddBar(barIndex);
+
+  const removeBar = () => onRemoveBar(barIndex);
+
+  const clearBar = () => onClearBar(barIndex);
 
   return (
     <div
@@ -58,9 +69,27 @@ export const Bar = memo(function Bar({
       {enabledGroups.t3 && <BarLine group="t3" line={instrumentsByGroups.t3} />}
       {enabledGroups.ki && <BarLine group="ki" line={instrumentsByGroups.ki} />}
 
-      <ButtonIcon aria-label="add bar" className={classes.addButton} onClick={addBar}>
-        <Icon name="ui-add" />
-      </ButtonIcon>
+      <div className={classes.actions}>
+        <ButtonIcon
+          aria-label={`${actions ? 'open' : 'close'} bar actions`}
+          className={classes.actionButton}
+          onClick={toggleActions}
+        >
+          <Icon name="ui-more" />
+        </ButtonIcon>
+
+        <Pill className={clsx(classes.actionBar, { [classes.actionsBarHidden]: !actions })}>
+          <ButtonIcon aria-label="remove bar" onClick={removeBar}>
+            <Icon name="ui-delete" />
+          </ButtonIcon>
+          <ButtonIcon aria-label="clear bar" onClick={clearBar}>
+            <Icon name="ui-clear" />
+          </ButtonIcon>
+          <ButtonIcon aria-label="add bar" onClick={addBar}>
+            <Icon name="ui-add" />
+          </ButtonIcon>
+        </Pill>
+      </div>
     </div>
   );
 });

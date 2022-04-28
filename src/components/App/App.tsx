@@ -2,6 +2,8 @@ import { memo, useCallback, useEffect, useState } from 'react';
 
 import {
   addBarAction,
+  clearBarAction,
+  removeBarAction,
   setNoteAction,
   setTempoAction,
   useGrooveContext,
@@ -44,6 +46,20 @@ export const App = memo(function App() {
     [dispatch]
   );
 
+  const clearBar = useCallback(
+    (barIndex: number) => {
+      dispatch(clearBarAction(barIndex));
+    },
+    [dispatch]
+  );
+
+  const removeBar = useCallback(
+    (barIndex: number) => {
+      dispatch(removeBarAction(barIndex));
+    },
+    [dispatch]
+  );
+
   const setNote = useCallback(
     (note: Note) => {
       dispatch(setNoteAction(note));
@@ -65,6 +81,8 @@ export const App = memo(function App() {
         enabledGroups={enabledGroups}
         playing={playing}
         onAddBar={addBar}
+        onClearBar={clearBar}
+        onRemoveBar={removeBar}
         onSetNote={setNote}
       />
 

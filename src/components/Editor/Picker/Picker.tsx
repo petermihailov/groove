@@ -5,6 +5,7 @@ import type { MouseEventHandler, Note as NoteType } from '../../../types';
 import { getInstrumentsByGroup, isInstrument, isInstrumentGroup } from '../../../utils';
 import { Note } from '../Note';
 import { getDataFromNoteElement } from '../Note/Note.utils';
+import { Pill } from '../Pill';
 
 import { useStyles } from './Picker.styles';
 
@@ -32,7 +33,7 @@ export const Picker = memo(function Picker({ className, note, onChange }: Picker
   }, [note]);
 
   return (
-    <div className={clsx(className, classes.root)}>
+    <Pill className={className}>
       {cachedNote &&
         getInstrumentsByGroup(cachedNote.group).map((instrument) => (
           <Note
@@ -49,6 +50,6 @@ export const Picker = memo(function Picker({ className, note, onChange }: Picker
             onClick={handleChange}
           />
         ))}
-    </div>
+    </Pill>
   );
 });

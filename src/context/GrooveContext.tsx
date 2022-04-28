@@ -7,6 +7,7 @@ import { exhaustiveCheck } from '../types';
 import {
   cloneBar,
   createAction,
+  createEmptyInstruments,
   createGrooveFromString,
   getInstrumentsByGroup,
   scaleBar,
@@ -14,6 +15,12 @@ import {
 
 type AddBarAction = {
   type: 'ADD_BAR';
+  /** Bar index */
+  payload: number;
+};
+
+type ClearBarAction = {
+  type: 'CLEAR_BAR';
   /** Bar index */
   payload: number;
 };
@@ -50,6 +57,7 @@ type SetTempoAction = {
 
 type Actions =
   | AddBarAction
+  | ClearBarAction
   | RemoveBarAction
   | SetGrooveFromStringAction
   | SetNoteAction
@@ -59,6 +67,7 @@ type Actions =
 /* Actions */
 
 export const addBarAction = createAction<AddBarAction>('ADD_BAR');
+export const clearBarAction = createAction<ClearBarAction>('CLEAR_BAR');
 export const removeBarAction = createAction<RemoveBarAction>('REMOVE_BAR');
 export const setGrooveFromStringAction =
   createAction<SetGrooveFromStringAction>('SET_GROOVE_FROM_STRING');
@@ -81,8 +90,18 @@ const reducer = (state: State, action: Actions): State => {
     case 'ADD_BAR': {
       const insertAfterBarIdx = action.payload;
       const bars = [...state.bars];
-
       bars.splice(insertAfterBarIdx + 1, 0, cloneBar(state.bars[insertAfterBarIdx]));
+
+      return { ...state, bars };
+    }
+
+    case 'CLEAR_BAR': {
+      const clearBarIdx = action.payload;
+      const bars = [...state.bars];
+
+      const clonedBar = cloneBar(state.bars[clearBarIdx]);
+      clonedBar.instruments = createEmptyInstruments();
+      bars[clearBarIdx] = clonedBar;
 
       return { ...state, bars };
     }

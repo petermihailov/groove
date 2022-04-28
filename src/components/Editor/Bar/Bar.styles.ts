@@ -5,13 +5,54 @@ export const useStyles = createUseStyles('Bar', {
     position: 'relative',
     display: 'grid',
     gridGap: theme.spacingNote,
-    paddingRight: theme.spacingBars,
+
+    '& + &': {
+      marginLeft: theme.spacingBars,
+
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        left: `calc(-1 * ${theme.spacingBars} / 2)`,
+        width: 2,
+        top: theme.spacingMedium,
+        bottom: theme.spacingMedium,
+        borderRadius: theme.radiusPill,
+        backgroundColor: theme.colorBorder,
+      },
+    },
   },
 
-  addButton: {
+  actions: {
     position: 'absolute',
-    top: `calc(50% - ${theme.sizeNote})`,
-    right: theme.spacingXSmall,
+    bottom: 0,
+    width: '100%',
+    transform: `translateY(calc(100% + ${theme.spacingBarBottom}))`,
+  },
+
+  actionButton: {
+    width: '100%',
+    backgroundColor: theme.colorTint,
+    borderRadius: theme.radiusSmall,
+
+    '&:active': {
+      color: theme.colorAccent,
+    },
+  },
+
+  actionBar: {
+    position: 'absolute',
+    left: '50%',
+    bottom: `calc(100% + ${theme.spacingSmall})`,
+    transform: 'translateX(-50%)',
     color: theme.colorAccent,
+    transitionProperty: 'transform, opacity',
+    transitionDuration: theme.transitionMedium,
+    transitionTimingFunction: theme.easeElastic2,
+  },
+
+  actionsBarHidden: {
+    pointerEvents: 'none',
+    opacity: 0,
+    transform: `translateX(-50%) translateY(100%) scale(0.15)`,
   },
 });

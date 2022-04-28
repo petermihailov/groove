@@ -23,7 +23,7 @@ export const Groups = memo(function Groups({ className, enabledGroups }: GroupsP
       {enabledGroups.t2 && <Icon name="group-t2" />}
       {enabledGroups.t3 && <Icon name="group-t3" />}
       {enabledGroups.ki && <Icon name="group-ki" />}
-      {enabledGroups.hh && <Icon className={classes.foot} name="group-hh-foot" />}
+      {enabledGroups.hh && <Icon name="group-hh-foot" />}
     </div>
   );
 });

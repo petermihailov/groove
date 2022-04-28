@@ -1,14 +1,16 @@
 export const colors = {
   colorAccent: '#05f',
-  colorHighlight: 'rgba(0, 85, 255, 0.1)',
   colorBorder: '#d9d9e8',
+  colorDelimiter: '#d9d9e8',
   colorDrawer: '#f9fbff',
+  colorHighlight: 'rgba(0, 85, 255, 0.1)',
   colorIcon: '#171a1c',
   colorOverlay: 'rgba(0, 0, 0, 0.2)',
   colorSurface1: '#f9fbff',
   colorSurface2: '#fff',
   colorText: '#171a1c',
   colorThumbHighlight: 'rgba(0, 0, 0, 0.2)',
+  colorTint: 'rgba(0, 0, 0, 0.04)',
 } as const;
 
 export const typography = {
@@ -46,7 +48,8 @@ export const spacing = {
   spacingXxxLarge: '3rem',
   spacingXxxxLarge: '4.5rem',
   spacingNote: '0.25rem',
-  spacingBars: '3rem',
+  spacingBars: '2.25rem',
+  spacingBarBottom: '2.25rem',
 } as const;
 
 export const sizes = {

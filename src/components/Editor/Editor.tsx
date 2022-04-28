@@ -15,6 +15,8 @@ type EditorProps = {
   beat: Beat;
   enabledGroups: InstrumentGroupEnabled;
   onAddBar: (barIndex: number) => void;
+  onClearBar: (barIndex: number) => void;
+  onRemoveBar: (barIndex: number) => void;
   onSetNote: (note: Note) => void;
   playing: boolean;
 };
@@ -24,6 +26,8 @@ export const Editor = memo(function Editor({
   bars,
   enabledGroups,
   onAddBar,
+  onClearBar,
+  onRemoveBar,
   onSetNote,
 }: EditorProps) {
   const classes = useStyles();
@@ -36,17 +40,20 @@ export const Editor = memo(function Editor({
 
   return (
     <div ref={editorRef} className={classes.root}>
-      <Groups className={clsx(classes.item, classes.groups)} enabledGroups={enabledGroups} />
+      <div className={classes.groups}>
+        <Groups enabledGroups={enabledGroups} />
+      </div>
 
       {bars.map((bar, idx) => (
         <Bar
           key={idx}
           bar={bar}
           barIndex={idx}
-          className={classes.item}
           enabledGroups={enabledGroups}
           onAddBar={onAddBar}
+          onClearBar={onClearBar}
           onClick={toggleNote}
+          onRemoveBar={onRemoveBar}
         />
       ))}
 

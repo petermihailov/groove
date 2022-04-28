@@ -11,10 +11,4 @@ export const useStyles = createUseStyles('Groups', {
   toBottom: {
     alignSelf: 'end',
   },
-
-  foot: {
-    position: 'absolute',
-    bottom: theme.spacingXxSmall,
-    left: theme.sizeHorizontalPadding,
-  },
 });
