@@ -43,6 +43,35 @@ export function NotesIcons() {
         />
       </symbol>
 
+      <symbol id="note-cy-edge-regular">
+        <path
+          clipRule="evenodd"
+          d="M5 16.99c0 .552.47 1 1.052 1h11.896c.581 0 1.052-.448 1.052-1s-.47-1-1.052-1H6.052c-.581 0-1.052.448-1.052 1Z"
+          fillRule="evenodd"
+        />
+        <path
+          clipRule="evenodd"
+          d="m13.414 17 3.293-3.293a1 1 0 0 0-1.414-1.414L12 15.586l-3.293-3.293a1 1 0 0 0-1.414 1.414L10.586 17h2.828Z"
+          fillRule="evenodd"
+        />
+      </symbol>
+
+      <symbol id="note-cy-trash-regular">
+        <path
+          clipRule="evenodd"
+          d="M5.355 18.995a1 1 0 0 1 1-1h11.3a1 1 0 1 1 0 2h-11.3a1 1 0 0 1-1-1ZM5.355 14.995a1 1 0 0 1 1-1h11.3a1 1 0 1 1 0 2h-11.3a1 1 0 0 1-1-1Z"
+          fillRule="evenodd"
+        />
+      </symbol>
+
+      <symbol id="note-cy-splash-regular">
+        <path
+          clipRule="evenodd"
+          d="M12 14.158 9.675 17 12 19.842 14.325 17 12 14.158Zm1.31-1.558c-.655-.8-1.965-.8-2.62 0l-2.863 3.5a1.401 1.401 0 0 0 0 1.8l2.864 3.5c.654.8 1.963.8 2.618 0l2.864-3.5a1.401 1.401 0 0 0 0-1.8l-2.864-3.5Z"
+          fillRule="evenodd"
+        />
+      </symbol>
+
       <symbol id="note-cy-splas-hregular">
         <path
           clipRule="evenodd"

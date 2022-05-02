@@ -46,7 +46,7 @@ export const useStyles = createUseStyles('Bar', {
     transform: 'translateX(-50%)',
     color: theme.colorAccent,
     transitionProperty: 'transform, opacity',
-    transitionDuration: theme.transitionMedium,
+    transitionDuration: theme.transitionFast,
     transitionTimingFunction: theme.easeElastic2,
   },
 

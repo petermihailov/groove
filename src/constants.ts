@@ -4,29 +4,31 @@ export const instrumentGroups: InstrumentGroup[] = ['cy', 'hh', 'sn', 't1', 't2'
 
 export const instruments: Instrument[] = [
   'cyBellRegular',
-  // 'cyChinaRegular',
+  'cyChinaRegular',
   'cyCowbellRegular',
   'cyCrashRegular',
+  'cyEdgeRegular',
   'cyRideRegular',
-  // 'cySplashRegular',
+  'cySplashRegular',
+  'cyTrashRegular',
+  // 'fxMetronomeAccent',
+  // 'fxMetronomeRegular',
   'hhCloseAccent',
   'hhCloseGhost',
   'hhCloseRegular',
   'hhFootRegular',
   'hhOpenAccent',
-  'hhOpenGhost',
   'hhOpenRegular',
-  'kiKickGhost',
   'kiKickRegular',
   'snRimRegular',
   'snSnareAccent',
   'snSnareGhost',
   'snSnareRegular',
-  't1HighGhost',
+  't1HighAccent',
   't1HighRegular',
-  't2MidGhost',
+  't2MidAccent',
   't2MidRegular',
-  't3LowGhost',
+  't3LowAccent',
   't3LowRegular',
 ];
 
@@ -35,14 +37,17 @@ export const tempoMax = 240;
 
 export const grooveDefault = 't80|s44d16:hcrkkr--hcr--hcrssr--hcr--hcr--hcrkkr-kkr-hcrssr--hcr-hcr';
 
-export const grooveNotNow =
+export const grooveNotNow1 =
   't106|s44d32:hfrkkr--tlr--hfrkkr--ssatlr--hfrkkr--tlr--hfrthrkkr--tlr--hfrkkr--thrtlr--hfrkkr--hoatlr--hfrssakkr--tlr--hfrssrkkr-thr-tlr-tlr';
 
-export const grooveFeeling =
+export const grooveFeeling1 =
   't173|s44d16:horkkr-ssg-hcr-ssg-ssa-ssg-hcr-ssg-hcr-ssg-horkkr-ssg-hcr-ssg-hcrssa-ssg';
 
 export const grooveFeeling2 =
   't87|s44d16:cwrhorkkr--hcr-cwr-ssr-hcr-cwrhcr-hcr-hfrkkr-hcr-cwrhcr-hcr-ssr-cwr-hcr-hcrkkr';
 
-export const grooveDumpweed =
+export const grooveDumpweed1 =
   't96|s44d16:crrhfrkkr-crrssg-crrhfrkkr-cbr-crrhfrssrkkr-crr-crrhfrkkr-cbr-crrhfrkkr-crrhcr-cbrhorkkr-crr-crrhfrssrkkr-crr-crrhfrssgkkr-crrssg';
+
+export const grooveDumpweed2 =
+  't96|s44d16:ccrhfrkkr-ssg-crrhfrkkr-cbr-crrhfrkkrssr--crrhfrkkr-cbr-crrhfrkkr-hcr-cbrhorkkr--crrhfrkkrssr--crrhfrkkr-ssg_s44d16:crrhfrkkr-ssg-crrhfrkkr-cbr-crrhfrkkrssr--crrhfrkkr-cbr-crrhfrkkr-hcr-cbrhorkkr--chrhfrkkrssr--hfr-';
