@@ -56,6 +56,7 @@ export const sizes = {
   sizeHorizontalPadding: spacing.spacingMedium,
   sizeIcon: '2rem',
   sizeNote: '2rem',
+  sizeControl: '2rem',
 };
 
 export const shadow = {

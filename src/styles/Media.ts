@@ -1,3 +1,4 @@
 export enum Media {
-  NoTouch = '@media (hover: none)',
+  CanHover = '@media (hover: hover)',
+  WithoutHover = '@media (hover: none)',
 }

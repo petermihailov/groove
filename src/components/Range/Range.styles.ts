@@ -69,7 +69,7 @@ export const useStyles = createUseStyles('Range', {
     gridTemplateColumns: 'auto auto',
   },
 
-  [Media.NoTouch]: {
+  [Media.WithoutHover]: {
     input: {
       '--thumb-size': '30px',
       '--thumb-offset': '-14px',

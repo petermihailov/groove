@@ -24,7 +24,6 @@ export const Settings = memo(function Settings({
         metronomeFrequency={metronomeFrequency}
         setMetronomeFrequency={setMetronomeFrequency}
       />
-      <TimeSignature />
       <InstrumentGroups enabledGroups={enabledGroups} setEnabledGroups={setEnabledGroups} />
     </div>
   );

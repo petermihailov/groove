@@ -18,7 +18,7 @@ export const ThemeSwitcher = memo(function ThemeSwitcher({
 
   return (
     <ButtonIcon
-      aria-label={theme}
+      aria-label={`switch to ${theme === 'dark' ? 'light' : 'dark'}`}
       className={clsx(className, { [classes.isDark]: theme === 'dark' })}
       onClick={toggleTheme}
       {...props}

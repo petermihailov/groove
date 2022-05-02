@@ -33,6 +33,8 @@ export type Instrument =
 
 export type DrumKit = Record<Instrument, AudioBuffer>;
 
+export type TimeDivision = 4 | 8 | 16 | 32;
+
 export type TimeSignature = {
   beatsPerBar: number;
   noteValue: number;

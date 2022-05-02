@@ -9,6 +9,7 @@ import { convertBarInstrumentsByGroups } from '../../../utils';
 import { ButtonIcon } from '../../ButtonIcon';
 import { BarLine } from '../BarLine';
 import { Pill } from '../Pill';
+import { TimeSignature } from '../TimeSignature';
 
 import { useStyles } from './Bar.styles';
 
@@ -103,6 +104,13 @@ export const Bar = memo(function Bar({
           <ButtonIcon aria-label="add bar" onClick={addBar}>
             <Icon name="ui-add" />
           </ButtonIcon>
+
+          <TimeSignature
+            beatsPerBar={4}
+            className={classes.timeSignature}
+            division={16}
+            noteValue={4}
+          />
         </Pill>
       </div>
     </div>

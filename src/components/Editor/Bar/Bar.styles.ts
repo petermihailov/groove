@@ -44,6 +44,8 @@ export const useStyles = createUseStyles('Bar', {
     left: '50%',
     bottom: `calc(100% + ${theme.spacingSmall})`,
     transform: 'translateX(-50%) scale(0.8)',
+    fontSize: theme.fontSizeLarge,
+    fontWeight: theme.fontWeightBold,
     color: theme.colorAccent,
     transitionProperty: 'transform, opacity',
     transitionDuration: theme.transitionFast,
@@ -54,5 +56,22 @@ export const useStyles = createUseStyles('Bar', {
     pointerEvents: 'none',
     opacity: 0,
     transform: `translateX(-50%) scale(0.8) translateY(50%)`,
+  },
+
+  timeSignature: {
+    position: 'relative',
+    marginLeft: theme.spacingXSmall,
+    paddingLeft: theme.spacingXSmall,
+    color: theme.colorText,
+
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      left: 0,
+      width: 2,
+      height: '50%',
+      borderRadius: theme.radiusPill,
+      backgroundColor: theme.colorBorder,
+    },
   },
 });
