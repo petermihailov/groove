@@ -10,7 +10,7 @@ export const colors = {
   colorSurface2: '#fff',
   colorText: '#171a1c',
   colorThumbHighlight: 'rgba(0, 0, 0, 0.2)',
-  colorTint: 'rgba(0, 0, 0, 0.04)',
+  colorTint: 'rgba(0, 85, 255, 0.04)',
 } as const;
 
 export const typography = {

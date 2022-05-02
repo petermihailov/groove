@@ -43,7 +43,7 @@ export const useStyles = createUseStyles('Bar', {
     position: 'absolute',
     left: '50%',
     bottom: `calc(100% + ${theme.spacingSmall})`,
-    transform: 'translateX(-50%)',
+    transform: 'translateX(-50%) scale(0.8)',
     color: theme.colorAccent,
     transitionProperty: 'transform, opacity',
     transitionDuration: theme.transitionFast,
@@ -53,6 +53,6 @@ export const useStyles = createUseStyles('Bar', {
   actionsBarHidden: {
     pointerEvents: 'none',
     opacity: 0,
-    transform: `translateX(-50%) translateY(100%) scale(0.15)`,
+    transform: `translateX(-50%) scale(0.8) translateY(50%)`,
   },
 });

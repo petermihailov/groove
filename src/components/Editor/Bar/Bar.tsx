@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 import type { MouseEventHandler } from 'react';
-import { memo, useMemo, useState } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 
+import { useClickOutside } from '../../../hooks';
 import { Icon } from '../../../icons/Icon';
 import type { Bar as BarType, InstrumentGroupEnabled } from '../../../types';
 import { convertBarInstrumentsByGroups } from '../../../utils';
@@ -35,6 +36,7 @@ export const Bar = memo(function Bar({
   const classes = useStyles();
 
   const [actions, setActions] = useState(false);
+  const actionsRef = useRef(null);
 
   const instrumentsByGroups = useMemo(() => {
     return convertBarInstrumentsByGroups(bar);
@@ -46,11 +48,24 @@ export const Bar = memo(function Bar({
 
   const toggleActions = () => setActions((prev) => !prev);
 
-  const addBar = () => onAddBar(barIndex);
+  const closeActions = () => setActions(false);
 
-  const removeBar = () => onRemoveBar(barIndex);
+  const addBar = () => {
+    onAddBar(barIndex);
+    closeActions();
+  };
 
-  const clearBar = () => onClearBar(barIndex);
+  const removeBar = () => {
+    onRemoveBar(barIndex);
+    closeActions();
+  };
+
+  const clearBar = () => {
+    onClearBar(barIndex);
+    closeActions();
+  };
+
+  useClickOutside(actionsRef, closeActions);
 
   return (
     <div
@@ -69,7 +84,7 @@ export const Bar = memo(function Bar({
       {enabledGroups.t3 && <BarLine group="t3" line={instrumentsByGroups.t3} />}
       {enabledGroups.ki && <BarLine group="ki" line={instrumentsByGroups.ki} />}
 
-      <div className={classes.actions}>
+      <div ref={actionsRef} className={classes.actions}>
         <ButtonIcon
           aria-label={`${actions ? 'open' : 'close'} bar actions`}
           className={classes.actionButton}
