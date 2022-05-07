@@ -116,7 +116,7 @@ export const convertBarInstrumentsByGroups = (bar: Bar): BarInstrumentsByGroups 
     const notes = bar.instruments[key].map((hasNote) => (hasNote ? key : null));
 
     notes.forEach((instrument, rhythmIndex) => {
-      if (instrument) {
+      if (instrument && rhythmIndex < bar.length) {
         res[groupName][rhythmIndex] = instrument;
       }
     });

@@ -10,14 +10,13 @@ import {
   useGrooveContext,
 } from '../../context/GrooveContext';
 import { usePlayer, useQuerySync } from '../../hooks';
-import type { InstrumentGroupEnabled, Note , TimeSignature , TimeDivision } from '../../types';
+import type { InstrumentGroupEnabled, Note, TimeSignature, TimeDivision } from '../../types';
 import { Controls } from '../Controls';
 import { Drawer } from '../Drawer';
 import { Editor } from '../Editor';
 import { Settings } from '../Settings';
 
 import { useStyles } from './App.styles';
-
 
 export const App = memo(function App() {
   const classes = useStyles();
@@ -58,8 +57,9 @@ export const App = memo(function App() {
   const removeBar = useCallback(
     (barIndex: number) => {
       dispatch(removeBarAction(barIndex));
+      stop();
     },
-    [dispatch]
+    [dispatch, stop]
   );
 
   const setNote = useCallback(
@@ -77,8 +77,9 @@ export const App = memo(function App() {
       }
     ) => {
       dispatch(setSignatureAction(signature));
+      stop();
     },
-    [dispatch]
+    [dispatch, stop]
   );
 
   useQuerySync();
