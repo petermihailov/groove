@@ -44,6 +44,7 @@ export const useStyles = createUseStyles('Bar', {
     position: 'absolute',
     left: '50%',
     bottom: `calc(100% + ${theme.spacingSmall})`,
+    width: 'fit-content',
     transform: 'translateX(-50%) scale(0.8)',
     fontSize: theme.fontSizeLarge,
     fontWeight: theme.fontWeightBold,
