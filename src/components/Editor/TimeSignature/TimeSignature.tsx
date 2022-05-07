@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { memo } from 'react';
+import { FormEventHandler, memo } from 'react';
 
 import { Icon } from '../../../icons/Icon';
 import type { TimeDivision, TimeSignature as TimeSignatureType } from '../../../types';
@@ -9,10 +9,17 @@ import { useStyles } from './TimeSignature.styles';
 
 type TimeSignatureProps = TimeSignatureType & {
   className?: string;
-  division: TimeDivision;
+  barIndex: number;
+  timeDivision: TimeDivision;
+  onChangeSignature: (
+    signature: TimeSignatureType & {
+      barIndex: number;
+      timeDivision: TimeDivision;
+    }
+  ) => void;
 };
 
-const divisionOptions: TimeDivision[] = [4, 8, 16, 32];
+const timeDivisionOptions: TimeDivision[] = [4, 8, 16, 32];
 const beatsPerBarOptions: TimeSignatureType['beatsPerBar'][] = Array.from({ length: 14 }).map(
   (_, idx) => idx + 2
 ); // top 2..14
@@ -20,21 +27,48 @@ const noteValueOptions: TimeSignatureType['noteValue'][] = [4, 8, 16]; // bottom
 
 export const TimeSignature = memo(function TimeSignature({
   className,
+  barIndex,
   beatsPerBar,
-  division,
   noteValue,
+  onChangeSignature,
+  timeDivision,
 }: TimeSignatureProps) {
   const classes = useStyles();
+
+  const changeSignature = (
+    patch: Partial<TimeSignatureType & { barIndex: number; timeDivision: TimeDivision }>
+  ) => {
+    onChangeSignature({
+      barIndex,
+      beatsPerBar,
+      timeDivision,
+      noteValue,
+      ...patch,
+    });
+  };
+
+  const changeTimeDivision = (timeDivision: TimeDivision) => {
+    changeSignature({ timeDivision });
+  };
+
+  const changeBeatsPerBar = (beatsPerBar: TimeSignatureType['beatsPerBar']) => {
+    changeSignature({ beatsPerBar });
+  };
+
+  const changeNoteValue = (noteValue: TimeSignatureType['noteValue']) => {
+    changeSignature({ noteValue });
+  };
 
   return (
     <div className={clsx(className, classes.root)}>
       <Select
-        options={divisionOptions.map((option) => ({
+        options={timeDivisionOptions.map((option) => ({
           value: option,
           label: `${option}th`,
           customLabel: <Icon name={`note-duration-${option}`} />,
         }))}
-        value={division}
+        value={timeDivision}
+        onChange={changeTimeDivision}
       />
 
       <Select
@@ -43,6 +77,7 @@ export const TimeSignature = memo(function TimeSignature({
           label: option,
         }))}
         value={beatsPerBar}
+        onChange={changeBeatsPerBar}
       />
 
       <span>/</span>
@@ -53,6 +88,7 @@ export const TimeSignature = memo(function TimeSignature({
           label: option,
         }))}
         value={noteValue}
+        onChange={changeNoteValue}
       />
     </div>
   );

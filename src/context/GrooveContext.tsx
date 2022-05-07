@@ -2,7 +2,7 @@ import { createContext, useContext, useReducer } from 'react';
 import type { Dispatch, FC, ReactNode } from 'react';
 
 import { grooveDefault, tempoMax, tempoMin } from '../constants';
-import type { Groove, Note, TimeSignature } from '../types';
+import type { Groove, Note, TimeDivision, TimeSignature } from '../types';
 import { exhaustiveCheck } from '../types';
 import {
   cloneBar,
@@ -46,7 +46,7 @@ type SetSignatureAction = {
   type: 'SET_SIGNATURE';
   payload: TimeSignature & {
     barIndex: number;
-    timeDivision: number;
+    timeDivision: TimeDivision;
   };
 };
 

@@ -1,6 +1,6 @@
 import type { Groove, Bar } from '../types';
 import { createEmptyBar, getInstrumentsByIndex, getUsedGroups } from './groove';
-import { isInstrument } from './guards';
+import { isInstrument, isTimeDivision } from './guards';
 import { longInstrumentMap, shirtInstrumentMap, shirtSymbolsMap as symbols } from './maps';
 
 export const readStringParamValue = (settingsString: string, shirtParam: string) => {
@@ -57,6 +57,11 @@ export const createBarsFromString = (str: string): Bar[] => {
     const signature = readStringParamValue(barSettingsString, symbols.timeSignature);
     const timeDivision = Number(readStringParamValue(barSettingsString, symbols.timeDivision));
     const [beatsPerBar, noteValue] = readStringTimeSignature(signature);
+
+    if (!isTimeDivision(timeDivision)) {
+      throw new Error('groove damaged');
+    }
+
     const beats = notesStr.split(symbols.beatDelimiter);
     const bar = createEmptyBar(timeDivision, beatsPerBar, noteValue);
     const slicedBeats = beats.slice(0, bar.length);

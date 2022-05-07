@@ -4,7 +4,12 @@ import { memo, useMemo, useRef, useState } from 'react';
 
 import { useClickOutside } from '../../../hooks';
 import { Icon } from '../../../icons/Icon';
-import type { Bar as BarType, InstrumentGroupEnabled } from '../../../types';
+import type {
+  Bar as BarType,
+  InstrumentGroupEnabled,
+  TimeSignature as TimeSignatureType,
+  TimeDivision,
+} from '../../../types';
 import { convertBarInstrumentsByGroups } from '../../../utils';
 import { ButtonIcon } from '../../ButtonIcon';
 import { BarLine } from '../BarLine';
@@ -20,8 +25,14 @@ type BarProps = {
   enabledGroups: InstrumentGroupEnabled;
   onAddBar: (barIndex: number) => void;
   onClearBar: (barIndex: number) => void;
-  onRemoveBar: (barIndex: number) => void;
   onClick?: MouseEventHandler<HTMLDivElement>;
+  onRemoveBar: (barIndex: number) => void;
+  onChangeSignature: (
+    signature: TimeSignatureType & {
+      barIndex: number;
+      timeDivision: TimeDivision;
+    }
+  ) => void;
 };
 
 export const Bar = memo(function Bar({
@@ -31,8 +42,9 @@ export const Bar = memo(function Bar({
   enabledGroups,
   onAddBar,
   onClearBar,
-  onRemoveBar,
   onClick,
+  onRemoveBar,
+  onChangeSignature,
 }: BarProps) {
   const classes = useStyles();
 
@@ -106,10 +118,12 @@ export const Bar = memo(function Bar({
           </ButtonIcon>
 
           <TimeSignature
-            beatsPerBar={4}
+            barIndex={barIndex}
+            beatsPerBar={bar.beatsPerBar}
             className={classes.timeSignature}
-            division={16}
-            noteValue={4}
+            noteValue={bar.noteValue}
+            timeDivision={bar.timeDivision}
+            onChangeSignature={onChangeSignature}
           />
         </Pill>
       </div>

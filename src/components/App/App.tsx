@@ -5,17 +5,19 @@ import {
   clearBarAction,
   removeBarAction,
   setNoteAction,
+  setSignatureAction,
   setTempoAction,
   useGrooveContext,
 } from '../../context/GrooveContext';
 import { usePlayer, useQuerySync } from '../../hooks';
-import type { InstrumentGroupEnabled, Note } from '../../types';
+import type { InstrumentGroupEnabled, Note , TimeSignature , TimeDivision } from '../../types';
 import { Controls } from '../Controls';
 import { Drawer } from '../Drawer';
 import { Editor } from '../Editor';
 import { Settings } from '../Settings';
 
 import { useStyles } from './App.styles';
+
 
 export const App = memo(function App() {
   const classes = useStyles();
@@ -67,6 +69,18 @@ export const App = memo(function App() {
     [dispatch]
   );
 
+  const setSignature = useCallback(
+    (
+      signature: TimeSignature & {
+        barIndex: number;
+        timeDivision: TimeDivision;
+      }
+    ) => {
+      dispatch(setSignatureAction(signature));
+    },
+    [dispatch]
+  );
+
   useQuerySync();
 
   useEffect(() => {
@@ -81,6 +95,7 @@ export const App = memo(function App() {
         enabledGroups={enabledGroups}
         playing={playing}
         onAddBar={addBar}
+        onChangeSignature={setSignature}
         onClearBar={clearBar}
         onRemoveBar={removeBar}
         onSetNote={setNote}

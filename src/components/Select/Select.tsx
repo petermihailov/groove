@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { ChangeEventHandler, HTMLAttributes, ReactNode } from 'react';
 
 import { useStyles } from './Select.styles';
 
@@ -10,27 +10,39 @@ export type SelectOption<T> = {
   disabled?: boolean;
 };
 
-export interface SelectProps extends HTMLAttributes<HTMLSelectElement> {
-  value?: string | number;
-  onChange?: () => void;
-  options: SelectOption<string | number>[];
+export interface SelectProps<T> extends Omit<HTMLAttributes<HTMLSelectElement>, 'onChange'> {
+  value?: T;
+  options: SelectOption<T>[];
+  onChange?: (value: T) => void;
 }
 
-export function Select({ className, value, onChange, options, ...props }: SelectProps) {
+export function Select<T>({ className, value, options, onChange, ...props }: SelectProps<T>) {
   const classes = useStyles();
-  const selected = options.find((option) => option.value === value);
+  const selectedIndex = options.findIndex((option) => option.value === value);
+
+  const changeHandler: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    const option = options[Number(e.target.value)];
+    onChange?.(option.value);
+  };
 
   return (
     <div className={clsx(className, classes.root)}>
-      <select className={classes.selectNative} value={value} {...props}>
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
+      <select
+        className={classes.selectNative}
+        value={selectedIndex}
+        onChange={changeHandler}
+        {...props}
+      >
+        {options.map((option, idx) => (
+          <option key={idx} value={idx}>
             {option.label}
           </option>
         ))}
       </select>
 
-      <div aria-hidden="true">{selected?.customLabel || selected?.label}</div>
+      <div aria-hidden="true">
+        {options[selectedIndex]?.customLabel || options[selectedIndex]?.label}
+      </div>
     </div>
   );
 }

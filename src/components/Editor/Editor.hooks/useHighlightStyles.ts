@@ -9,12 +9,14 @@ export function useHighlightStyles(beat: Beat, bars: Bar[]) {
 
   useEffect(() => {
     if (bars.length && beat.playNote) {
-      const currentBar = bars[beat.barIndex];
+      const barOffset = bars.slice(0, beat.barIndex).reduce((acc, bar) => acc + bar.length, 0);
+      const noteWithSpacing = `(${theme.sizeNote} + ${theme.spacingNote})`;
+      const barSpacingOffset = `calc(${beat.barIndex} * (${theme.spacingBars} - ${theme.spacingNote}))`;
 
       // sorry for this
       const translateStart = `translateX(calc(${theme.sizeHorizontalPadding} + ${theme.sizeIcon} + ${theme.spacingSmall} + ${theme.spacingSmall}))`;
-      const translateBarOffset = `translateX(calc(${beat.barIndex} * (${currentBar.length} * (${theme.sizeNote} + ${theme.spacingNote}) - ${theme.spacingNote} + ${theme.spacingBars})))`;
-      const translateRhythm = `translateX(calc(${beat.rhythmIndex} * (${theme.sizeNote} + ${theme.spacingNote})))`;
+      const translateRhythm = `translateX(calc(${beat.rhythmIndex} * ${noteWithSpacing}))`;
+      const translateBarOffset = `translateX(calc(${barOffset} * ${noteWithSpacing} + ${barSpacingOffset}))`;
 
       setHighlightStyles({
         transform: `${translateStart} ${translateBarOffset} ${translateRhythm}`,

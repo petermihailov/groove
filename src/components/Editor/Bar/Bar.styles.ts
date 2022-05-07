@@ -23,6 +23,7 @@ export const useStyles = createUseStyles('Bar', {
   },
 
   actions: {
+    zIndex: 1,
     position: 'absolute',
     bottom: 0,
     width: '100%',
@@ -67,7 +68,7 @@ export const useStyles = createUseStyles('Bar', {
     '&::before': {
       content: '""',
       position: 'absolute',
-      left: 0,
+      left: -1,
       width: 2,
       height: '50%',
       borderRadius: theme.radiusPill,

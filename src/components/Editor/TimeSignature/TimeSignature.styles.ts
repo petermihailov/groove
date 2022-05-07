@@ -5,5 +5,9 @@ export const useStyles = createUseStyles('TimeSignature', {
     display: 'flex',
     alignItems: 'center',
     gap: theme.spacingXSmall,
+
+    '& > *': {
+      flex: 'none',
+    },
   },
 });
