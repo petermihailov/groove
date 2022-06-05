@@ -10,7 +10,6 @@ export const useStyles = createUseStyles('ButtonIcon', {
     padding: 0,
     inlineSize: theme.sizeControl,
     blockSize: theme.sizeControl,
-    aspectRatio: 1,
     borderRadius: theme.radiusCircle,
     outlineOffset: 5,
     color: theme.colorIcon,

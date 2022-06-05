@@ -2,9 +2,10 @@ import { createUseStyles, theme } from '../../styles';
 
 export const useStyles = createUseStyles('Controls', {
   root: {
-    display: 'flex',
+    display: 'grid',
+    gridTemplateColumns: `${theme.sizeIcon} ${theme.sizeIcon} auto ${theme.sizeIcon} ${theme.sizeIcon}`,
     alignItems: 'center',
-    gap: theme.spacingXSmall,
+    gridGap: theme.spacingXSmall,
     padding: [theme.spacingMedium, theme.sizeHorizontalPadding],
   },
 

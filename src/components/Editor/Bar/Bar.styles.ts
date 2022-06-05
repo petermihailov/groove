@@ -23,11 +23,10 @@ export const useStyles = createUseStyles('Bar', {
   },
 
   actions: {
-    zIndex: 1,
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    transform: `translateY(calc(100% + ${theme.spacingBarBottom}))`,
+    transform: `translateY(calc(100% + ${theme.spacingBarBottom} + ${theme.spacingNote}))`,
   },
 
   actionButton: {
@@ -44,14 +43,13 @@ export const useStyles = createUseStyles('Bar', {
     position: 'absolute',
     left: '50%',
     bottom: `calc(100% + ${theme.spacingSmall})`,
-    width: 'max-content',
     transform: 'translateX(-50%) scale(0.8)',
     fontSize: theme.fontSizeLarge,
     fontWeight: theme.fontWeightBold,
     color: theme.colorAccent,
     transitionProperty: 'transform, opacity',
     transitionDuration: theme.transitionFast,
-    transitionTimingFunction: theme.easeElastic2,
+    transitionTimingFunction: theme.easeElastic1,
   },
 
   actionsBarHidden: {

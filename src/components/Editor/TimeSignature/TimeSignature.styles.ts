@@ -4,10 +4,13 @@ export const useStyles = createUseStyles('TimeSignature', {
   root: {
     display: 'flex',
     alignItems: 'center',
-    gap: theme.spacingXSmall,
 
     '& > *': {
       flex: 'none',
+    },
+
+    '& > * + *': {
+      marginLeft: theme.spacingXSmall,
     },
   },
 });
