@@ -15,7 +15,6 @@ export const useStyles = createUseStyles('Editor', {
   groups: {
     position: 'sticky',
     left: 0,
-    zIndex: 1,
     flex: 'none',
     marginRight: theme.spacingSmall,
     paddingLeft: theme.sizeHorizontalPadding,
