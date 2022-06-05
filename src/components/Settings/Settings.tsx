@@ -4,7 +4,6 @@ import type { InstrumentGroupsProps } from './InstrumentGroups';
 import { InstrumentGroups } from './InstrumentGroups';
 import type { MetronomeFrequencyProps } from './MetronomeFrequency';
 import { MetronomeFrequency } from './MetronomeFrequency';
-import { TimeSignature } from './TimeSignature';
 
 import { useStyles } from './Settings.styles';
 

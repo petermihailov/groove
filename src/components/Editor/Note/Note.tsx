@@ -2,9 +2,9 @@ import clsx from 'clsx';
 import type { HTMLAttributes } from 'react';
 import { memo } from 'react';
 
-import { Icon } from '../../../icons/Icon';
 import type { IconName, Instrument, InstrumentGroup } from '../../../types';
 import { ButtonIcon } from '../../ButtonIcon';
+import { Icon } from '../../Icon';
 import { getIconName, getNoteLabel } from './Note.utils';
 
 import { useStyles } from './Note.styles';

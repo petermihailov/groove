@@ -1,6 +1,6 @@
-import { Icon } from '../../../icons/Icon';
 import type { MetronomeFrequency as MetronomeFrequencyType } from '../../../types';
 import { ButtonIcon } from '../../ButtonIcon';
+import { Icon } from '../../Icon';
 
 import { useStyles } from './MetronomeFrequency.styles';
 

@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import { memo } from 'react';
 
-import { Icon } from '../../../icons/Icon';
 import type { InstrumentGroupEnabled } from '../../../types';
+import { Icon } from '../../Icon';
 
 import { useStyles } from './Groups.styles';
 

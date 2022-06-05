@@ -11,7 +11,7 @@ export function useDrumKit() {
     const buffers: DrumKit = {} as DrumKit;
 
     const instrumentPromises = instruments.map(async (instrument) => {
-      buffers[instrument] = await fetchAndDecodeAudio(getPublicFile(`sounds/${instrument}.opus`));
+      buffers[instrument] = await fetchAndDecodeAudio(getPublicFile(`wav/${instrument}.wav`));
     });
 
     Promise.all(instrumentPromises).then(() => {

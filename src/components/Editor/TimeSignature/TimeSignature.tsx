@@ -1,8 +1,8 @@
 import clsx from 'clsx';
-import { FormEventHandler, memo } from 'react';
+import { memo } from 'react';
 
-import { Icon } from '../../../icons/Icon';
 import type { TimeDivision, TimeSignature as TimeSignatureType } from '../../../types';
+import { Icon } from '../../Icon';
 import { Select } from '../../Select';
 
 import { useStyles } from './TimeSignature.styles';

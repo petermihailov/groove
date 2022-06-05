@@ -2,7 +2,14 @@ import clsx from 'clsx';
 import { memo, useRef } from 'react';
 
 import { useClickOutside } from '../../hooks';
-import type { Bar as BarType, Beat, InstrumentGroupEnabled, Note, TimeDivision , TimeSignature } from '../../types';
+import type {
+  Bar as BarType,
+  Beat,
+  InstrumentGroupEnabled,
+  Note,
+  TimeDivision,
+  TimeSignature,
+} from '../../types';
 import { Bar } from './Bar';
 import { useHighlightStyles, useNoteEditor } from './Editor.hooks';
 import { Groups } from './Groups';

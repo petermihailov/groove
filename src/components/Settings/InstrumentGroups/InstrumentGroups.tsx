@@ -1,6 +1,6 @@
-import { Icon } from '../../../icons/Icon';
 import type { InstrumentGroup, InstrumentGroupEnabled } from '../../../types';
 import { ButtonIcon } from '../../ButtonIcon';
+import { Icon } from '../../Icon';
 
 import { useStyles } from './InstrumentGroups.styles';
 

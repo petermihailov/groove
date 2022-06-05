@@ -1,9 +1,15 @@
 #!/bin/bash
 dir=$(dirname $0)
 sounds=./public/sounds
+cafSounds=./public/caf
 
 rm -rf $sounds && mkdir $sounds
+rm -rf $cafSounds && mkdir $cafSounds
 
 for filename in $dir/wav/*.wav; do
   $dir/opusenc $filename $sounds/$(basename $filename .wav).opus "$@"
+done
+
+for filename in $sounds/*.opus; do
+  $dir/ffmpeg -i $filename -c:a copy $cafSounds/$(basename $filename .opus).caf
 done

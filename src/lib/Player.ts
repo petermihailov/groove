@@ -45,10 +45,8 @@ export class Player {
     const whenSeconds = when / 1000;
 
     instruments.forEach((instrument) => {
-      const source = new AudioBufferSourceNode(this.audioCtx, {
-        buffer: this.kit[instrument],
-      });
-
+      const source = this.audioCtx.createBufferSource();
+      source.buffer = this.kit[instrument];
       source.connect(this.audioCtx.destination);
       source.start(whenSeconds);
       this.scheduledBuffers.push(source);

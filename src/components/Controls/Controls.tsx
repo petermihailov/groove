@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 
 import { tempoMax, tempoMin } from '../../constants';
-import { Icon } from '../../icons/Icon';
 import type { Groove } from '../../types';
 import { ButtonIcon } from '../ButtonIcon';
 import { ButtonPlay } from '../ButtonPlay';
+import { Icon } from '../Icon';
 import { Range } from '../Range';
 import { ThemeSwitcher } from '../ThemeSwitcher';
 

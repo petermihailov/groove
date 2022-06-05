@@ -3,7 +3,6 @@ import type { MouseEventHandler } from 'react';
 import { memo, useMemo, useRef, useState } from 'react';
 
 import { useClickOutside } from '../../../hooks';
-import { Icon } from '../../../icons/Icon';
 import type {
   Bar as BarType,
   InstrumentGroupEnabled,
@@ -12,6 +11,7 @@ import type {
 } from '../../../types';
 import { convertBarInstrumentsByGroups } from '../../../utils';
 import { ButtonIcon } from '../../ButtonIcon';
+import { Icon } from '../../Icon';
 import { BarLine } from '../BarLine';
 import { Pill } from '../Pill';
 import { TimeSignature } from '../TimeSignature';
