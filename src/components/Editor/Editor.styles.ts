@@ -45,6 +45,8 @@ export const useStyles = createUseStyles('Editor', {
   },
 
   pickerWrapper: {
+    pointerEvents: 'none',
+    zIndex: 1,
     position: 'fixed',
     bottom: theme.spacingLarge,
     left: 0,
@@ -59,6 +61,7 @@ export const useStyles = createUseStyles('Editor', {
   },
 
   picker: {
+    pointerEvents: 'auto',
     maxWidth: `calc(100% - 2 * ${theme.sizeHorizontalPadding})`,
   },
 });

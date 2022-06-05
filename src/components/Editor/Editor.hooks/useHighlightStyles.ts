@@ -5,7 +5,9 @@ import { theme } from '../../../styles';
 import type { Bar, Beat } from '../../../types';
 
 export function useHighlightStyles(beat: Beat, bars: Bar[]) {
-  const [highlightStyles, setHighlightStyles] = useState<CSSProperties>({});
+  const [highlightStyles, setHighlightStyles] = useState<CSSProperties>({
+    transform: 'translateX(-100%)',
+  });
 
   useEffect(() => {
     if (bars.length && beat.playNote) {
