@@ -5,7 +5,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "webpack --mode production",
-    "build:sounds": "src/sounds/build --bitrate 96",
+    "build:sounds": "src/sounds/wav2opus",
     "start": "webpack-dev-server --mode development",
     "lint": "eslint . --ext .ts,.tsx --fix && prettier ./src --write",
     "prepare": "husky install"
