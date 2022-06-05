@@ -39,6 +39,7 @@ export function Controls({
     <div className={clsx(className, classes.root)}>
       <ButtonPlay active playing={playing} onClick={onTogglePlaying} />
       <ButtonIcon
+        disabled
         active={metronomeEnabled}
         aria-label={`metronome ${metronomeEnabled ? 'enabled' : 'disabled'}`}
         onClick={onToggleMetronome}

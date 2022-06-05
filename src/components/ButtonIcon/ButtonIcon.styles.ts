@@ -20,6 +20,10 @@ export const useStyles = createUseStyles('ButtonIcon', {
       blockSize: '100%',
       inlineSize: '100%',
     },
+
+    '&[disabled]': {
+      opacity: 0.48,
+    },
   },
 
   active: {

@@ -24,6 +24,7 @@ export function MetronomeFrequency({
       Metronome
       <div className={classes.list}>
         <ButtonIcon
+          disabled
           active={metronomeFrequency === 4}
           aria-label="4th notes"
           onClick={handleSetFrequency(4)}
@@ -31,6 +32,7 @@ export function MetronomeFrequency({
           <Icon name="note-duration-4" />
         </ButtonIcon>
         <ButtonIcon
+          disabled
           active={metronomeFrequency === 8}
           aria-label="8th notes"
           onClick={handleSetFrequency(8)}
@@ -38,6 +40,7 @@ export function MetronomeFrequency({
           <Icon name="note-duration-8" />
         </ButtonIcon>
         <ButtonIcon
+          disabled
           active={metronomeFrequency === 16}
           aria-label="16th notes"
           onClick={handleSetFrequency(16)}
@@ -45,6 +48,7 @@ export function MetronomeFrequency({
           <Icon name="note-duration-16" />
         </ButtonIcon>
         <ButtonIcon
+          disabled
           active={metronomeFrequency === 32}
           aria-label="32th notes"
           onClick={handleSetFrequency(32)}

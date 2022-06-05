@@ -6,6 +6,7 @@ import { useStyles } from './ButtonIcon.styles';
 export interface ButtonIconProps extends HTMLAttributes<HTMLButtonElement> {
   'aria-label': string; // required
   active?: boolean;
+  disabled?: boolean;
 }
 
 export function ButtonIcon({ className, active, ...props }: ButtonIconProps) {
