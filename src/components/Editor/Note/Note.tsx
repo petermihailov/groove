@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import type { HTMLAttributes } from 'react';
-import {memo} from "react";
+import { memo } from 'react';
 
 import { getIconName, getNoteLabel } from './Note.utils';
 import type { IconName, Instrument, InstrumentGroup } from '../../../types';

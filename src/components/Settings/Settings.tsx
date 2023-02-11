@@ -15,7 +15,6 @@ const Settings = ({
   enabledGroups,
   setEnabledGroups,
 }: SettingsProps) => {
-
   return (
     <div className={classes.root}>
       <MetronomeFrequency
