@@ -9,6 +9,7 @@ module.exports = {
     './src/styles/reset.css',
     './src/styles/theme.css',
     './src/styles/main.css',
+    './src/styles/helpers.css',
     './src/index.tsx',
   ],
   output: {

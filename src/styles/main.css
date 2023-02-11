@@ -7,21 +7,10 @@
 }
 
 :where(body) {
+  -webkit-overflow-scrolling: touch;
   background-color: var(--color-surface1);
 }
 
 :where(h1, h2, h3, h4, h5, h6, dt) {
   color: var(--color-text);
-}
-
-/* helpers */
-.srOnly {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(50%);
 }
