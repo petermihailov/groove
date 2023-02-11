@@ -1,0 +1,4 @@
+.root {
+  padding: var(--size-3) var(--size-horizontal-padding) var(--size-5);
+  text-transform: uppercase;
+}

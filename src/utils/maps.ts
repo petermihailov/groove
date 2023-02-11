@@ -59,7 +59,7 @@ export const shirtInstrumentMap = {
 } as const;
 
 export const longInstrumentMap = Object.fromEntries(
-  Object.entries(shirtInstrumentMap).map(([value, key]) => [key, value])
+  Object.entries(shirtInstrumentMap).map(([value, key]) => [key, value]),
 );
 
 export const iconNamesMap: Record<Instrument, IconName> = {

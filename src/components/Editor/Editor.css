@@ -1,0 +1,60 @@
+.editor {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding-block: var(--size-1) var(--spacing-bar-bottom);
+  padding-inline-end: var(--size-horizontal-padding);
+  background-color: var(--color-surface2);
+  overflow: auto;
+}
+
+.groups {
+  position: sticky;
+  inset-inline-start: 0;
+  flex: none;
+  margin-inline-end: var(--size-1);
+  padding-block-end: 0;
+  padding-inline: var(--size-horizontal-padding) var(--size-1);
+}
+
+.groups::before {
+  position: absolute;
+  inset-block: calc(-1 * var(--size-1)) calc(-1 * var(--spacing-bar-bottom));
+  inset-inline-start: 0;
+  content: '';
+  z-index: -1;
+  width: 100%;
+  background-color: var(--color-highlight);
+  box-shadow: var(--shadow-1);
+  backdrop-filter: blur(20px);
+}
+
+.highlight {
+  position: absolute;
+  inset-block-start: 0;
+  width: var(--size-note);
+  height: 100%;
+  background-color: var(--color-highlight);
+  pointer-events: none;
+}
+
+.pickerWrapper {
+  position: fixed;
+  inset-block-end: var(--size-3);
+  inset-inline-start: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  pointer-events: none;
+  transition: transform 0.3s ease-in;
+}
+
+.pickerHidden {
+  transform: translateY(calc(100% + var(--size-3)));
+}
+
+.picker {
+  max-width: calc(100% - 2 * var(--size-horizontal-padding));
+  pointer-events: auto;
+}

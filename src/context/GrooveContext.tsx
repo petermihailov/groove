@@ -3,7 +3,7 @@ import type { Dispatch, FC, ReactNode } from 'react';
 
 import { grooveDefault, tempoMax, tempoMin } from '../constants';
 import type { Groove, Note, TimeDivision, TimeSignature } from '../types';
-import { exhaustiveCheck } from '../types';
+import type { Action } from '../utils';
 import {
   cloneBar,
   createAction,
@@ -13,47 +13,21 @@ import {
   scaleBar,
 } from '../utils';
 
-type AddBarAction = {
-  type: 'ADD_BAR';
-  /** Bar index */
-  payload: number;
-};
+/* Actions */
 
-type ClearBarAction = {
-  type: 'CLEAR_BAR';
-  /** Bar index */
-  payload: number;
-};
-
-type RemoveBarAction = {
-  type: 'REMOVE_BAR';
-  /** Bar index */
-  payload: number;
-};
-
-type SetGrooveFromStringAction = {
-  type: 'SET_GROOVE_FROM_STRING';
-  /** Groove string */
-  payload: string;
-};
-
-type SetNoteAction = {
-  type: 'SET_NOTE';
-  payload: Note;
-};
-
-type SetSignatureAction = {
-  type: 'SET_SIGNATURE';
-  payload: TimeSignature & {
+type AddBarAction = Action<'ADD_BAR', number>;
+type ClearBarAction = Action<'CLEAR_BAR', number>;
+type RemoveBarAction = Action<'REMOVE_BAR', number>;
+type SetGrooveFromStringAction = Action<'SET_GROOVE_FROM_STRING', string>;
+type SetNoteAction = Action<'SET_NOTE', Note>;
+type SetTempoAction = Action<'SET_TEMPO', number>;
+type SetSignatureAction = Action<
+  'SET_SIGNATURE',
+  TimeSignature & {
     barIndex: number;
     timeDivision: TimeDivision;
-  };
-};
-
-type SetTempoAction = {
-  type: 'SET_TEMPO';
-  payload: number;
-};
+  }
+>;
 
 type Actions =
   | AddBarAction
@@ -69,11 +43,11 @@ type Actions =
 export const addBarAction = createAction<AddBarAction>('ADD_BAR');
 export const clearBarAction = createAction<ClearBarAction>('CLEAR_BAR');
 export const removeBarAction = createAction<RemoveBarAction>('REMOVE_BAR');
-export const setGrooveFromStringAction =
-  createAction<SetGrooveFromStringAction>('SET_GROOVE_FROM_STRING');
 export const setNoteAction = createAction<SetNoteAction>('SET_NOTE');
 export const setSignatureAction = createAction<SetSignatureAction>('SET_SIGNATURE');
 export const setTempoAction = createAction<SetTempoAction>('SET_TEMPO');
+export const setGrooveFromStringAction =
+  createAction<SetGrooveFromStringAction>('SET_GROOVE_FROM_STRING');
 
 /* Reducer */
 
@@ -120,9 +94,9 @@ const reducer = (state: State, action: Actions): State => {
         groove.tempo = Math.min(tempoMax, Math.max(tempoMin, Number(groove.tempo)));
 
         const damageCheck = groove.bars.every((bar) => Object.values(bar).every(Boolean));
-        if (!damageCheck) throw new Error();
+        if (!damageCheck) throw new Error('Groove damaged');
       } catch (err) {
-        alert('Groove damaged');
+        alert(err);
         groove = createGrooveFromString(grooveDefault);
       }
 
@@ -170,10 +144,11 @@ const reducer = (state: State, action: Actions): State => {
     case 'SET_TEMPO': {
       return { ...state, tempo: action.payload };
     }
-  }
 
-  exhaustiveCheck(action);
-  return state;
+    default: {
+      return state;
+    }
+  }
 };
 
 /* Context */
@@ -198,7 +173,13 @@ export const GrooveProvider: FC<{ children: ReactNode; initial?: State }> = ({
 /* Hooks */
 
 export const useGrooveContext = () => {
-  return useContext(GrooveContext);
+  const context = useContext(GrooveContext);
+
+  if (!context) {
+    throw new Error('useGrooveContext must be used within a <GrooveContext />');
+  }
+
+  return context;
 };
 
 export const useGrooveState = () => {

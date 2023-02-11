@@ -1,23 +1,24 @@
 import clsx from 'clsx';
 import type { ChangeEventHandler, HTMLAttributes, ReactNode } from 'react';
+import { memo } from 'react';
 
-import { useStyles } from './Select.styles';
+import classes from './Select.css';
 
-export type SelectOption<T> = {
+export interface SelectOption<T> {
   value: T;
   label: string | number;
   customLabel?: ReactNode;
   disabled?: boolean;
-};
+}
 
-export interface SelectProps<T> extends Omit<HTMLAttributes<HTMLSelectElement>, 'onChange'> {
+export interface SelectProps<T>
+  extends Omit<HTMLAttributes<HTMLSelectElement>, 'onChange' | 'children'> {
   value?: T;
   options: SelectOption<T>[];
   onChange?: (value: T) => void;
 }
 
-export function Select<T>({ className, value, options, onChange, ...props }: SelectProps<T>) {
-  const classes = useStyles();
+const Select = <T,>({ className, value, options, onChange, ...props }: SelectProps<T>) => {
   const selectedIndex = options.findIndex((option) => option.value === value);
 
   const changeHandler: ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -26,7 +27,7 @@ export function Select<T>({ className, value, options, onChange, ...props }: Sel
   };
 
   return (
-    <div className={clsx(className, classes.root)}>
+    <div className={clsx(className, classes.select)}>
       <select
         className={classes.selectNative}
         value={selectedIndex}
@@ -45,4 +46,6 @@ export function Select<T>({ className, value, options, onChange, ...props }: Sel
       </div>
     </div>
   );
-}
+};
+
+export default memo(Select) as typeof Select;

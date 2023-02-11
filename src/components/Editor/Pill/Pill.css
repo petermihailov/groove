@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  padding: var(--size-1) var(--size-3);
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface2);
+  box-shadow: var(--shadow-5);
+  overflow: auto;
+}
+
+.root > * {
+  flex: none;
+}
+
+.root > * + * {
+  margin-inline-start: var(--size-1);
+}

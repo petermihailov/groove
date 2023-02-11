@@ -1,0 +1,7 @@
+# folders
+build/
+
+# files
+tsconfig.json
+package-lock.json
+package.json

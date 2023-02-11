@@ -5,17 +5,16 @@ import { InstrumentGroups } from './InstrumentGroups';
 import type { MetronomeFrequencyProps } from './MetronomeFrequency';
 import { MetronomeFrequency } from './MetronomeFrequency';
 
-import { useStyles } from './Settings.styles';
+import classes from './Settings.css';
 
-interface SettingsProps extends InstrumentGroupsProps, MetronomeFrequencyProps {}
+export interface SettingsProps extends InstrumentGroupsProps, MetronomeFrequencyProps {}
 
-export const Settings = memo(function Settings({
+const Settings = ({
   metronomeFrequency,
   setMetronomeFrequency,
   enabledGroups,
   setEnabledGroups,
-}: SettingsProps) {
-  const classes = useStyles();
+}: SettingsProps) => {
 
   return (
     <div className={classes.root}>
@@ -26,4 +25,6 @@ export const Settings = memo(function Settings({
       <InstrumentGroups enabledGroups={enabledGroups} setEnabledGroups={setEnabledGroups} />
     </div>
   );
-});
+};
+
+export default memo(Settings);

@@ -1,0 +1,11 @@
+.controls {
+  display: grid;
+  grid-template-columns: var(--size-icon) var(--size-icon) auto var(--size-icon) var(--size-icon);
+  grid-gap: var(--size-1);
+  align-items: center;
+  padding: var(--size-3) var(--size-horizontal-padding);
+}
+
+.bpm {
+  flex: 1;
+}

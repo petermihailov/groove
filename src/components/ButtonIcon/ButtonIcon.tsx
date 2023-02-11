@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import type { HTMLAttributes } from 'react';
 
-import { useStyles } from './ButtonIcon.styles';
+import classes from './ButtonIcon.css';
 
 export interface ButtonIconProps extends HTMLAttributes<HTMLButtonElement> {
   'aria-label': string; // required
@@ -9,8 +9,7 @@ export interface ButtonIconProps extends HTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;
 }
 
-export function ButtonIcon({ className, active, ...props }: ButtonIconProps) {
-  const classes = useStyles();
+const ButtonIcon = ({ className, active, ...props }: ButtonIconProps) => {
   const title = props['aria-label'];
 
   return (
@@ -20,4 +19,6 @@ export function ButtonIcon({ className, active, ...props }: ButtonIconProps) {
       {...props}
     />
   );
-}
+};
+
+export default ButtonIcon;

@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { memo } from 'react';
 
 import { tempoMax, tempoMin } from '../../constants';
 import type { Groove } from '../../types';
@@ -8,9 +9,9 @@ import { Icon } from '../Icon';
 import { Range } from '../Range';
 import { ThemeSwitcher } from '../ThemeSwitcher';
 
-import { useStyles } from './Controls.styles';
+import classes from './Controls.css';
 
-type ControlsProps = {
+export interface ControlsProps {
   className?: string;
   groove: Groove;
   metronomeEnabled: boolean;
@@ -20,9 +21,9 @@ type ControlsProps = {
   onTogglePlaying: () => void;
   playing: boolean;
   settingsOpened: boolean;
-};
+}
 
-export function Controls({
+const Controls = ({
   className,
   groove,
   metronomeEnabled,
@@ -32,11 +33,9 @@ export function Controls({
   onTogglePlaying,
   playing,
   settingsOpened,
-}: ControlsProps) {
-  const classes = useStyles();
-
+}: ControlsProps) => {
   return (
-    <div className={clsx(className, classes.root)}>
+    <div className={clsx(className, classes.controls)}>
       <ButtonPlay active playing={playing} onClick={onTogglePlaying} />
       <ButtonIcon
         disabled
@@ -62,4 +61,6 @@ export function Controls({
       <ThemeSwitcher />
     </div>
   );
-}
+};
+
+export default memo(Controls);

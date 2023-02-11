@@ -16,6 +16,6 @@ if (container) {
         <App />
       </GrooveProvider>
       <Sprite />
-    </ErrorBoundary>
+    </ErrorBoundary>,
   );
 }

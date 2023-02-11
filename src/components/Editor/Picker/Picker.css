@@ -1,0 +1,21 @@
+.iconCenter svg {
+  transform: translateY(-0.4rem);
+}
+
+.iconHhFoot svg {
+  transform: translateY(0);
+}
+
+.selected {
+  position: relative;
+}
+
+.selected::before {
+  position: absolute;
+  inset-block-end: -4px;
+  inset-inline: 4px;
+  content: '';
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-accent);
+}

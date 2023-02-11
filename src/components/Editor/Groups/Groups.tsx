@@ -4,16 +4,14 @@ import { memo } from 'react';
 import type { InstrumentGroupEnabled } from '../../../types';
 import { Icon } from '../../Icon';
 
-import { useStyles } from './Groups.styles';
+import classes from './Groups.css';
 
-type GroupsProps = {
+export interface GroupsProps {
   className?: string;
   enabledGroups: InstrumentGroupEnabled;
-};
+}
 
-export const Groups = memo(function Groups({ className, enabledGroups }: GroupsProps) {
-  const classes = useStyles();
-
+const Groups = ({ className, enabledGroups }: GroupsProps) => {
   return (
     <div className={clsx(className, classes.root)}>
       {enabledGroups.cy && <Icon className={classes.toBottom} name="group-cy" />}
@@ -26,4 +24,6 @@ export const Groups = memo(function Groups({ className, enabledGroups }: GroupsP
       {enabledGroups.hh && <Icon name="group-hh-foot" />}
     </div>
   );
-});
+};
+
+export default memo(Groups);

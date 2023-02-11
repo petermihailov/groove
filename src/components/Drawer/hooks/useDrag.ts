@@ -48,7 +48,7 @@ type StateChangeCallback<T> = (arg: Readonly<GestureState<T>>) => void;
  */
 export function useDrag<T>(
   elementRef: RefObject<HTMLElement>,
-  onStateChange: StateChangeCallback<T>
+  onStateChange: StateChangeCallback<T>,
 ) {
   const touchIdentifierRef = useRef<number>();
   const gestureStateRef = useRef<GestureState<T>>();
@@ -59,7 +59,7 @@ export function useDrag<T>(
       const onChange = onStateChangeRef.current ?? noop;
       let state: GestureState<T> | undefined = gestureStateRef.current;
       let touch = Array.from(event.changedTouches).find(
-        (item) => item.identifier === touchIdentifierRef.current
+        (item) => item.identifier === touchIdentifierRef.current,
       );
 
       if (
@@ -125,7 +125,7 @@ export function useDrag<T>(
         onChange(state);
       }
     },
-    [onStateChangeRef]
+    [onStateChangeRef],
   );
 
   // обновляем колбэк при каждом рендере, так нам не нужно будет использовать useCallback

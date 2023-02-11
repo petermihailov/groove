@@ -16,11 +16,9 @@ import { Drawer } from '../Drawer';
 import { Editor } from '../Editor';
 import { Settings } from '../Settings';
 
-import { useStyles } from './App.styles';
+import classes from './App.css';
 
-export const App = memo(function App() {
-  const classes = useStyles();
-
+const App = () => {
   const { groove, dispatch } = useGrooveContext();
   const { beat, play, playing, stop } = usePlayer(groove);
 
@@ -37,21 +35,21 @@ export const App = memo(function App() {
     (tempo: number) => {
       dispatch(setTempoAction(tempo));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const addBar = useCallback(
     (barIndex: number) => {
       dispatch(addBarAction(barIndex));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const clearBar = useCallback(
     (barIndex: number) => {
       dispatch(clearBarAction(barIndex));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const removeBar = useCallback(
@@ -59,14 +57,14 @@ export const App = memo(function App() {
       dispatch(removeBarAction(barIndex));
       stop();
     },
-    [dispatch, stop]
+    [dispatch, stop],
   );
 
   const setNote = useCallback(
     (note: Note) => {
       dispatch(setNoteAction(note));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const setSignature = useCallback(
@@ -74,12 +72,12 @@ export const App = memo(function App() {
       signature: TimeSignature & {
         barIndex: number;
         timeDivision: TimeDivision;
-      }
+      },
     ) => {
       dispatch(setSignatureAction(signature));
       stop();
     },
-    [dispatch, stop]
+    [dispatch, stop],
   );
 
   useQuerySync();
@@ -121,4 +119,6 @@ export const App = memo(function App() {
       </Drawer>
     </>
   );
-});
+};
+
+export default memo(App);

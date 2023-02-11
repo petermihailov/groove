@@ -7,16 +7,15 @@ import { Note } from '../Note';
 import { getDataFromNoteElement } from '../Note/Note.utils';
 import { Pill } from '../Pill';
 
-import { useStyles } from './Picker.styles';
+import classes from './Picker.css';
 
-type PickerProps = {
+export interface PickerProps {
   className?: string;
   note: NoteType | null;
   onChange: (note: NoteType) => void;
-};
+}
 
-export const Picker = memo(function Picker({ className, note, onChange }: PickerProps) {
-  const classes = useStyles();
+const Picker = ({ className, note, onChange }: PickerProps) => {
   const [cachedNote, setCachedNote] = useState<NoteType | null>(note);
 
   const handleChange: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -52,4 +51,6 @@ export const Picker = memo(function Picker({ className, note, onChange }: Picker
         ))}
     </Pill>
   );
-});
+};
+
+export default memo(Picker);

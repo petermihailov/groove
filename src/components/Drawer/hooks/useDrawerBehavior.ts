@@ -20,7 +20,7 @@ export function useDrawerBehavior(
   open: boolean,
   refs: DrawerRefs,
   onClose?: () => void,
-  dragDisabled?: boolean
+  dragDisabled?: boolean,
 ) {
   /* Обработчик drag-событий с корневого DOM-элемента */
   useDrag<IDragStateData>(refs.root, (dragState) => {

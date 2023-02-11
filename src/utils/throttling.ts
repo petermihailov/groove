@@ -20,7 +20,7 @@ type ThrottleOptions = Partial<{
 export function throttle<T extends (...args: any[]) => any>(
   delay: number,
   callback: T,
-  options?: ThrottleOptions
+  options?: ThrottleOptions,
 ): Throttle<T> {
   const { noTrailing = false, noLeading = false, debounceMode = undefined } = options || {};
 
@@ -74,7 +74,7 @@ export function throttle<T extends (...args: any[]) => any>(
     } else if (!noTrailing) {
       timeoutId = window.setTimeout(
         debounceMode ? clear : exec,
-        debounceMode === undefined ? delay - elapsed : delay
+        debounceMode === undefined ? delay - elapsed : delay,
       );
     }
   };
@@ -86,7 +86,7 @@ export function throttle<T extends (...args: any[]) => any>(
 
 export function debounce<T extends (...args: any[]) => any>(
   delay: number,
-  callback: T
+  callback: T,
 ): Debounce<T> {
   return throttle(delay, callback, { debounceMode: true });
 }

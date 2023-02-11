@@ -1,10 +1,9 @@
-# Dependency directories
+# dependency directories
 .npm_cache
 node_modules/
 
-# Build
-dist
-public
+# build
+build/
 
-# Files
+# files
 webpack.config.js

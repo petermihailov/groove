@@ -1,7 +1,4 @@
-declare global {
-  interface Window {
-    webkitAudioContext: typeof AudioContext;
-  }
+declare module '*.css' {
+  const classes: { [key: string]: string };
+  export default classes;
 }
-
-export {};

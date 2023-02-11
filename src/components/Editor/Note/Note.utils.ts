@@ -7,6 +7,7 @@ export const getIconName = (instrument: Instrument | null, group: InstrumentGrou
     if (group === 'hh') {
       return iconNamesMap.hhCloseRegular;
     }
+
     return 'note-empty';
   }
 

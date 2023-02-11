@@ -18,7 +18,7 @@ export async function fetchAndDecodeAudio(url: string) {
       (e) => {
         console.log(e);
         reject(e);
-      }
+      },
     );
   });
 }

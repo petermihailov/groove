@@ -1,20 +1,26 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "target": "ES2021",
-    "lib": ["DOM", "DOM.Iterable", "ES2021"],
-    "outDir": "./dist",
-    "module": "es6",
-    "jsx": "react-jsx",
+    "sourceMap": true,
+    "target": "es2015",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
     "moduleResolution": "node",
-    "noImplicitAny": true,
-    "sourceMap": true
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx"
   },
-  "exclude": ["node_modules"],
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.d.ts"
+    "src"
   ]
 }

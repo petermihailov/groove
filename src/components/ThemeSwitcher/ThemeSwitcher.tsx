@@ -1,19 +1,15 @@
 import clsx from 'clsx';
 import { memo } from 'react';
 
+import { useThemeSwitch } from './useThemeSwitch';
 import type { ButtonIconProps } from '../ButtonIcon';
 import { ButtonIcon } from '../ButtonIcon';
-import { useThemeSwitch } from './useThemeSwitch';
 
-import { useStyles } from './ThemeSwitcher.styles';
+import classes from './ThemeSwitcher.css';
 
-type ThemeSwitcherProps = Omit<ButtonIconProps, 'aria-label'>;
+export type ThemeSwitcherProps = Omit<ButtonIconProps, 'aria-label'>;
 
-export const ThemeSwitcher = memo(function ThemeSwitcher({
-  className,
-  ...props
-}: ThemeSwitcherProps) {
-  const classes = useStyles();
+const ThemeSwitcher = ({ className, ...props }: ThemeSwitcherProps) => {
   const { theme, toggleTheme } = useThemeSwitch();
 
   return (
@@ -55,4 +51,6 @@ export const ThemeSwitcher = memo(function ThemeSwitcher({
       </svg>
     </ButtonIcon>
   );
-});
+};
+
+export default memo(ThemeSwitcher);

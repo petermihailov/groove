@@ -1,7 +1,6 @@
 import type { CSSProperties } from 'react';
 import { useEffect, useState } from 'react';
 
-import { theme } from '../../../styles';
 import type { Bar, Beat } from '../../../types';
 
 export function useHighlightStyles(beat: Beat, bars: Bar[]) {
@@ -12,11 +11,11 @@ export function useHighlightStyles(beat: Beat, bars: Bar[]) {
   useEffect(() => {
     if (bars.length && beat.playNote) {
       const barOffset = bars.slice(0, beat.barIndex).reduce((acc, bar) => acc + bar.length, 0);
-      const noteWithSpacing = `(${theme.sizeNote} + ${theme.spacingNote})`;
-      const barSpacingOffset = `calc(${beat.barIndex} * (${theme.spacingBars} - ${theme.spacingNote}))`;
+      const noteWithSpacing = `(var(--spacing-note) + var(--spacing-note))`;
+      const barSpacingOffset = `calc(${beat.barIndex} * (var(--spacing-bars) - var(--spacing-note)))`;
 
       // sorry for this
-      const translateStart = `translateX(calc(${theme.sizeHorizontalPadding} + ${theme.sizeIcon} + ${theme.spacingSmall} + ${theme.spacingSmall}))`;
+      const translateStart = `translateX(calc(var(--size-horizontal-padding) + var(--size-icon) + var(--size-1) + var(--size-1)))`;
       const translateRhythm = `translateX(calc(${beat.rhythmIndex} * ${noteWithSpacing}))`;
       const translateBarOffset = `translateX(calc(${barOffset} * ${noteWithSpacing} + ${barSpacingOffset}))`;
 

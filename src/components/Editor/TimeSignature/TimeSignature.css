@@ -1,0 +1,12 @@
+.root {
+  display: flex;
+  align-items: center;
+}
+
+.root > * {
+  flex: none;
+}
+
+.root > * + * {
+  margin-inline-start: var(--size-1);
+}

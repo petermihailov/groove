@@ -1,0 +1,27 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inline-size: var(--size-control);
+  block-size: var(--size-control);
+  padding: 0;
+  color: var(--color-icon);
+  border: none;
+  border-radius: var(--radius-round);
+  background: none;
+  outline-offset: 5px;
+  cursor: pointer;
+}
+
+.root > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.root[disabled] {
+  opacity: 0.48;
+}
+
+.active {
+  color: var(--color-accent);
+}

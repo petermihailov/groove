@@ -1,31 +1,22 @@
 import clsx from 'clsx';
 import type { HTMLAttributes } from 'react';
-import { memo } from 'react';
+import {memo} from "react";
 
+import { getIconName, getNoteLabel } from './Note.utils';
 import type { IconName, Instrument, InstrumentGroup } from '../../../types';
 import { ButtonIcon } from '../../ButtonIcon';
 import { Icon } from '../../Icon';
-import { getIconName, getNoteLabel } from './Note.utils';
 
-import { useStyles } from './Note.styles';
+import classes from './Note.css';
 
-interface NoteProps extends HTMLAttributes<HTMLButtonElement> {
+export interface NoteProps extends HTMLAttributes<HTMLButtonElement> {
   group: InstrumentGroup;
   icon?: IconName;
   index: number;
   instrument: Instrument | null;
 }
 
-export const Note = memo(function Note({
-  className,
-  group,
-  icon,
-  index,
-  instrument,
-  ...delegated
-}: NoteProps) {
-  const classes = useStyles();
-
+const Note = ({ className, group, icon, index, instrument, ...delegated }: NoteProps) => {
   const isEmpty = !instrument;
   const iconName = icon || getIconName(instrument, group);
   const label = getNoteLabel(instrument, group);
@@ -45,4 +36,6 @@ export const Note = memo(function Note({
       />
     </ButtonIcon>
   );
-});
+};
+
+export default memo(Note);

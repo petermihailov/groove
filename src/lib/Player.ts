@@ -88,7 +88,7 @@ export class Player {
           rhythmIndex: nextRhythmIndex,
           playNote: Boolean(instruments.length),
         }),
-      this.nextBeatAt - this.audioCtx.currentTime * 1000
+      this.nextBeatAt - this.audioCtx.currentTime * 1000,
     );
   }
 

@@ -1,0 +1,14 @@
+.root {
+  width: var(--size-note);
+  height: var(--size-note);
+  transition: opacity 0.15s ease-in;
+}
+
+.empty {
+  opacity: 0.15;
+}
+
+.emptyCymbal {
+  transform: scale(0.5);
+  transform-origin: bottom;
+}

@@ -5,9 +5,9 @@ import type { TimeDivision, TimeSignature as TimeSignatureType } from '../../../
 import { Icon } from '../../Icon';
 import { Select } from '../../Select';
 
-import { useStyles } from './TimeSignature.styles';
+import classes from './TimeSignature.css';
 
-type TimeSignatureProps = TimeSignatureType & {
+export interface TimeSignatureProps extends TimeSignatureType {
   className?: string;
   barIndex: number;
   timeDivision: TimeDivision;
@@ -15,28 +15,26 @@ type TimeSignatureProps = TimeSignatureType & {
     signature: TimeSignatureType & {
       barIndex: number;
       timeDivision: TimeDivision;
-    }
+    },
   ) => void;
-};
+}
 
 const timeDivisionOptions: TimeDivision[] = [4, 8, 16, 32];
 const beatsPerBarOptions: TimeSignatureType['beatsPerBar'][] = Array.from({ length: 14 }).map(
-  (_, idx) => idx + 2
+  (_, idx) => idx + 2,
 ); // top 2..14
 const noteValueOptions: TimeSignatureType['noteValue'][] = [4, 8, 16]; // bottom 4 , 8, 16
 
-export const TimeSignature = memo(function TimeSignature({
+const TimeSignature = ({
   className,
   barIndex,
   beatsPerBar,
   noteValue,
   onChangeSignature,
   timeDivision,
-}: TimeSignatureProps) {
-  const classes = useStyles();
-
+}: TimeSignatureProps) => {
   const changeSignature = (
-    patch: Partial<TimeSignatureType & { barIndex: number; timeDivision: TimeDivision }>
+    patch: Partial<TimeSignatureType & { barIndex: number; timeDivision: TimeDivision }>,
   ) => {
     onChangeSignature({
       barIndex,
@@ -92,4 +90,6 @@ export const TimeSignature = memo(function TimeSignature({
       />
     </div>
   );
-});
+};
+
+export default memo(TimeSignature);

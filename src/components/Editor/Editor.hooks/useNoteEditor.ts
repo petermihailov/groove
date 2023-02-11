@@ -42,7 +42,7 @@ export function useNoteEditor(setNote: (note: Note) => void) {
         }
       }
     },
-    [defaults, setNote]
+    [defaults, setNote],
   );
 
   const changeNote = useCallback(
@@ -51,7 +51,7 @@ export function useNoteEditor(setNote: (note: Note) => void) {
       setDefaults((prev) => ({ ...prev, [note.group]: note.instrument }));
       setFocusedNote(null);
     },
-    [setNote]
+    [setNote],
   );
 
   return {

@@ -1,7 +1,7 @@
-import type { Groove, Bar } from '../types';
 import { createEmptyBar, getInstrumentsByIndex, getUsedGroups } from './groove';
 import { isInstrument, isTimeDivision } from './guards';
 import { longInstrumentMap, shirtInstrumentMap, shirtSymbolsMap as symbols } from './maps';
+import type { Groove, Bar } from '../types';
 
 export const readStringParamValue = (settingsString: string, shirtParam: string) => {
   const pattern = new RegExp(`${shirtParam}[0-9]+`, 'g');

@@ -1,6 +1,10 @@
 import clsx from 'clsx';
 import { memo, useRef } from 'react';
 
+import { Bar } from './Bar';
+import { useHighlightStyles, useNoteEditor } from './Editor.hooks';
+import { Groups } from './Groups';
+import { Picker } from './Picker';
 import { useClickOutside } from '../../hooks';
 import type {
   Bar as BarType,
@@ -10,14 +14,10 @@ import type {
   TimeDivision,
   TimeSignature,
 } from '../../types';
-import { Bar } from './Bar';
-import { useHighlightStyles, useNoteEditor } from './Editor.hooks';
-import { Groups } from './Groups';
-import { Picker } from './Picker';
 
-import { useStyles } from './Editor.styles';
+import classes from './Editor.css';
 
-type EditorProps = {
+export interface EditorProps {
   bars: BarType[];
   beat: Beat;
   enabledGroups: InstrumentGroupEnabled;
@@ -29,12 +29,12 @@ type EditorProps = {
     signature: TimeSignature & {
       barIndex: number;
       timeDivision: TimeDivision;
-    }
+    },
   ) => void;
   playing: boolean;
-};
+}
 
-export const Editor = memo(function Editor({
+export const Editor = ({
   beat,
   bars,
   enabledGroups,
@@ -43,9 +43,7 @@ export const Editor = memo(function Editor({
   onRemoveBar,
   onSetNote,
   onChangeSignature,
-}: EditorProps) {
-  const classes = useStyles();
-
+}: EditorProps) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const highlightBeatStyles = useHighlightStyles(beat, bars);
   const { blurNote, changeNote, focusedNote, toggleNote } = useNoteEditor(onSetNote);
@@ -53,7 +51,7 @@ export const Editor = memo(function Editor({
   useClickOutside(editorRef, blurNote);
 
   return (
-    <div ref={editorRef} className={classes.root}>
+    <div ref={editorRef} className={classes.editor}>
       <div className={classes.groups}>
         <Groups enabledGroups={enabledGroups} />
       </div>
@@ -83,4 +81,6 @@ export const Editor = memo(function Editor({
       </div>
     </div>
   );
-});
+};
+
+export default memo(Editor);

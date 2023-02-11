@@ -1,0 +1,10 @@
+.controlsWrapper {
+  position: sticky;
+  inset-block-end: 0;
+  background-color: var(--color-surface1);
+  box-shadow: var(--shadow-1);
+}
+
+.controls {
+  max-width: 50rem;
+}

@@ -1,0 +1,11 @@
+.select {
+  position: relative;
+  overflow: hidden;
+}
+
+.selectNative {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  opacity: 0;
+}

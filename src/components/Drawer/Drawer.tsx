@@ -1,15 +1,13 @@
 import clsx from 'clsx';
-import { createRef, memo, useMemo } from 'react';
+import { createRef, useMemo } from 'react';
 
-import { useInOutAnimation, useLockBodyScroll } from '../../hooks';
 import type { DrawerProps } from './Drawer.props';
 import { useClientHeight, useDrawerBehavior } from './hooks';
+import { useInOutAnimation, useLockBodyScroll } from '../../hooks';
 
-import useStyles from './Drawer.styles';
+import classes from './Drawer.css';
 
-export const Drawer = memo(function Drawer(props: DrawerProps) {
-  const classes = useStyles();
-
+const Drawer = (props: DrawerProps) => {
   const {
     children,
     className,
@@ -35,7 +33,7 @@ export const Drawer = memo(function Drawer(props: DrawerProps) {
       curtain: createRef<HTMLDivElement>(),
       overlay: createRef<HTMLDivElement>(),
     }),
-    [contentRef]
+    [contentRef],
   );
 
   useDrawerBehavior(open, refs, onClose, dragDisabled);
@@ -47,7 +45,7 @@ export const Drawer = memo(function Drawer(props: DrawerProps) {
   return (
     <div
       ref={refs.root}
-      className={clsx(classes.root, {
+      className={clsx(classes.drawer, {
         [classes.show]: open,
         [classes.hide]: !open,
         [classes.pristine]: inPristineState,
@@ -64,4 +62,6 @@ export const Drawer = memo(function Drawer(props: DrawerProps) {
       </div>
     </div>
   );
-});
+};
+
+export default Drawer;

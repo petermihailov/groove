@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 export function useClickOutside(
   ref: Array<RefObject<HTMLElement>> | RefObject<HTMLElement>,
-  handler?: (e: MouseEvent) => void
+  handler?: (e: MouseEvent) => void,
 ) {
   useEffect(() => {
     const refs = !Array.isArray(ref) ? [ref] : ref;

@@ -17,7 +17,7 @@ export function useThemeSwitch() {
 
   const toggleTheme = useCallback(
     () => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark')),
-    []
+    [],
   );
 
   useEffect(() => {

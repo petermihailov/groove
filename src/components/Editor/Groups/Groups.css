@@ -1,0 +1,10 @@
+.root {
+  display: grid;
+  grid-gap: var(--spacing-note);
+  align-items: center;
+  color: var(--color-accent);
+}
+
+.toBottom {
+  align-self: end;
+}

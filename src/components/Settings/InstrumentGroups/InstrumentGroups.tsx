@@ -1,17 +1,17 @@
+import { memo } from 'react';
+
 import type { InstrumentGroup, InstrumentGroupEnabled } from '../../../types';
 import { ButtonIcon } from '../../ButtonIcon';
 import { Icon } from '../../Icon';
 
-import { useStyles } from './InstrumentGroups.styles';
+import classes from './InstrumentGroups.css';
 
-export type InstrumentGroupsProps = {
+export interface InstrumentGroupsProps {
   enabledGroups: InstrumentGroupEnabled;
   setEnabledGroups: (enabledGroups: InstrumentGroupEnabled) => void;
-};
+}
 
-export function InstrumentGroups({ enabledGroups, setEnabledGroups }: InstrumentGroupsProps) {
-  const classes = useStyles();
-
+const InstrumentGroups = ({ enabledGroups, setEnabledGroups }: InstrumentGroupsProps) => {
   const toggleGroup = (group: InstrumentGroup) => () => {
     setEnabledGroups?.({
       ...enabledGroups,
@@ -20,7 +20,7 @@ export function InstrumentGroups({ enabledGroups, setEnabledGroups }: Instrument
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.instrumentGroups}>
       Groups
       <div className={classes.list}>
         <ButtonIcon active={enabledGroups?.cy} aria-label="cymbals" onClick={toggleGroup('cy')}>
@@ -47,4 +47,6 @@ export function InstrumentGroups({ enabledGroups, setEnabledGroups }: Instrument
       </div>
     </div>
   );
-}
+};
+
+export default memo(InstrumentGroups);

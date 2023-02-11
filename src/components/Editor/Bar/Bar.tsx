@@ -16,9 +16,9 @@ import { BarLine } from '../BarLine';
 import { Pill } from '../Pill';
 import { TimeSignature } from '../TimeSignature';
 
-import { useStyles } from './Bar.styles';
+import classes from './Bar.css';
 
-type BarProps = {
+export interface BarProps {
   className?: string;
   bar: BarType;
   barIndex: number;
@@ -31,11 +31,11 @@ type BarProps = {
     signature: TimeSignatureType & {
       barIndex: number;
       timeDivision: TimeDivision;
-    }
+    },
   ) => void;
-};
+}
 
-export const Bar = memo(function Bar({
+const Bar = ({
   className,
   bar,
   barIndex,
@@ -45,9 +45,7 @@ export const Bar = memo(function Bar({
   onClick,
   onRemoveBar,
   onChangeSignature,
-}: BarProps) {
-  const classes = useStyles();
-
+}: BarProps) => {
   const [actions, setActions] = useState(false);
   const actionsRef = useRef(null);
 
@@ -129,4 +127,6 @@ export const Bar = memo(function Bar({
       </div>
     </div>
   );
-});
+};
+
+export default memo(Bar);

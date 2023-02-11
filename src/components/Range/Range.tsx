@@ -6,9 +6,9 @@ import type {
   KeyboardEventHandler,
   ReactNode,
 } from 'react';
-import { memo, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-import { useStyles } from './Range.styles';
+import classes from './Range.css';
 
 const rangeToPercent = (value: number, min: number, max: number) => {
   const percent = value / (max - min) - min / (max - min);
@@ -23,16 +23,7 @@ export interface RangeProps extends Omit<HTMLAttributes<HTMLInputElement>, 'onCh
   onChange: (value: number) => void;
 }
 
-export const Range = memo(function Range({
-  className,
-  label,
-  min = 0,
-  max = 100,
-  value,
-  onChange,
-  ...props
-}: RangeProps) {
-  const classes = useStyles();
+const Range = ({ className, label, min = 0, max = 100, value, onChange, ...props }: RangeProps) => {
   const decimalRef = useRef<HTMLInputElement>(null);
   const rangeRef = useRef<HTMLInputElement>(null);
 
@@ -103,4 +94,6 @@ export const Range = memo(function Range({
       />
     </label>
   );
-});
+};
+
+export default Range;

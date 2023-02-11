@@ -4,11 +4,9 @@ import { memo, useEffect, useRef } from 'react';
 import type { ButtonIconProps } from '../ButtonIcon';
 import { ButtonIcon } from '../ButtonIcon';
 
-import { useStyles } from './ButtonPlay.styles';
-
-type ButtonPlayProps = Omit<ButtonIconProps, 'aria-label'> & {
+export interface ButtonPlayProps extends Omit<ButtonIconProps, 'aria-label'> {
   playing: boolean;
-};
+}
 
 const animationProps = {
   begin: 'indefinite',
@@ -17,13 +15,7 @@ const animationProps = {
   dur: '150ms',
 };
 
-export const ButtonPlay = memo(function ButtonPlay({
-  className,
-  playing,
-  ...props
-}: ButtonPlayProps) {
-  const classes = useStyles();
-
+const ButtonPlay = ({ className, playing, ...props }: ButtonPlayProps) => {
   const playAnimationRef = useRef<SVGAnimateElement>(null);
   const stopAnimationRef = useRef<SVGAnimateElement>(null);
 
@@ -40,14 +32,7 @@ export const ButtonPlay = memo(function ButtonPlay({
 
   return (
     <ButtonIcon aria-label={playing ? 'stop' : 'play'} className={clsx(className)} {...props}>
-      <svg
-        className={classes.icon}
-        fill="currentColor"
-        height="24"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        width="24"
-      >
+      <svg fill="currentColor" height="24" stroke="currentColor" viewBox="0 0 24 24" width="24">
         <polygon points={playPolygon} strokeLinejoin="round" strokeWidth="5">
           <animate ref={stopAnimationRef} to={stopPolygon} {...animationProps} />
           <animate ref={playAnimationRef} to={playPolygon} {...animationProps} />
@@ -55,4 +40,6 @@ export const ButtonPlay = memo(function ButtonPlay({
       </svg>
     </ButtonIcon>
   );
-});
+};
+
+export default memo(ButtonPlay);

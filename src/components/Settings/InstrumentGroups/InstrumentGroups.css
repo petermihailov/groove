@@ -1,0 +1,11 @@
+.instrumentGroups {
+  display: flex;
+  gap: var(--size-1);
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list {
+  display: flex;
+  gap: var(--size-1);
+}

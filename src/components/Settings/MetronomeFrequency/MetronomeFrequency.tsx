@@ -1,26 +1,26 @@
+import { memo } from 'react';
+
 import type { MetronomeFrequency as MetronomeFrequencyType } from '../../../types';
 import { ButtonIcon } from '../../ButtonIcon';
 import { Icon } from '../../Icon';
 
-import { useStyles } from './MetronomeFrequency.styles';
+import classes from './MetronomeFrequency.css';
 
-export type MetronomeFrequencyProps = {
+export interface MetronomeFrequencyProps {
   metronomeFrequency?: MetronomeFrequencyType;
   setMetronomeFrequency?: (frequency: MetronomeFrequencyType) => void;
-};
+}
 
-export function MetronomeFrequency({
+const MetronomeFrequency = ({
   metronomeFrequency,
   setMetronomeFrequency,
-}: MetronomeFrequencyProps) {
-  const classes = useStyles();
-
+}: MetronomeFrequencyProps) => {
   const handleSetFrequency = (frequency: MetronomeFrequencyType) => () => {
     setMetronomeFrequency?.(frequency);
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.metronomeFrequency}>
       Metronome
       <div className={classes.list}>
         <ButtonIcon
@@ -58,4 +58,6 @@ export function MetronomeFrequency({
       </div>
     </div>
   );
-}
+};
+
+export default memo(MetronomeFrequency);

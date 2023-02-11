@@ -45,6 +45,7 @@ export function useLockBodyScroll(enabled = true) {
       increment();
       return decrement;
     }
+
     return undefined;
   }, [enabled]);
 }

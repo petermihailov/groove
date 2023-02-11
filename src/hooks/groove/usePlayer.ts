@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { useDrumKit } from './useDrumKit';
 import { Player } from '../../lib/Player';
 import type { Beat, Groove } from '../../types';
-import { useDrumKit } from './useDrumKit';
 
 export function usePlayer(groove: Groove) {
   const { tempo, bars } = groove;

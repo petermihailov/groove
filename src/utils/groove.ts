@@ -1,3 +1,4 @@
+import { safeKeys } from './safe-keys';
 import { instruments } from '../constants';
 import type {
   Bar,
@@ -8,7 +9,6 @@ import type {
   BarInstrumentsByGroups,
   TimeDivision,
 } from '../types';
-import { safeKeys } from './safe-keys';
 
 export const getUsedGroups = (bars: Bar[]) => {
   const groups: InstrumentGroupEnabled = {
@@ -43,7 +43,7 @@ export const createEmptyInstruments = () =>
 export const createEmptyBar = (
   timeDivision: TimeDivision,
   beatsPerBar: number,
-  noteValue: number
+  noteValue: number,
 ): Bar => {
   return {
     beatsPerBar,
@@ -87,7 +87,7 @@ export const scaleBar = (
   bar: Bar,
   noteValue: number,
   beatsPerBar: number,
-  timeDivision: TimeDivision
+  timeDivision: TimeDivision,
 ): Bar => {
   const scale = timeDivision / bar.timeDivision;
   const newBar = createEmptyBar(timeDivision, beatsPerBar, noteValue);
