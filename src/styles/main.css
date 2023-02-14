@@ -17,6 +17,6 @@
 }
 
 :where([data-react-root]) {
-  isolation: isolate;
   block-size: inherit;
+  isolation: isolate;
 }

@@ -1,10 +1,10 @@
 import clsx from 'clsx';
-import type { Dispatch, SetStateAction } from "react";
-import { memo } from "react";
+import type { Dispatch, SetStateAction } from 'react';
+import { memo } from 'react';
 
-import { ButtonIcon } from "../../ButtonIcon";
-import { Icon } from "../../Icon";
-import { Logo } from "../../Logo";
+import { ButtonIcon } from '../../ButtonIcon';
+import { Icon } from '../../Icon';
+import { Logo } from '../../Logo';
 
 import classes from './Controls.css';
 
@@ -13,17 +13,14 @@ export interface ControlsProps {
   setEditorScaleValue: Dispatch<SetStateAction<number>>;
 }
 
-const Controls = ({
-  className,
-  setEditorScaleValue,
-}: ControlsProps) => {
+const Controls = ({ className, setEditorScaleValue }: ControlsProps) => {
   const zoomIn = () => {
-    setEditorScaleValue(val => val += 0.1);
-  }
+    setEditorScaleValue((val) => (val += 0.1));
+  };
 
   const zoomOut = () => {
-    setEditorScaleValue(val => val -= 0.1);
-  }
+    setEditorScaleValue((val) => (val -= 0.1));
+  };
 
   return (
     <div className={clsx(className, classes.root)}>
@@ -42,11 +39,11 @@ const Controls = ({
       </div>
 
       <div className={classes.group}>
-        <ButtonIcon aria-label='zoom in' onClick={zoomIn}>
+        <ButtonIcon aria-label="zoom in" onClick={zoomIn}>
           <Icon name="ui-zoom-in" />
         </ButtonIcon>
 
-        <ButtonIcon aria-label='zoom out' onClick={zoomOut}>
+        <ButtonIcon aria-label="zoom out" onClick={zoomOut}>
           <Icon name="ui-zoom-out" />
         </ButtonIcon>
       </div>

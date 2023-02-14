@@ -2,8 +2,8 @@
   inline-size: var(--size-note);
   block-size: var(--size-note);
   transition-property: opacity, block-size, inline-size;
-  transition-duration: 150ms;
   transition-timing-function: var(--ease-in-out-1);
+  transition-duration: 150ms;
 }
 
 .empty {

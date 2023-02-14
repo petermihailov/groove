@@ -5,9 +5,9 @@
 }
 
 .title {
+  padding-inline: var(--size-horizontal-padding);
   font-size: var(--font-size-1);
   white-space: nowrap;
-  overflow: auto;
-  padding-inline: var(--size-horizontal-padding);
   text-align: center;
+  overflow: auto;
 }

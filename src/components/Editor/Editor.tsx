@@ -1,8 +1,9 @@
 import clsx from 'clsx';
-import type { CSSProperties} from "react";
-import { memo, useRef, useState } from "react";
+import type { CSSProperties } from 'react';
+import { memo, useRef, useState } from 'react';
 
 import { Bar } from './Bar';
+import { Controls } from './Controls';
 import { useHighlightStyles, useNoteEditor } from './Editor.hooks';
 import { Groups } from './Groups';
 import { Picker } from './Picker';
@@ -17,7 +18,6 @@ import type {
 } from '../../types';
 
 import classes from './Editor.css';
-import { Controls } from "./Controls";
 
 export interface EditorProps {
   bars: BarType[];
@@ -60,7 +60,7 @@ export const Editor = ({
 
       <div
         className={classes.editor}
-        style={{'--size-note': `calc(${uiScaleValue} * 2rem)`} as CSSProperties}
+        style={{ '--size-note': `calc(${uiScaleValue} * 2rem)` } as CSSProperties}
       >
         {/*<div className={classes.groups}>*/}
         {/*  <Groups enabledGroups={enabledGroups} />*/}

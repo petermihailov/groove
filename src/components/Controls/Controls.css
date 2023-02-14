@@ -14,14 +14,14 @@
 .row {
   display: flex;
   gap: var(--size-2);
-  align-items: center;
   justify-content: space-evenly;
+  align-items: center;
 }
 
 .other {
+  inline-size: 100%;
   max-inline-size: 20rem;
   margin-inline: auto;
-  inline-size: 100%;
 }
 
 @media (min-width: 768px) {

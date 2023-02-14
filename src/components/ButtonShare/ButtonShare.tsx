@@ -1,10 +1,10 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from 'react';
 
-import { share } from "../../utils/share";
+import { share } from '../../utils/share';
 import type { ButtonIconProps } from '../ButtonIcon';
 import { ButtonIcon } from '../ButtonIcon';
-import { Icon } from "../Icon";
-import { Tooltip } from "../Tooltip";
+import { Icon } from '../Icon';
+import { Tooltip } from '../Tooltip';
 
 import classes from './ButtonShare.css';
 
@@ -17,11 +17,13 @@ const ButtonShare = (props: ButtonShareProps) => {
   const iconName = hasShareAPI ? 'ui-share' : 'ui-link';
 
   const shareHandler = useCallback(() => {
-    share().then(type => {
-      setTooltipText(type + '! 👍');
-    }).catch(() => {
-      setTooltipText('error 😵');
-    })
+    share()
+      .then((type) => {
+        setTooltipText(type + '! 👍');
+      })
+      .catch(() => {
+        setTooltipText('error 😵');
+      });
   }, []);
 
   useEffect(() => {
@@ -35,12 +37,14 @@ const ButtonShare = (props: ButtonShareProps) => {
 
     return () => {
       window.clearTimeout(timeout);
-    }
+    };
   }, [tooltipText]);
 
   return (
     <ButtonIcon aria-label="copy link" onClick={shareHandler} {...props}>
-      <Tooltip className={classes.tooltip} placement='top'>{tooltipText}</Tooltip>
+      <Tooltip className={classes.tooltip} placement="top">
+        {tooltipText}
+      </Tooltip>
       <Icon name={iconName} />
     </ButtonIcon>
   );

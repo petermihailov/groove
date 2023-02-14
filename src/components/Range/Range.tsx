@@ -23,7 +23,15 @@ export interface RangeProps extends Omit<HTMLAttributes<HTMLInputElement>, 'onCh
   onChange: (value: number) => void;
 }
 
-const Range = ({ className, label, min = 0, max = 100, value, onChange, ...restInputProps }: RangeProps) => {
+const Range = ({
+  className,
+  label,
+  min = 0,
+  max = 100,
+  value,
+  onChange,
+  ...restInputProps
+}: RangeProps) => {
   const decimalRef = useRef<HTMLInputElement>(null);
   const rangeRef = useRef<HTMLInputElement>(null);
 

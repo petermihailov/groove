@@ -1,11 +1,11 @@
 import clsx from 'clsx';
-import { memo } from "react";
+import { memo } from 'react';
 
 import { tempoMax, tempoMin } from '../../constants';
 import type { Groove } from '../../types';
 import { ButtonIcon } from '../ButtonIcon';
 import { ButtonPlay } from '../ButtonPlay';
-import { ButtonShare } from "../ButtonShare";
+import { ButtonShare } from '../ButtonShare';
 import { Icon } from '../Icon';
 import { Range } from '../Range';
 import { ThemeSwitcher } from '../ThemeSwitcher';
