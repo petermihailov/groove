@@ -34,9 +34,7 @@ const Controls = ({ className, setEditorScaleValue }: ControlsProps) => {
         </ButtonIcon>
       </div>
 
-      <div className={classes.group}>
-        <Logo />
-      </div>
+      <Logo />
 
       <div className={classes.group}>
         <ButtonIcon aria-label="zoom in" onClick={zoomIn}>
