@@ -7,10 +7,16 @@
 }
 
 :where(body) {
+  block-size: 100%;
   -webkit-overflow-scrolling: touch;
-  background-color: var(--color-surface1);
+  background-color: var(--color-surface-2);
 }
 
 :where(h1, h2, h3, h4, h5, h6, dt) {
   color: var(--color-text);
+}
+
+:where([data-react-root]) {
+  isolation: isolate;
+  block-size: inherit;
 }

@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import { memo, useRef } from 'react';
+import type { CSSProperties} from "react";
+import { memo, useRef, useState } from "react";
 
 import { Bar } from './Bar';
 import { useHighlightStyles, useNoteEditor } from './Editor.hooks';
@@ -16,6 +17,7 @@ import type {
 } from '../../types';
 
 import classes from './Editor.css';
+import { Controls } from "./Controls";
 
 export interface EditorProps {
   bars: BarType[];
@@ -44,33 +46,42 @@ export const Editor = ({
   onSetNote,
   onChangeSignature,
 }: EditorProps) => {
-  const editorRef = useRef<HTMLDivElement>(null);
-  const highlightBeatStyles = useHighlightStyles(beat, bars);
+  const [uiScaleValue, setUiScaleValue] = useState(1);
+
+  const rootRef = useRef<HTMLDivElement>(null);
+  // const highlightBeatStyles = useHighlightStyles(beat, bars);
   const { blurNote, changeNote, focusedNote, toggleNote } = useNoteEditor(onSetNote);
 
-  useClickOutside(editorRef, blurNote);
+  useClickOutside(rootRef, blurNote);
 
   return (
-    <div ref={editorRef} className={classes.editor}>
-      <div className={classes.groups}>
-        <Groups enabledGroups={enabledGroups} />
+    <div ref={rootRef} className={classes.root}>
+      <Controls setEditorScaleValue={setUiScaleValue} />
+
+      <div
+        className={classes.editor}
+        style={{'--size-note': `calc(${uiScaleValue} * 2rem)`} as CSSProperties}
+      >
+        {/*<div className={classes.groups}>*/}
+        {/*  <Groups enabledGroups={enabledGroups} />*/}
+        {/*</div>*/}
+
+        {bars.map((bar, idx) => (
+          <Bar
+            key={idx}
+            bar={bar}
+            barIndex={idx}
+            enabledGroups={enabledGroups}
+            onAddBar={onAddBar}
+            onChangeSignature={onChangeSignature}
+            onClearBar={onClearBar}
+            onClick={toggleNote}
+            onRemoveBar={onRemoveBar}
+          />
+        ))}
+
+        {/*<div className={classes.highlight} style={highlightBeatStyles} />*/}
       </div>
-
-      {bars.map((bar, idx) => (
-        <Bar
-          key={idx}
-          bar={bar}
-          barIndex={idx}
-          enabledGroups={enabledGroups}
-          onAddBar={onAddBar}
-          onChangeSignature={onChangeSignature}
-          onClearBar={onClearBar}
-          onClick={toggleNote}
-          onRemoveBar={onRemoveBar}
-        />
-      ))}
-
-      <div className={classes.highlight} style={highlightBeatStyles} />
 
       <div
         className={clsx(classes.pickerWrapper, {

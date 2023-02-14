@@ -9,7 +9,7 @@ import classes from './ThemeSwitcher.css';
 
 export type ThemeSwitcherProps = Omit<ButtonIconProps, 'aria-label'>;
 
-const ThemeSwitcher = ({ className, ...props }: ThemeSwitcherProps) => {
+const ThemeSwitcher = ({ className, ...restProps }: ThemeSwitcherProps) => {
   const { theme, toggleTheme } = useThemeSwitch();
 
   return (
@@ -17,7 +17,7 @@ const ThemeSwitcher = ({ className, ...props }: ThemeSwitcherProps) => {
       aria-label={`switch to ${theme === 'dark' ? 'light' : 'dark'}`}
       className={clsx(className, { [classes.isDark]: theme === 'dark' })}
       onClick={toggleTheme}
-      {...props}
+      {...restProps}
     >
       <svg
         aria-hidden="true"

@@ -4,31 +4,17 @@
   grid-gap: var(--spacing-note);
 }
 
-.root::before {
-  position: absolute;
-  inset-block: var(--size-3);
-  inset-inline-start: calc(-1 * var(--spacing-bars) / 2);
-  content: '';
-  width: 2px;
-  border-radius: var(--radius-pill);
-  background-color: var(--color-border);
-}
-
-.root + .root {
-  margin-inline-start: var(--spacing-bars);
-}
-
 /* actions */
 
 .actions {
   position: absolute;
   inset-block-end: 0;
-  width: 100%;
+  inline-size: 100%;
   transform: translateY(calc(100% + var(--spacing-bar-bottom) + var(--spacing-note)));
 }
 
 .actionButton {
-  width: 100%;
+  inline-size: 100%;
   border-radius: var(--radius-2);
   background-color: var(--color-tint);
 }
@@ -69,8 +55,8 @@
   position: absolute;
   inset-inline-start: -1px;
   content: '';
-  width: 2px;
-  height: 50%;
+  inline-size: 2px;
+  block-size: 50%;
   border-radius: var(--radius-pill);
   background-color: var(--color-border);
 }

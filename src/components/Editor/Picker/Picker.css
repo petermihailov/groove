@@ -15,7 +15,7 @@
   inset-block-end: -4px;
   inset-inline: 4px;
   content: '';
-  height: 4px;
+  block-size: 4px;
   border-radius: var(--radius-pill);
   background-color: var(--color-accent);
 }

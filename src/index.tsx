@@ -5,7 +5,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { GrooveProvider } from './context/GrooveContext';
 import { Sprite } from './icons';
 
-const container = document.getElementById('root');
+const container = document.querySelector('[data-react-root]');
 
 if (container) {
   const root = createRoot(container);

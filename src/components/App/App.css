@@ -1,10 +1,13 @@
-.controlsWrapper {
-  position: sticky;
-  inset-block-end: 0;
-  background-color: var(--color-surface1);
-  box-shadow: var(--shadow-1);
+.root {
+  display: grid;
+  grid-template-rows: 1fr;
+  max-block-size: 100%;
 }
 
-.controls {
-  max-width: 50rem;
+.title {
+  font-size: var(--font-size-1);
+  white-space: nowrap;
+  overflow: auto;
+  padding-inline: var(--size-horizontal-padding);
+  text-align: center;
 }

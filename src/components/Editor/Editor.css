@@ -1,16 +1,22 @@
-.editor {
+.root {
   position: relative;
-  display: flex;
-  align-items: flex-start;
-  padding-block: var(--size-1) var(--spacing-bar-bottom);
-  padding-inline-end: var(--size-horizontal-padding);
-  background-color: var(--color-surface2);
+  background-color: var(--color-surface-1);
   overflow: auto;
+}
+
+.editor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-2);
+  align-items: flex-start;
+  padding-block-end: var(--spacing-bar-bottom);
+  padding-inline: var(--size-horizontal-padding);
 }
 
 .groups {
   position: sticky;
   inset-inline-start: 0;
+  z-index: 1;
   flex: none;
   margin-inline-end: var(--size-1);
   padding-block-end: 0;
@@ -23,17 +29,18 @@
   inset-inline-start: 0;
   content: '';
   z-index: -1;
-  width: 100%;
+  inline-size: 100%;
   background-color: var(--color-highlight);
   box-shadow: var(--shadow-1);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
 }
 
 .highlight {
   position: absolute;
   inset-block-start: 0;
-  width: var(--size-note);
-  height: 100%;
+  inline-size: var(--size-note);
+  block-size: 100%;
   background-color: var(--color-highlight);
   pointer-events: none;
 }
@@ -45,7 +52,7 @@
   z-index: 1;
   display: flex;
   justify-content: center;
-  width: 100%;
+  inline-size: 100%;
   pointer-events: none;
   transition: transform 0.3s ease-in;
 }
@@ -55,6 +62,6 @@
 }
 
 .picker {
-  max-width: calc(100% - 2 * var(--size-horizontal-padding));
+  max-inline-size: calc(100% - 2 * var(--size-horizontal-padding));
   pointer-events: auto;
 }

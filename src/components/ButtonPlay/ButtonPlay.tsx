@@ -4,6 +4,8 @@ import { memo, useEffect, useRef } from 'react';
 import type { ButtonIconProps } from '../ButtonIcon';
 import { ButtonIcon } from '../ButtonIcon';
 
+import classes from './ButtonPlay.css';
+
 export interface ButtonPlayProps extends Omit<ButtonIconProps, 'aria-label'> {
   playing: boolean;
 }
@@ -15,7 +17,7 @@ const animationProps = {
   dur: '150ms',
 };
 
-const ButtonPlay = ({ className, playing, ...props }: ButtonPlayProps) => {
+const ButtonPlay = ({ className, playing, ...restProps }: ButtonPlayProps) => {
   const playAnimationRef = useRef<SVGAnimateElement>(null);
   const stopAnimationRef = useRef<SVGAnimateElement>(null);
 
@@ -31,7 +33,11 @@ const ButtonPlay = ({ className, playing, ...props }: ButtonPlayProps) => {
   }, [playing]);
 
   return (
-    <ButtonIcon aria-label={playing ? 'stop' : 'play'} className={clsx(className)} {...props}>
+    <ButtonIcon
+      aria-label={playing ? 'stop' : 'play'}
+      className={clsx(className, classes.root)}
+      {...restProps}
+    >
       <svg fill="currentColor" height="24" stroke="currentColor" viewBox="0 0 24 24" width="24">
         <polygon points={playPolygon} strokeLinejoin="round" strokeWidth="5">
           <animate ref={stopAnimationRef} to={stopPolygon} {...animationProps} />

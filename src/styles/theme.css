@@ -1,134 +1,39 @@
+/* OpenProps documentation: https://open-props.style */
+
+/* animations */
+@import url('open-props/animations.min.css');
+
+/* easing */
+@import url('open-props/easings.min.css');
+
+/* aspects */
+@import url('open-props/aspects.min.css');
+
+/* fonts */
+@import url('open-props/fonts.min.css');
+
+/* sizes */
+@import url('open-props/sizes.min.css');
+@import url('open-props/borders.min.css');
+
+/* shadows */
+@import url('open-props/shadows.min.css');
+
 :where(html) {
-  /* aspects */
-  --ratio-square: 1;
-  --ratio-landscape: 4/3;
-  --ratio-portrait: 3/4;
-  --ratio-widescreen: 16/9;
-  --ratio-ultrawide: 18/5;
-  --ratio-golden: 1.618/1;
-
   /* borders */
-  --border-size-1: 1px;
-  --border-size-2: 2px;
-  --border-size-3: 5px;
-  --border-size-4: 10px;
-  --border-size-5: 25px;
-  --radius-1: 2px;
-  --radius-2: 5px;
-  --radius-3: 1rem;
-  --radius-4: 2rem;
-  --radius-5: 4rem;
-  --radius-6: 8rem;
-  --radius-round: 50%;
   --radius-pill: 1e5px;
-
-  /* fonts */
-  --font-sans: system-ui, -apple-system, segoe ui, roboto, ubuntu, cantarell, noto sans, sans-serif;
-  --font-serif: ui-serif, serif;
-  --font-mono: dank mono, operator mono, inconsolata, fira mono, ui-monospace, sf mono, monaco,
-    droid sans mono, source code pro, monospace;
-  --font-weight-1: 100;
-  --font-weight-2: 200;
-  --font-weight-3: 300;
-  --font-weight-4: 400;
-  --font-weight-5: 500;
-  --font-weight-6: 600;
-  --font-weight-7: 700;
-  --font-weight-8: 800;
-  --font-weight-9: 900;
-  --font-lineheight-00: 0.95;
-  --font-lineheight-0: 1.1;
-  --font-lineheight-1: 1.25;
-  --font-lineheight-2: 1.375;
-  --font-lineheight-3: 1.5;
-  --font-lineheight-4: 1.75;
-  --font-lineheight-5: 2;
-  --font-letterspacing-0: -0.05em;
-  --font-letterspacing-1: 0.025em;
-  --font-letterspacing-2: 0.05em;
-  --font-letterspacing-3: 0.075em;
-  --font-letterspacing-4: 0.15em;
-  --font-letterspacing-5: 0.5em;
-  --font-letterspacing-6: 0.75em;
-  --font-letterspacing-7: 1em;
-  --font-size-00: 0.5rem;
-  --font-size-0: 0.75rem;
-  --font-size-1: 1rem;
-  --font-size-2: 1.1rem;
-  --font-size-3: 1.25rem;
-  --font-size-4: 1.5rem;
-  --font-size-5: 2rem;
-  --font-size-6: 2.5rem;
-  --font-size-7: 3rem;
-  --font-size-8: 3.5rem;
-  --font-size-fluid-0: clamp(0.75rem, 2vw, 1rem);
-  --font-size-fluid-1: clamp(1rem, 4vw, 1.5rem);
-  --font-size-fluid-2: clamp(1.5rem, 6vw, 2.5rem);
-  --font-size-fluid-3: clamp(2rem, 9vw, 3.5rem);
+  --radius-round: 50%;
 
   /* sizes */
-  --size-000: -0.5rem;
-  --size-00: -0.25rem;
-  --size-1: 0.25rem;
-  --size-2: 0.5rem;
-  --size-3: 1rem;
-  --size-4: 1.25rem;
-  --size-5: 1.5rem;
-  --size-6: 1.75rem;
-  --size-7: 2rem;
-  --size-8: 3rem;
-  --size-9: 4rem;
-  --size-10: 5rem;
-  --size-11: 7.5rem;
-  --size-12: 10rem;
-  --size-13: 15rem;
-  --size-14: 20rem;
-  --size-15: 30rem;
-
-  /* custom sizes */
-  --size-horizontal-padding: 1rem;
-  --size-icon: 2rem;
-  --size-note: 2rem;
-  --size-control: 2rem;
+  --size-control: var(--size-6);
+  --size-horizontal-padding: var(--size-1);
+  --size-icon: var(--size-5);
+  --size-note: var(--size-5);
 
   /* custom spacing */
-  --spacing-note: 0.25rem;
-  --spacing-bars: 2.25rem;
-  --spacing-bar-bottom: 2.25rem;
-
-  /* shadows */
-  --shadow-1: 0 1px 2px -1px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%));
-  --shadow-2: 0 3px 5px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
-    0 7px 14px -5px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 5%));
-  --shadow-3: 0 -1px 3px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
-    0 1px 2px -5px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
-    0 2px 5px -5px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 4%)),
-    0 4px 12px -5px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 5%)),
-    0 12px 15px -5px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 7%));
-  --shadow-4: 0 -2px 5px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
-    0 1px 1px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
-    0 2px 2px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
-    0 5px 5px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 4%)),
-    0 9px 9px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 5%)),
-    0 16px 16px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 6%));
-  --shadow-5: 0 -1px 2px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
-    0 2px 1px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
-    0 5px 5px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
-    0 10px 10px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 4%)),
-    0 20px 20px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 5%)),
-    0 40px 40px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 7%));
-  --shadow-6: 0 -1px 2px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 2%)),
-    0 3px 2px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
-    0 7px 5px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 3%)),
-    0 12px 10px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 4%)),
-    0 22px 18px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 5%)),
-    0 41px 33px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 6%)),
-    0 100px 80px -2px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 7%));
-  --inner-shadow-0: inset 0 0 0 1px hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%));
-  --inner-shadow-1: inset 0 1px 2px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%));
-  --inner-shadow-2: inset 0 1px 4px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%));
-  --inner-shadow-3: inset 0 2px 8px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%));
-  --inner-shadow-4: inset 0 2px 14px 0 hsl(var(--shadow-color) / calc(var(--shadow-strength) + 9%));
+  --spacing-note: 0;
+  --spacing-bars: var(--size-5);
+  --spacing-bar-bottom: var(--size-5);
 
   /* z-index */
   --z-index-drawer: 700;
@@ -140,13 +45,13 @@
 :where(html[data-theme='light']) {
   --color-accent: #05f;
   --color-border: #d9d9e8;
-  --color-delimiter: #d9d9e8;
-  --color-drawer: #f9fbff;
   --color-highlight: rgb(0 85 255 / 10%);
   --color-icon: #171a1c;
   --color-overlay: rgb(0 0 0 / 20%);
-  --color-surface1: #f9fbff;
-  --color-surface2: #fff;
+  --color-surface-1: #f8f9fa;
+  --color-surface-2: #e9ecef;
+  --color-surface-3: #dee2e6;
+  --color-surface-4: #ced4da;
   --color-text: #171a1c;
   --color-thumb-highlight: rgb(0 0 0 / 20%);
   --color-tint: rgb(0 85 255 / 4%);
@@ -159,13 +64,13 @@
 :where(html[data-theme='dark']) {
   --color-accent: #007fff;
   --color-border: #394146;
-  --color-delimiter: #394146;
-  --color-drawer: #394146;
   --color-highlight: rgb(0 127 255 / 20%);
   --color-icon: #e2e6e9;
   --color-overlay: rgb(0 0 0 / 40%);
-  --color-surface1: #2c2f31;
-  --color-surface2: #0d161c;
+  --color-surface-1: #212529;
+  --color-surface-2: #343a40;
+  --color-surface-3: #495057;
+  --color-surface-4: #868e96;
   --color-text: #e2e6e9;
   --color-thumb-highlight: rgb(255 255 255 / 7.5%);
   --color-tint: rgb(0 127 255 / 10%);

@@ -9,14 +9,14 @@ export interface ButtonIconProps extends HTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;
 }
 
-const ButtonIcon = ({ className, active, ...props }: ButtonIconProps) => {
-  const title = props['aria-label'];
+const ButtonIcon = ({ className, active, ...restProps }: ButtonIconProps) => {
+  const title = restProps['aria-label'];
 
   return (
     <button
       className={clsx(className, classes.root, { [classes.active]: active })}
       title={title}
-      {...props}
+      {...restProps}
     />
   );
 };

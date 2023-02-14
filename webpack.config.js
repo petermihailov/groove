@@ -24,7 +24,8 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.css$/i,
+        test: /\.css$/,
+        include: path.resolve(__dirname, 'src/components'),
         use: [
           'style-loader',
           {
@@ -36,6 +37,11 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.css$/,
+        include: path.resolve(__dirname, 'src/styles'),
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },

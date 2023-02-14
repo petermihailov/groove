@@ -1,4 +1,4 @@
-.metronomeFrequency {
+.root {
   display: flex;
   gap: var(--size-1);
   justify-content: space-between;

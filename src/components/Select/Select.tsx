@@ -18,7 +18,7 @@ export interface SelectProps<T>
   onChange?: (value: T) => void;
 }
 
-const Select = <T,>({ className, value, options, onChange, ...props }: SelectProps<T>) => {
+const Select = <T,>({ className, value, options, onChange, ...restProps }: SelectProps<T>) => {
   const selectedIndex = options.findIndex((option) => option.value === value);
 
   const changeHandler: ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -27,12 +27,12 @@ const Select = <T,>({ className, value, options, onChange, ...props }: SelectPro
   };
 
   return (
-    <div className={clsx(className, classes.select)}>
+    <div className={clsx(className, classes.root)}>
       <select
         className={classes.selectNative}
         value={selectedIndex}
         onChange={changeHandler}
-        {...props}
+        {...restProps}
       >
         {options.map((option, idx) => (
           <option key={idx} value={idx}>

@@ -20,7 +20,7 @@ const InstrumentGroups = ({ enabledGroups, setEnabledGroups }: InstrumentGroupsP
   };
 
   return (
-    <div className={classes.instrumentGroups}>
+    <div className={classes.root}>
       Groups
       <div className={classes.list}>
         <ButtonIcon active={enabledGroups?.cy} aria-label="cymbals" onClick={toggleGroup('cy')}>

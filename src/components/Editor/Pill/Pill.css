@@ -2,7 +2,7 @@
   display: flex;
   padding: var(--size-1) var(--size-3);
   border-radius: var(--radius-pill);
-  background-color: var(--color-surface2);
+  background-color: var(--color-surface-2);
   box-shadow: var(--shadow-5);
   overflow: auto;
 }

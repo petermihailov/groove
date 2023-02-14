@@ -1,4 +1,5 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import clsx from "clsx";
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   addBarAction,
@@ -12,7 +13,8 @@ import {
 import { usePlayer, useQuerySync } from '../../hooks';
 import type { InstrumentGroupEnabled, Note, TimeSignature, TimeDivision } from '../../types';
 import { Controls } from '../Controls';
-import { Drawer } from '../Drawer';
+import type { DialogHandlers } from '../Dialog';
+import { Dialog } from '../Dialog';
 import { Editor } from '../Editor';
 import { Settings } from '../Settings';
 
@@ -22,14 +24,15 @@ const App = () => {
   const { groove, dispatch } = useGrooveContext();
   const { beat, play, playing, stop } = usePlayer(groove);
 
+  const settings = useRef<DialogHandlers>(null);
+
   const [metronome, setMetronome] = useState(false);
-  const [settings, setSettings] = useState(false);
   const [enabledGroups, setEnabledGroups] = useState<InstrumentGroupEnabled>({});
 
   const togglePlaying = () => (playing ? stop() : play());
   const toggleMetronome = () => setMetronome((prev) => !prev);
-  const openSettings = () => setSettings(true);
-  const closeSettings = () => setSettings(false);
+  const openSettings = () => settings.current?.showModal();
+  const closeSettings = () => settings.current?.close();
 
   const setTempo = useCallback(
     (tempo: number) => {
@@ -87,7 +90,7 @@ const App = () => {
   }, [groove.groups]);
 
   return (
-    <>
+    <div className={classes.root}>
       <Editor
         bars={groove.bars}
         beat={beat}
@@ -100,24 +103,24 @@ const App = () => {
         onSetNote={setNote}
       />
 
-      <div className={classes.controlsWrapper}>
-        <Controls
-          className={classes.controls}
-          groove={groove}
-          metronomeEnabled={metronome}
-          playing={playing}
-          settingsOpened={settings}
-          onOpenSettings={openSettings}
-          onSetTempo={setTempo}
-          onToggleMetronome={toggleMetronome}
-          onTogglePlaying={togglePlaying}
-        />
-      </div>
+      <h1 className={clsx(classes.title, 'disableScroll')}>
+        <span>Title</span>
+      </h1>
 
-      <Drawer open={settings} onClose={closeSettings}>
+      <Controls
+        groove={groove}
+        metronomeEnabled={metronome}
+        playing={playing}
+        onOpenSettings={openSettings}
+        onSetTempo={setTempo}
+        onToggleMetronome={toggleMetronome}
+        onTogglePlaying={togglePlaying}
+      />
+
+      <Dialog ref={settings} mode="mega" onClose={closeSettings}>
         <Settings enabledGroups={enabledGroups} setEnabledGroups={setEnabledGroups} />
-      </Drawer>
-    </>
+      </Dialog>
+    </div>
   );
 };
 

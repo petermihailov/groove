@@ -20,7 +20,7 @@ const MetronomeFrequency = ({
   };
 
   return (
-    <div className={classes.metronomeFrequency}>
+    <div className={classes.root}>
       Metronome
       <div className={classes.list}>
         <ButtonIcon

@@ -1,0 +1,19 @@
+.root {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: var(--size-horizontal-padding);
+  padding-block: var(--size-2);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 var(--color-border);
+}
+
+.group {
+  display: flex;
+  gap: var(--size-2);
+}

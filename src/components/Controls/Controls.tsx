@@ -1,10 +1,11 @@
 import clsx from 'clsx';
-import { memo } from 'react';
+import { memo } from "react";
 
 import { tempoMax, tempoMin } from '../../constants';
 import type { Groove } from '../../types';
 import { ButtonIcon } from '../ButtonIcon';
 import { ButtonPlay } from '../ButtonPlay';
+import { ButtonShare } from "../ButtonShare";
 import { Icon } from '../Icon';
 import { Range } from '../Range';
 import { ThemeSwitcher } from '../ThemeSwitcher';
@@ -20,7 +21,6 @@ export interface ControlsProps {
   onToggleMetronome: () => void;
   onTogglePlaying: () => void;
   playing: boolean;
-  settingsOpened: boolean;
 }
 
 const Controls = ({
@@ -32,33 +32,40 @@ const Controls = ({
   onToggleMetronome,
   onTogglePlaying,
   playing,
-  settingsOpened,
 }: ControlsProps) => {
   return (
-    <div className={clsx(className, classes.controls)}>
-      <ButtonPlay active playing={playing} onClick={onTogglePlaying} />
-      <ButtonIcon
-        disabled
-        active={metronomeEnabled}
-        aria-label={`metronome ${metronomeEnabled ? 'enabled' : 'disabled'}`}
-        onClick={onToggleMetronome}
-      >
-        <Icon name="ui-metronome" />
-      </ButtonIcon>
+    <div className={clsx(className, classes.root)}>
+      <div className={classes.row}>
+        <ButtonPlay active playing={playing} onClick={onTogglePlaying} />
 
-      <Range
-        className={classes.bpm}
-        label="BPM"
-        max={tempoMax}
-        min={tempoMin}
-        value={groove.tempo}
-        onChange={onSetTempo}
-      />
+        <ButtonIcon
+          disabled
+          active={metronomeEnabled}
+          aria-label={`metronome ${metronomeEnabled ? 'enabled' : 'disabled'}`}
+          onClick={onToggleMetronome}
+        >
+          <Icon name="ui-metronome" />
+        </ButtonIcon>
 
-      <ButtonIcon active={settingsOpened} aria-label="open settings" onClick={onOpenSettings}>
-        <Icon name="ui-settings" />
-      </ButtonIcon>
-      <ThemeSwitcher />
+        <Range
+          className={classes.bpm}
+          label="BPM"
+          max={tempoMax}
+          min={tempoMin}
+          value={groove.tempo}
+          onChange={onSetTempo}
+        />
+      </div>
+
+      <div className={clsx(classes.row, classes.other)}>
+        <ButtonIcon aria-label="open settings" onClick={onOpenSettings}>
+          <Icon name="ui-settings" />
+        </ButtonIcon>
+
+        <ButtonShare />
+
+        <ThemeSwitcher />
+      </div>
     </div>
   );
 };

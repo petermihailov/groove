@@ -95,36 +95,36 @@ const Bar = ({
       {enabledGroups.t3 && <BarLine group="t3" line={instrumentsByGroups.t3} />}
       {enabledGroups.ki && <BarLine group="ki" line={instrumentsByGroups.ki} />}
 
-      <div ref={actionsRef} className={classes.actions}>
-        <ButtonIcon
-          aria-label={`${actions ? 'open' : 'close'} bar actions`}
-          className={classes.actionButton}
-          onClick={toggleActions}
-        >
-          <Icon name="ui-more" />
-        </ButtonIcon>
+      {/*<div ref={actionsRef} className={classes.actions}>*/}
+      {/*  <ButtonIcon*/}
+      {/*    aria-label={`${actions ? 'open' : 'close'} bar actions`}*/}
+      {/*    className={classes.actionButton}*/}
+      {/*    onClick={toggleActions}*/}
+      {/*  >*/}
+      {/*    <Icon name="ui-more" />*/}
+      {/*  </ButtonIcon>*/}
 
-        <Pill className={clsx(classes.actionBar, { [classes.actionsBarHidden]: !actions })}>
-          <ButtonIcon aria-label="remove bar" onClick={removeBar}>
-            <Icon name="ui-delete" />
-          </ButtonIcon>
-          <ButtonIcon aria-label="clear bar" onClick={clearBar}>
-            <Icon name="ui-clear" />
-          </ButtonIcon>
-          <ButtonIcon aria-label="add bar" onClick={addBar}>
-            <Icon name="ui-add" />
-          </ButtonIcon>
+      {/*  <Pill className={clsx(classes.actionBar, { [classes.actionsBarHidden]: !actions })}>*/}
+      {/*    <ButtonIcon aria-label="remove bar" onClick={removeBar}>*/}
+      {/*      <Icon name="ui-delete" />*/}
+      {/*    </ButtonIcon>*/}
+      {/*    <ButtonIcon aria-label="clear bar" onClick={clearBar}>*/}
+      {/*      <Icon name="ui-clear" />*/}
+      {/*    </ButtonIcon>*/}
+      {/*    <ButtonIcon aria-label="add bar" onClick={addBar}>*/}
+      {/*      <Icon name="ui-add" />*/}
+      {/*    </ButtonIcon>*/}
 
-          <TimeSignature
-            barIndex={barIndex}
-            beatsPerBar={bar.beatsPerBar}
-            className={classes.timeSignature}
-            noteValue={bar.noteValue}
-            timeDivision={bar.timeDivision}
-            onChangeSignature={onChangeSignature}
-          />
-        </Pill>
-      </div>
+      {/*    <TimeSignature*/}
+      {/*      barIndex={barIndex}*/}
+      {/*      beatsPerBar={bar.beatsPerBar}*/}
+      {/*      className={classes.timeSignature}*/}
+      {/*      noteValue={bar.noteValue}*/}
+      {/*      timeDivision={bar.timeDivision}*/}
+      {/*      onChangeSignature={onChangeSignature}*/}
+      {/*    />*/}
+      {/*  </Pill>*/}
+      {/*</div>*/}
     </div>
   );
 };

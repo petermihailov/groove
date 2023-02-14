@@ -1,7 +1,9 @@
 .root {
-  width: var(--size-note);
-  height: var(--size-note);
-  transition: opacity 0.15s ease-in;
+  inline-size: var(--size-note);
+  block-size: var(--size-note);
+  transition-property: opacity, block-size, inline-size;
+  transition-duration: 150ms;
+  transition-timing-function: var(--ease-in-out-1);
 }
 
 .empty {

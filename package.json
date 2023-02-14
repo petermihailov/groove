@@ -1,5 +1,5 @@
 {
-  "name": "drum-notes",
+  "name": "groove-app",
   "private": "true",
   "version": "1.0.0",
   "license": "UNLICENSED",
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "clsx": "^1.2.1",
+    "open-props": "^1.5.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -22,6 +23,7 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
     "eslint": "^8.34.0",
