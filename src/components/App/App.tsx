@@ -4,10 +4,12 @@ import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import {
   addBarAction,
   clearBarAction,
+  redoAction,
   removeBarAction,
   setNoteAction,
   setSignatureAction,
   setTempoAction,
+  undoAction,
   useGrooveContext,
 } from '../../context/GrooveContext';
 import { usePlayer, useQuerySync } from '../../hooks';
@@ -83,6 +85,14 @@ const App = () => {
     [dispatch, stop],
   );
 
+  const undo = useCallback(() => {
+    dispatch(undoAction());
+  }, [dispatch]);
+
+  const redo = useCallback(() => {
+    dispatch(redoAction());
+  }, [dispatch]);
+
   useQuerySync();
 
   useEffect(() => {
@@ -94,13 +104,17 @@ const App = () => {
       <Editor
         bars={groove.bars}
         beat={beat}
+        canRedo={groove.canRedo}
+        canUndo={groove.canUndo}
         enabledGroups={enabledGroups}
         playing={playing}
         onAddBar={addBar}
         onChangeSignature={setSignature}
         onClearBar={clearBar}
+        onRedo={redo}
         onRemoveBar={removeBar}
         onSetNote={setNote}
+        onUndo={undo}
       />
 
       <h1 className={clsx(classes.title, 'disableScroll')}>

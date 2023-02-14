@@ -1,5 +1,6 @@
 import type { IconName, Instrument, InstrumentGroup } from '../../../types';
-import { groupNamesMap, iconNamesMap, uncamelcase } from '../../../utils';
+import { groupNamesMap, iconNamesMap } from '../../../utils/maps';
+import { uncamelcase } from '../../../utils/uncamelcase';
 
 export const getIconName = (instrument: Instrument | null, group: InstrumentGroup): IconName => {
   if (!instrument) {

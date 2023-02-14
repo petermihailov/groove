@@ -1,19 +1,19 @@
+import type { Patch, PatchListener } from 'immer';
+import { produce, enablePatches, applyPatches } from 'immer';
 import { createContext, useContext, useReducer } from 'react';
 import type { Dispatch, FC, ReactNode } from 'react';
 
 import { grooveDefault, tempoMax, tempoMin } from '../constants';
 import type { Groove, Note, TimeDivision, TimeSignature } from '../types';
-import type { Action } from '../utils';
-import {
-  cloneBar,
-  createAction,
-  createEmptyInstruments,
-  createGrooveFromString,
-  getInstrumentsByGroup,
-  scaleBar,
-} from '../utils';
+import type { Action } from '../utils/actions';
+import { createAction } from '../utils/actions';
+import { createEmptyInstruments, getInstrumentsByGroup, scaleBar } from '../utils/groove';
+import { createGrooveFromString } from '../utils/shirtify';
 
 /* Actions */
+
+type UndoAction = Action<'UNDO'>;
+type RedoAction = Action<'REDO'>;
 
 type AddBarAction = Action<'ADD_BAR', number>;
 type ClearBarAction = Action<'CLEAR_BAR', number>;
@@ -36,9 +36,12 @@ type Actions =
   | SetGrooveFromStringAction
   | SetNoteAction
   | SetSignatureAction
-  | SetTempoAction;
+  | SetTempoAction
+  | UndoAction
+  | RedoAction;
 
-/* Actions */
+export const undoAction = createAction<UndoAction>('UNDO');
+export const redoAction = createAction<RedoAction>('REDO');
 
 export const addBarAction = createAction<AddBarAction>('ADD_BAR');
 export const clearBarAction = createAction<ClearBarAction>('CLEAR_BAR');
@@ -49,100 +52,161 @@ export const setTempoAction = createAction<SetTempoAction>('SET_TEMPO');
 export const setGrooveFromStringAction =
   createAction<SetGrooveFromStringAction>('SET_GROOVE_FROM_STRING');
 
+/* Undo/Redo */
+
+enablePatches();
+
+let currentVersion = -1;
+const noOfVersionsSupported = 100;
+const changes: Record<number, { undo: Patch[]; redo: Patch[] }> = {};
+
+const patchListener: PatchListener = (patches, inversePatches) => {
+  currentVersion++;
+
+  changes[currentVersion] = {
+    redo: patches,
+    undo: inversePatches,
+  };
+
+  delete changes[currentVersion + 1];
+  delete changes[currentVersion - noOfVersionsSupported];
+};
+
 /* Reducer */
 
-type State = Groove;
+interface State extends Groove {
+  canUndo: boolean;
+  canRedo: boolean;
+}
 
 const defaultState: State = {
   tempo: 80,
   bars: [],
   groups: {},
+  canUndo: false,
+  canRedo: false,
 };
 
 const reducer = (state: State, action: Actions): State => {
   switch (action.type) {
     case 'ADD_BAR': {
-      const insertAfterBarIdx = action.payload;
-      const bars = [...state.bars];
-      bars.splice(insertAfterBarIdx + 1, 0, cloneBar(state.bars[insertAfterBarIdx]));
-
-      return { ...state, bars };
+      return produce(
+        state,
+        (draft) => {
+          const insertAfterBarIdx = action.payload;
+          draft.bars.splice(insertAfterBarIdx + 1, 0, draft.bars[insertAfterBarIdx]);
+          draft.canUndo = true;
+        },
+        patchListener,
+      );
     }
 
     case 'CLEAR_BAR': {
-      const clearBarIdx = action.payload;
-      const bars = [...state.bars];
-
-      const clonedBar = cloneBar(state.bars[clearBarIdx]);
-      clonedBar.instruments = createEmptyInstruments();
-      bars[clearBarIdx] = clonedBar;
-
-      return { ...state, bars };
+      return produce(
+        state,
+        (draft) => {
+          draft.bars[action.payload].instruments = createEmptyInstruments();
+          draft.canUndo = true;
+        },
+        patchListener,
+      );
     }
 
     case 'REMOVE_BAR': {
-      const removeBarIdx = action.payload;
-      const bars = state.bars.filter((_, idx) => removeBarIdx !== idx);
-      return { ...state, bars };
+      return produce(
+        state,
+        (draft) => {
+          draft.bars = draft.bars.filter((_, idx) => action.payload !== idx);
+          draft.canUndo = true;
+        },
+        patchListener,
+      );
     }
 
     case 'SET_GROOVE_FROM_STRING': {
-      let groove: Groove;
+      return produce(state, (draft) => {
+        try {
+          const { bars, groups, tempo } = createGrooveFromString(action.payload);
 
-      try {
-        groove = createGrooveFromString(action.payload);
-        groove.tempo = Math.min(tempoMax, Math.max(tempoMin, Number(groove.tempo)));
+          const damageCheck = bars.every((bar) => Object.values(bar).every(Boolean));
+          if (!damageCheck) {
+            throw new Error('Groove damaged');
+          }
 
-        const damageCheck = groove.bars.every((bar) => Object.values(bar).every(Boolean));
-        if (!damageCheck) throw new Error('Groove damaged');
-      } catch (err) {
-        alert(err);
-        groove = createGrooveFromString(grooveDefault);
-      }
-
-      return groove;
+          draft.bars = bars;
+          draft.groups = groups;
+          draft.tempo = Math.min(tempoMax, Math.max(tempoMin, Number(tempo)));
+        } catch (err) {
+          alert(err);
+          const { bars, groups, tempo } = createGrooveFromString(grooveDefault);
+          draft.bars = bars;
+          draft.groups = groups;
+          draft.tempo = tempo;
+        }
+      });
     }
 
     case 'SET_NOTE': {
-      const { rhythmIndex, instrument, group, barIndex, value } = action.payload;
+      return produce(
+        state,
+        (draft) => {
+          const { rhythmIndex, instrument, group, barIndex, value } = action.payload;
+          // reset all group of instruments
+          const instruments = getInstrumentsByGroup(group);
+          instruments.forEach((ins) => {
+            draft.bars[barIndex].instruments[ins][rhythmIndex] = false;
+          });
 
-      const bars = [...state.bars];
-      const clonedBar = cloneBar(state.bars[barIndex]);
-
-      // disable all group
-      const instruments = getInstrumentsByGroup(group);
-      instruments.forEach((ins) => {
-        clonedBar.instruments[ins][rhythmIndex] = false;
-      });
-
-      // set value
-      clonedBar.instruments[instrument][rhythmIndex] = value;
-      bars[barIndex] = clonedBar;
-
-      return { ...state, bars };
+          draft.bars[barIndex].instruments[instrument][rhythmIndex] = value;
+          draft.canUndo = true;
+        },
+        patchListener,
+      );
     }
 
     case 'SET_SIGNATURE': {
-      const { barIndex, noteValue, beatsPerBar, timeDivision } = action.payload;
-      const bar = state.bars[barIndex];
-
-      if (
-        beatsPerBar === bar.beatsPerBar &&
-        noteValue === bar.noteValue &&
-        timeDivision === bar.timeDivision
-      ) {
-        return state;
-      }
-
-      const scaledBar = scaleBar(bar, noteValue, beatsPerBar, timeDivision);
-      const bars = [...state.bars];
-      bars[barIndex] = scaledBar;
-
-      return { ...state, bars };
+      return produce(
+        state,
+        (draft) => {
+          const { barIndex, noteValue, beatsPerBar, timeDivision } = action.payload;
+          const bar = draft.bars[barIndex];
+          draft.bars[barIndex] = scaleBar(bar, noteValue, beatsPerBar, timeDivision);
+          draft.canUndo = true;
+        },
+        patchListener,
+      );
     }
 
     case 'SET_TEMPO': {
-      return { ...state, tempo: action.payload };
+      return produce(state, (draft) => {
+        draft.tempo = action.payload;
+      });
+    }
+
+    case 'UNDO': {
+      const patch = changes[currentVersion--]?.undo;
+
+      if (patch) {
+        return produce(applyPatches(state, patch), (draft) => {
+          draft.canUndo = Boolean(changes[currentVersion]);
+          draft.canRedo = true;
+        });
+      }
+
+      return state;
+    }
+
+    case 'REDO': {
+      const patch = changes[++currentVersion]?.redo;
+
+      if (patch) {
+        return produce(applyPatches(state, patch), (draft) => {
+          draft.canUndo = true;
+          draft.canRedo = Boolean(changes[currentVersion + 1]);
+        });
+      }
+
+      return state;
     }
 
     default: {
@@ -158,7 +222,7 @@ const GrooveContext = createContext({
   dispatch: Function.prototype as Dispatch<Actions>,
 });
 
-export const GrooveProvider: FC<{ children: ReactNode; initial?: State }> = ({
+export const GrooveProvider: FC<{ children: ReactNode; initial?: Groove }> = ({
   children,
   initial = {},
 }) => {

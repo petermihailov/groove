@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import type { DialogHTMLAttributes, MouseEventHandler, ReactEventHandler } from 'react';
-import { forwardRef, useCallback, useImperativeHandle, useRef, useState } from 'react';
+import type { DialogHTMLAttributes, MouseEventHandler } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
 
 import classes from './Dialog.css';
 

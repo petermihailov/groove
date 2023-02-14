@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { instruments } from '../../constants';
 import type { DrumKit } from '../../types';
-import { fetchAndDecodeAudio, getPublicFile } from '../../utils';
+import { fetchAndDecodeAudio } from '../../utils/audio';
+import { getPublicFile } from '../../utils/files';
 
 export function useDrumKit() {
   const [drumKit, setDrumKit] = useState<DrumKit | null>(null);

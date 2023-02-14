@@ -1,5 +1,6 @@
 import type { Beat, Instrument, Bar, DrumKit } from '../types';
-import { getAudioContext, getInstrumentsByIndex } from '../utils';
+import { getAudioContext } from '../utils/audio';
+import { getInstrumentsByIndex } from '../utils/groove';
 
 const safetyBuffer = 0.25; // seconds
 

@@ -68,21 +68,6 @@ export const getInstrumentsByIndex = (bar: Bar, rhythmIndex: number): Instrument
   });
 };
 
-export const cloneBar = (bar: Bar): Bar => {
-  const instruments = safeKeys(bar.instruments).reduce<BarInstruments>((res, key) => {
-    res[key] = bar.instruments[key].slice();
-    return res;
-  }, createEmptyInstruments());
-
-  return {
-    beatsPerBar: bar.beatsPerBar,
-    noteValue: bar.noteValue,
-    timeDivision: bar.timeDivision,
-    length: bar.length,
-    instruments,
-  };
-};
-
 export const scaleBar = (
   bar: Bar,
   noteValue: number,

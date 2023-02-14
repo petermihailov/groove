@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 
 import { grooveDefault } from '../../constants';
 import { setGrooveFromStringAction, useGrooveContext } from '../../context/GrooveContext';
-import { getQuery, modifyQuery, updateQuery, createStringGroove } from '../../utils';
+import { createStringGroove } from '../../utils/shirtify';
+import { getQuery, modifyQuery, updateQuery } from '../../utils/url';
 
 export function useQuerySync() {
   const { groove, dispatch } = useGrooveContext();

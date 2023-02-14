@@ -9,7 +9,7 @@ import type {
   TimeSignature as TimeSignatureType,
   TimeDivision,
 } from '../../../types';
-import { convertBarInstrumentsByGroups } from '../../../utils';
+import { convertBarInstrumentsByGroups } from '../../../utils/groove';
 import { ButtonIcon } from '../../ButtonIcon';
 import { Icon } from '../../Icon';
 import { BarLine } from '../BarLine';

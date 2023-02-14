@@ -22,6 +22,8 @@ import classes from './Editor.css';
 export interface EditorProps {
   bars: BarType[];
   beat: Beat;
+  canUndo: boolean;
+  canRedo: boolean;
   enabledGroups: InstrumentGroupEnabled;
   onAddBar: (barIndex: number) => void;
   onClearBar: (barIndex: number) => void;
@@ -33,18 +35,24 @@ export interface EditorProps {
       timeDivision: TimeDivision;
     },
   ) => void;
+  onUndo: () => void;
+  onRedo: () => void;
   playing: boolean;
 }
 
 export const Editor = ({
-  beat,
   bars,
+  beat,
+  canRedo,
+  canUndo,
   enabledGroups,
   onAddBar,
+  onChangeSignature,
   onClearBar,
+  onRedo,
   onRemoveBar,
   onSetNote,
-  onChangeSignature,
+  onUndo,
 }: EditorProps) => {
   const [uiScaleValue, setUiScaleValue] = useState(1);
 
@@ -56,7 +64,13 @@ export const Editor = ({
 
   return (
     <div ref={rootRef} className={classes.root}>
-      <Controls setEditorScaleValue={setUiScaleValue} />
+      <Controls
+        canRedo={canRedo}
+        canUndo={canUndo}
+        setEditorScaleValue={setUiScaleValue}
+        onRedo={onRedo}
+        onUndo={onUndo}
+      />
 
       <div
         className={classes.editor}

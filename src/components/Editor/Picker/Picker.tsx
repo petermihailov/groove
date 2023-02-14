@@ -2,7 +2,8 @@ import clsx from 'clsx';
 import { memo, useEffect, useState } from 'react';
 
 import type { MouseEventHandler, Note as NoteType } from '../../../types';
-import { getInstrumentsByGroup, isInstrument, isInstrumentGroup } from '../../../utils';
+import { getInstrumentsByGroup } from '../../../utils/groove';
+import { isInstrument, isInstrumentGroup } from '../../../utils/guards';
 import { Note } from '../Note';
 import { getDataFromNoteElement } from '../Note/Note.utils';
 import { Pill } from '../Pill';
