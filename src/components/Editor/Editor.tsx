@@ -76,24 +76,27 @@ export const Editor = ({
         className={classes.editor}
         style={{ '--size-note': `calc(${uiScaleValue} * 2rem)` } as CSSProperties}
       >
-        {/*<div className={classes.groups}>*/}
-        {/*  <Groups enabledGroups={enabledGroups} />*/}
-        {/*</div>*/}
+        <div className={classes.groups}>
+          {bars.map((_, idx) => (
+            <Groups key={idx} enabledGroups={enabledGroups} />
+          ))}
+        </div>
 
-        {bars.map((bar, idx) => (
-          <Bar
-            key={idx}
-            bar={bar}
-            barIndex={idx}
-            enabledGroups={enabledGroups}
-            onAddBar={onAddBar}
-            onChangeSignature={onChangeSignature}
-            onClearBar={onClearBar}
-            onClick={toggleNote}
-            onRemoveBar={onRemoveBar}
-          />
-        ))}
-
+        <div className={classes.bars}>
+          {bars.map((bar, idx) => (
+            <Bar
+              key={idx}
+              bar={bar}
+              barIndex={idx}
+              enabledGroups={enabledGroups}
+              onAddBar={onAddBar}
+              onChangeSignature={onChangeSignature}
+              onClearBar={onClearBar}
+              onClick={toggleNote}
+              onRemoveBar={onRemoveBar}
+            />
+          ))}
+        </div>
         {/*<div className={classes.highlight} style={highlightBeatStyles} />*/}
       </div>
 

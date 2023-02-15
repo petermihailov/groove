@@ -1,9 +1,9 @@
 .root {
-  inline-size: var(--size-note);
-  block-size: var(--size-note);
-  transition-property: opacity, block-size, inline-size;
+  --size-control: var(--size-note);
+
+  transition-property: inline-size, block-size;
   transition-timing-function: var(--ease-in-out-1);
-  transition-duration: 150ms;
+  transition-duration: 300ms;
 }
 
 .empty {

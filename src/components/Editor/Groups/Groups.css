@@ -1,8 +1,16 @@
 .root {
   display: grid;
+  grid-auto-rows: var(--size-note);
   grid-gap: var(--spacing-note);
-  align-items: center;
+  place-items: center;
   color: var(--color-accent);
+}
+
+.icon {
+  --size: calc(0.8 * var(--size-note));
+
+  inline-size: var(--size);
+  block-size: var(--size);
 }
 
 .toBottom {
