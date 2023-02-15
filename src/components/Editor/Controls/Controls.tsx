@@ -28,11 +28,11 @@ const Controls = ({
   onRedo,
 }: ControlsProps) => {
   const zoomIn = () => {
-    setEditorScaleValue((val) => (val + zoomStep));
+    setEditorScaleValue((val) => val + zoomStep);
   };
 
   const zoomOut = () => {
-    setEditorScaleValue((val) => (val >= .2 ? val - zoomStep : val));
+    setEditorScaleValue((val) => (val >= 0.2 ? val - zoomStep : val));
   };
 
   useEffect(() => {
