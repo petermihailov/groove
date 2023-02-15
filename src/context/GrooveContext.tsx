@@ -80,6 +80,7 @@ interface State extends Groove {
 }
 
 const defaultState: State = {
+  title: '',
   tempo: 80,
   bars: [],
   groups: {},
@@ -129,19 +130,22 @@ const reducer = (state: State, action: Actions): State => {
     case 'SET_GROOVE_FROM_STRING': {
       return produce(state, (draft) => {
         try {
-          const { bars, groups, tempo } = createGrooveFromString(action.payload);
+          const { title, bars, groups, tempo } = createGrooveFromString(action.payload);
 
           const damageCheck = bars.every((bar) => Object.values(bar).every(Boolean));
           if (!damageCheck) {
             throw new Error('Groove damaged');
           }
 
+          draft.title = title;
           draft.bars = bars;
           draft.groups = groups;
           draft.tempo = Math.min(tempoMax, Math.max(tempoMin, Number(tempo)));
         } catch (err) {
           alert(err);
-          const { bars, groups, tempo } = createGrooveFromString(grooveDefault);
+
+          const { title, bars, groups, tempo } = createGrooveFromString(grooveDefault);
+          draft.title = title;
           draft.bars = bars;
           draft.groups = groups;
           draft.tempo = tempo;

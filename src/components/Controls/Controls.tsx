@@ -44,7 +44,7 @@ const Controls = ({
           aria-label={`metronome ${metronomeEnabled ? 'enabled' : 'disabled'}`}
           onClick={onToggleMetronome}
         >
-          <Icon name="ui-metronome" />
+          <Icon name="icon.metronome" />
         </ButtonIcon>
 
         <Range
@@ -59,7 +59,7 @@ const Controls = ({
 
       <div className={clsx(classes.row, classes.other)}>
         <ButtonIcon aria-label="open settings" onClick={onOpenSettings}>
-          <Icon name="ui-settings" />
+          <Icon name="icon.settings" />
         </ButtonIcon>
 
         <ButtonShare />

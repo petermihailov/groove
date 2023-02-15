@@ -44,7 +44,7 @@ const Picker = ({ className, note, onChange }: PickerProps) => {
               [classes.iconHhFoot]: instrument === 'hhFootRegular',
             })}
             group={cachedNote.group}
-            icon={instrument === 'hhFootRegular' ? 'group-hh-foot' : undefined}
+            icon={instrument === 'hhFootRegular' ? 'icon.group.hh-foot' : undefined}
             index={cachedNote.rhythmIndex}
             instrument={instrument}
             onClick={handleChange}

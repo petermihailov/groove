@@ -64,7 +64,7 @@ const Controls = ({
           disabled={!canUndo}
           onClick={onUndo}
         >
-          <Icon name="ui-undo" />
+          <Icon name="icon.undo" />
         </ButtonIcon>
 
         <ButtonIcon
@@ -73,7 +73,7 @@ const Controls = ({
           disabled={!canRedo}
           onClick={onRedo}
         >
-          <Icon name="ui-redo" />
+          <Icon name="icon.redo" />
         </ButtonIcon>
       </div>
 
@@ -81,11 +81,11 @@ const Controls = ({
 
       <div className={classes.group}>
         <ButtonIcon aria-label="zoom in" onClick={zoomIn}>
-          <Icon name="ui-zoom-in" />
+          <Icon name="icon.zoom-in" />
         </ButtonIcon>
 
         <ButtonIcon aria-label="zoom out" onClick={zoomOut}>
-          <Icon name="ui-zoom-out" />
+          <Icon name="icon.zoom-out" />
         </ButtonIcon>
       </div>
     </div>

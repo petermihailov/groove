@@ -14,7 +14,7 @@ const hasShareAPI = 'share' in navigator;
 
 const ButtonShare = (props: ButtonShareProps) => {
   const [tooltipText, setTooltipText] = useState('');
-  const iconName = hasShareAPI ? 'ui-share' : 'ui-link';
+  const iconName = hasShareAPI ? 'icon.share' : 'icon.link';
 
   const shareHandler = useCallback(() => {
     share()

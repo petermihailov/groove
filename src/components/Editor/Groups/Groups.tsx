@@ -14,14 +14,14 @@ export interface GroupsProps {
 const Groups = ({ className, enabledGroups }: GroupsProps) => {
   return (
     <div className={clsx(className, classes.root)}>
-      {enabledGroups.cy && <Icon className={classes.toBottom} name="group-cy" />}
-      {enabledGroups.hh && <Icon className={classes.toBottom} name="group-hh" />}
-      {enabledGroups.t1 && <Icon name="group-t1" />}
-      {enabledGroups.sn && <Icon name="group-sn" />}
-      {enabledGroups.t2 && <Icon name="group-t2" />}
-      {enabledGroups.t3 && <Icon name="group-t3" />}
-      {enabledGroups.ki && <Icon name="group-ki" />}
-      {enabledGroups.hh && <Icon name="group-hh-foot" />}
+      {enabledGroups.cy && <Icon className={classes.toBottom} name="icon.group.cy" />}
+      {enabledGroups.hh && <Icon className={classes.toBottom} name="icon.group.hh" />}
+      {enabledGroups.t1 && <Icon name="icon.group.t1" />}
+      {enabledGroups.sn && <Icon name="icon.group.sn" />}
+      {enabledGroups.t2 && <Icon name="icon.group.t2" />}
+      {enabledGroups.t3 && <Icon name="icon.group.t3" />}
+      {enabledGroups.ki && <Icon name="icon.group.ki" />}
+      {enabledGroups.hh && <Icon name="icon.group.hh-foot" />}
     </div>
   );
 };

@@ -63,7 +63,7 @@ const TimeSignature = ({
         options={timeDivisionOptions.map((option) => ({
           value: option,
           label: `${option}th`,
-          customLabel: <Icon name={`note-duration-${option}`} />,
+          customLabel: <Icon name={`icon.note.duration.${option}`} />,
         }))}
         value={timeDivision}
         onChange={changeTimeDivision}

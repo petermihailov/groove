@@ -84,9 +84,10 @@ export const createBarsFromString = (str: string): Bar[] => {
 
 export const createGrooveFromString = (str: string): Groove => {
   const [settingsString, barsStr] = str.split(symbols.grooveSettingsDelimiter);
+  const title = readStringParamValue(settingsString, symbols.title);
   const tempo = Number(readStringParamValue(settingsString, symbols.tempo));
   const bars = createBarsFromString(barsStr);
   const groups = getUsedGroups(bars);
 
-  return { tempo, bars, groups };
+  return { title, tempo, bars, groups };
 };

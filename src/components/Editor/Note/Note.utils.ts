@@ -9,7 +9,7 @@ export const getIconName = (instrument: Instrument | null, group: InstrumentGrou
       return iconNamesMap.hhCloseRegular;
     }
 
-    return 'note-empty';
+    return 'icon.note.empty';
   }
 
   return iconNamesMap[instrument];

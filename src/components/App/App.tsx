@@ -118,7 +118,7 @@ const App = () => {
       />
 
       <h1 className={clsx(classes.title, 'disableScroll')}>
-        <span>Title</span>
+        <span>{groove.title}</span>
       </h1>
 
       <Controls

@@ -101,18 +101,18 @@ const Bar = ({
       {/*    className={classes.actionButton}*/}
       {/*    onClick={toggleActions}*/}
       {/*  >*/}
-      {/*    <Icon name="ui-more" />*/}
+      {/*    <Icon name="icon.more" />*/}
       {/*  </ButtonIcon>*/}
 
       {/*  <Pill className={clsx(classes.actionBar, { [classes.actionsBarHidden]: !actions })}>*/}
       {/*    <ButtonIcon aria-label="remove bar" onClick={removeBar}>*/}
-      {/*      <Icon name="ui-delete" />*/}
+      {/*      <Icon name="icon.delete" />*/}
       {/*    </ButtonIcon>*/}
       {/*    <ButtonIcon aria-label="clear bar" onClick={clearBar}>*/}
-      {/*      <Icon name="ui-clear" />*/}
+      {/*      <Icon name="icon.clear" />*/}
       {/*    </ButtonIcon>*/}
       {/*    <ButtonIcon aria-label="add bar" onClick={addBar}>*/}
-      {/*      <Icon name="ui-add" />*/}
+      {/*      <Icon name="icon.add" />*/}
       {/*    </ButtonIcon>*/}
 
       {/*    <TimeSignature*/}
