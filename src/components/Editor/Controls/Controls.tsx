@@ -17,6 +17,8 @@ export interface ControlsProps {
   setEditorScaleValue: Dispatch<SetStateAction<number>>;
 }
 
+const zoomStep = 0.1;
+
 const Controls = ({
   canRedo,
   canUndo,
@@ -26,11 +28,11 @@ const Controls = ({
   onRedo,
 }: ControlsProps) => {
   const zoomIn = () => {
-    setEditorScaleValue((val) => (val += 0.1));
+    setEditorScaleValue((val) => (val + zoomStep));
   };
 
   const zoomOut = () => {
-    setEditorScaleValue((val) => (val -= 0.1));
+    setEditorScaleValue((val) => (val >= .2 ? val - zoomStep : val));
   };
 
   useEffect(() => {
