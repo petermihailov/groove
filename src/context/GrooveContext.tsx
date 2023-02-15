@@ -96,6 +96,7 @@ const reducer = (state: State, action: Actions): State => {
           const insertAfterBarIdx = action.payload;
           draft.bars.splice(insertAfterBarIdx + 1, 0, draft.bars[insertAfterBarIdx]);
           draft.canUndo = true;
+          draft.canRedo = false;
         },
         patchListener,
       );
@@ -107,6 +108,7 @@ const reducer = (state: State, action: Actions): State => {
         (draft) => {
           draft.bars[action.payload].instruments = createEmptyInstruments();
           draft.canUndo = true;
+          draft.canRedo = false;
         },
         patchListener,
       );
@@ -118,6 +120,7 @@ const reducer = (state: State, action: Actions): State => {
         (draft) => {
           draft.bars = draft.bars.filter((_, idx) => action.payload !== idx);
           draft.canUndo = true;
+          draft.canRedo = false;
         },
         patchListener,
       );
@@ -159,6 +162,7 @@ const reducer = (state: State, action: Actions): State => {
 
           draft.bars[barIndex].instruments[instrument][rhythmIndex] = value;
           draft.canUndo = true;
+          draft.canRedo = false;
         },
         patchListener,
       );
@@ -172,6 +176,7 @@ const reducer = (state: State, action: Actions): State => {
           const bar = draft.bars[barIndex];
           draft.bars[barIndex] = scaleBar(bar, noteValue, beatsPerBar, timeDivision);
           draft.canUndo = true;
+          draft.canRedo = false;
         },
         patchListener,
       );
