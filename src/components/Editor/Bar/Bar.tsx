@@ -16,7 +16,7 @@ import { BarLine } from '../BarLine';
 import { Pill } from '../Pill';
 import { TimeSignature } from '../TimeSignature';
 
-import classes from './Bar.css';
+import classes from './Bar.module.css';
 
 export interface BarProps {
   className?: string;

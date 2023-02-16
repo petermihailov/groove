@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import classes from './Tooltip.css';
+import classes from './Tooltip.module.css';
 
 export type TooltipPlacement = 'top' | 'right' | 'bottom' | 'left';
 

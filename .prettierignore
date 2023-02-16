@@ -1,5 +1,5 @@
 # folders
-build/
+dist/
 
 # files
 tsconfig.json

@@ -8,7 +8,7 @@ import { Note } from '../Note';
 import { getDataFromNoteElement } from '../Note/Note.utils';
 import { Pill } from '../Pill';
 
-import classes from './Picker.css';
+import classes from './Picker.module.css';
 
 export interface PickerProps {
   className?: string;

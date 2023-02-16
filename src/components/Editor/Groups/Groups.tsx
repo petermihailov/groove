@@ -4,7 +4,7 @@ import { memo } from 'react';
 import type { InstrumentGroupEnabled } from '../../../types';
 import { Icon } from '../../Icon';
 
-import classes from './Groups.css';
+import classes from './Groups.module.css';
 
 export interface GroupsProps {
   className?: string;

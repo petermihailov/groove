@@ -4,7 +4,7 @@ import type { InstrumentGroup, InstrumentGroupEnabled } from '../../../types';
 import { ButtonIcon } from '../../ButtonIcon';
 import { Icon } from '../../Icon';
 
-import classes from './InstrumentGroups.css';
+import classes from './InstrumentGroups.module.css';
 
 export interface InstrumentGroupsProps {
   enabledGroups: InstrumentGroupEnabled;

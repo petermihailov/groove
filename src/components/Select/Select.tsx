@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import type { ChangeEventHandler, HTMLAttributes, ReactNode } from 'react';
 import { memo } from 'react';
 
-import classes from './Select.css';
+import classes from './Select.module.css';
 
 export interface SelectOption<T> {
   value: T;

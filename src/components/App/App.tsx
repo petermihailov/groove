@@ -20,7 +20,7 @@ import { Dialog } from '../Dialog';
 import { Editor } from '../Editor';
 import { Settings } from '../Settings';
 
-import classes from './App.css';
+import classes from './App.module.css';
 
 const App = () => {
   const { groove, dispatch } = useGrooveContext();

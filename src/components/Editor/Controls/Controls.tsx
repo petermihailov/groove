@@ -6,7 +6,7 @@ import { ButtonIcon } from '../../ButtonIcon';
 import { Icon } from '../../Icon';
 import { Logo } from '../../Logo';
 
-import classes from './Controls.css';
+import classes from './Controls.module.css';
 
 export interface ControlsProps {
   canRedo: boolean;

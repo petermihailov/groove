@@ -17,7 +17,7 @@ import type {
   TimeSignature,
 } from '../../types';
 
-import classes from './Editor.css';
+import classes from './Editor.module.css';
 
 export interface EditorProps {
   bars: BarType[];

@@ -6,7 +6,7 @@ import { ButtonIcon } from '../ButtonIcon';
 import { Icon } from '../Icon';
 import { Tooltip } from '../Tooltip';
 
-import classes from './ButtonShare.css';
+import classes from './ButtonShare.module.css';
 
 export type ButtonShareProps = Omit<ButtonIconProps, 'aria-label'>;
 

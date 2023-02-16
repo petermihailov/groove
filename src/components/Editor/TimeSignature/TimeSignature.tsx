@@ -5,7 +5,7 @@ import type { TimeDivision, TimeSignature as TimeSignatureType } from '../../../
 import { Icon } from '../../Icon';
 import { Select } from '../../Select';
 
-import classes from './TimeSignature.css';
+import classes from './TimeSignature.module.css';
 
 export interface TimeSignatureProps extends TimeSignatureType {
   className?: string;

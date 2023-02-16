@@ -8,7 +8,7 @@ import type {
 } from 'react';
 import { useEffect, useRef } from 'react';
 
-import classes from './Range.css';
+import classes from './Range.module.css';
 
 const rangeToPercent = (value: number, min: number, max: number) => {
   const percent = value / (max - min) - min / (max - min);

@@ -3,7 +3,7 @@ import { memo } from 'react';
 
 import type { IconName } from '../../types';
 
-import classes from './Icon.css';
+import classes from './Icon.module.css';
 
 export interface IconProps {
   className?: string;

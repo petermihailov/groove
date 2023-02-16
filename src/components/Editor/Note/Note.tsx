@@ -7,7 +7,7 @@ import type { IconName, Instrument, InstrumentGroup } from '../../../types';
 import { ButtonIcon } from '../../ButtonIcon';
 import { Icon } from '../../Icon';
 
-import classes from './Note.css';
+import classes from './Note.module.css';
 
 export interface NoteProps extends HTMLAttributes<HTMLButtonElement> {
   group: InstrumentGroup;

@@ -49,7 +49,6 @@
   --tip: var(--bottom-tip);
 
   inset-block-end: calc(var(--triangle-size) * -1);
-  -webkit-border-after: var(--triangle-size) solid transparent;
   border-block-end: var(--triangle-size) solid transparent;
 }
 

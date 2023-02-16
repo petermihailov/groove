@@ -4,7 +4,7 @@ import type { MetronomeFrequency as MetronomeFrequencyType } from '../../../type
 import { ButtonIcon } from '../../ButtonIcon';
 import { Icon } from '../../Icon';
 
-import classes from './MetronomeFrequency.css';
+import classes from './MetronomeFrequency.module.css';
 
 export interface MetronomeFrequencyProps {
   metronomeFrequency?: MetronomeFrequencyType;

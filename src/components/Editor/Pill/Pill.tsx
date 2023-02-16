@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import type { HTMLAttributes } from 'react';
 
-import classes from './Pill.css';
+import classes from './Pill.module.css';
 
 export type PillProps = HTMLAttributes<HTMLDivElement>;
 

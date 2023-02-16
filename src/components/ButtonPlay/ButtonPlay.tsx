@@ -4,7 +4,7 @@ import { memo, useEffect, useRef } from 'react';
 import type { ButtonIconProps } from '../ButtonIcon';
 import { ButtonIcon } from '../ButtonIcon';
 
-import classes from './ButtonPlay.css';
+import classes from './ButtonPlay.module.css';
 
 export interface ButtonPlayProps extends Omit<ButtonIconProps, 'aria-label'> {
   playing: boolean;

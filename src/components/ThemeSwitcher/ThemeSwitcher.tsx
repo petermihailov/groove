@@ -5,7 +5,7 @@ import { useThemeSwitch } from './useThemeSwitch';
 import type { ButtonIconProps } from '../ButtonIcon';
 import { ButtonIcon } from '../ButtonIcon';
 
-import classes from './ThemeSwitcher.css';
+import classes from './ThemeSwitcher.module.css';
 
 export type ThemeSwitcherProps = Omit<ButtonIconProps, 'aria-label'>;
 

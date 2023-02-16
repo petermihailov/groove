@@ -1,5 +1,10 @@
 import { createRoot } from 'react-dom/client';
 
+import './styles/reset.css';
+import './styles/theme.css';
+import './styles/main.css';
+import './styles/helpers.css';
+
 import { App } from './components/App';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { GrooveProvider } from './context/GrooveContext';

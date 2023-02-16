@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import type { DialogHTMLAttributes, MouseEventHandler } from 'react';
 import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
 
-import classes from './Dialog.css';
+import classes from './Dialog.module.css';
 
 export interface DialogHandlers {
   show: () => void;

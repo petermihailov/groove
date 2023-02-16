@@ -5,7 +5,7 @@ import { InstrumentGroups } from './InstrumentGroups';
 import type { MetronomeFrequencyProps } from './MetronomeFrequency';
 import { MetronomeFrequency } from './MetronomeFrequency';
 
-import classes from './Settings.css';
+import classes from './Settings.module.css';
 
 export interface SettingsProps extends InstrumentGroupsProps, MetronomeFrequencyProps {}
 

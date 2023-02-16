@@ -10,7 +10,7 @@ import { Icon } from '../Icon';
 import { Range } from '../Range';
 import { ThemeSwitcher } from '../ThemeSwitcher';
 
-import classes from './Controls.css';
+import classes from './Controls.module.css';
 
 export interface ControlsProps {
   className?: string;

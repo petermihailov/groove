@@ -2,8 +2,8 @@
 .npm_cache
 node_modules/
 
-# build
-build/
+# out
+dist/
 
 # files
 webpack.config.js
