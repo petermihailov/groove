@@ -1,4 +1,5 @@
 .root {
-  padding: var(--size-3) var(--size-horizontal-padding) var(--size-5);
+  padding-block: var(--size-5);
+  padding-inline: var(--size-3);
   text-transform: uppercase;
 }

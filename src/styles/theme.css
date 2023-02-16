@@ -40,6 +40,9 @@
   --z-index-dialog: 800;
   --z-index-dropdown: 900;
   --z-index-tooltip: 1000;
+
+  /* filters */
+  --backdrop-blur: blur(25px);
 }
 
 :where(html[data-theme='light']) {

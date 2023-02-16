@@ -13,27 +13,36 @@
 .editor {
   position: relative;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: var(--size-note) 1fr;
   align-items: start;
-  padding-block-end: var(--spacing-bar-bottom);
-  padding-inline-end: var(--size-horizontal-padding);
 }
 
-.groups {
+.stickyWrapper {
   position: sticky;
   inset-inline-start: 0;
   z-index: 1;
+  block-size: 100%;
+  background-color: var(--color-highlight);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  backdrop-filter: var(--backdrop-blur);
+  overflow: hidden;
+}
+
+.outOfTheFlowWrapper {
+  position: absolute;
+  inline-size: 100%;
+}
+
+.groups {
   display: grid;
   inline-size: var(--size-note);
-  background-color: var(--color-highlight);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
 }
 
 .bars {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+  padding-block-end: var(--size-2);
 }
 
 .highlight {

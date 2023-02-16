@@ -1,7 +1,4 @@
 .root {
   inline-size: var(--size-icon);
   block-size: var(--size-icon);
-  transition-property: inline-size, block-size;
-  transition-timing-function: var(--ease-in-out-1);
-  transition-duration: 300ms;
 }

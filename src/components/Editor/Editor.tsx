@@ -20,6 +20,7 @@ import type {
 import classes from './Editor.module.css';
 
 export interface EditorProps {
+  className?: string;
   bars: BarType[];
   beat: Beat;
   canUndo: boolean;
@@ -45,6 +46,7 @@ export const Editor = ({
   beat,
   canRedo,
   canUndo,
+  className,
   enabledGroups,
   onAddBar,
   onChangeSignature,
@@ -63,7 +65,7 @@ export const Editor = ({
   useClickOutside(rootRef, blurNote);
 
   return (
-    <div ref={rootRef} className={classes.root}>
+    <div ref={rootRef} className={clsx(className, classes.root)}>
       <Controls
         canRedo={canRedo}
         canUndo={canUndo}
@@ -76,10 +78,14 @@ export const Editor = ({
         className={classes.editor}
         style={{ '--size-note': `calc(${uiScaleValue} * 2rem)` } as CSSProperties}
       >
-        <div className={classes.groups}>
-          {bars.map((_, idx) => (
-            <Groups key={idx} enabledGroups={enabledGroups} />
-          ))}
+        <div className={classes.stickyWrapper}>
+          <div className={classes.outOfTheFlowWrapper}>
+            <div className={classes.groups}>
+              {bars.map((_, idx) => (
+                <Groups key={idx} enabledGroups={enabledGroups} />
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className={classes.bars}>

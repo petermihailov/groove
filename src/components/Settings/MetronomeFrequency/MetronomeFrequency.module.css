@@ -1,6 +1,6 @@
 .root {
   display: flex;
-  gap: var(--size-1);
+  gap: var(--size-3);
   justify-content: space-between;
   align-items: center;
 }
