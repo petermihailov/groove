@@ -1,9 +1,6 @@
 .root {
-  display: grid;
-  grid-auto-rows: var(--size-note);
-  grid-gap: var(--spacing-note);
-  place-items: center;
-  color: var(--color-accent);
+  max-inline-size: unset;
+  fill: var(--color-accent);
 }
 
 .icon {

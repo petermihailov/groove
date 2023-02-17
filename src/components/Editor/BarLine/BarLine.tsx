@@ -13,7 +13,7 @@ const BarLine = ({ group, hhFootOffsetGroups, line }: BarLineProps) => {
   const getStyles = (instrument: Instrument | null) =>
     hhFootOffsetGroups != null && instrument === 'hhFootRegular'
       ? {
-          transform: `translateY(calc(var(--size-note) * ${hhFootOffsetGroups} + var(--spacing-note) * ${hhFootOffsetGroups})) rotate(180deg)`,
+          transform: `translateY(calc(var(--size-note) * ${hhFootOffsetGroups} * ${hhFootOffsetGroups})) rotate(180deg)`,
         }
       : undefined;
 

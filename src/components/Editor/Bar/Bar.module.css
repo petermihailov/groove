@@ -13,7 +13,7 @@
   position: absolute;
   inset-block-end: 0;
   inline-size: 100%;
-  transform: translateY(calc(100% + var(--spacing-bar-bottom) + var(--spacing-note)));
+  transform: translateY(calc(100% + var(--spacing-bar-bottom)));
 }
 
 .actionButton {

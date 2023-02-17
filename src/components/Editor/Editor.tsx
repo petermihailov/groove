@@ -49,6 +49,7 @@ export const Editor = ({
   canUndo,
   className,
   enabledGroups,
+  playing,
   onAddBar,
   onChangeSignature,
   onClearBar,
@@ -58,7 +59,7 @@ export const Editor = ({
   onUndo,
 }: EditorProps) => {
   const [uiScaleValue, setUiScaleValue] = useState(1);
-  const sizeNote = uiScaleValue * sizeIconDefault;
+  const sizeNote = Math.round(uiScaleValue * sizeIconDefault);
 
   const rootRef = useRef<HTMLDivElement>(null);
   // const highlightBeatStyles = useHighlightStyles(beat, bars);
@@ -81,7 +82,7 @@ export const Editor = ({
           <div className={classes.outOfTheFlowWrapper}>
             <div className={classes.groups}>
               {bars.map((_, idx) => (
-                <Groups key={idx} enabledGroups={enabledGroups} />
+                <Groups key={idx} enabledGroups={enabledGroups} sizeNote={sizeNote} />
               ))}
             </div>
           </div>
@@ -94,7 +95,9 @@ export const Editor = ({
               bar={bar}
               barIndex={idx}
               enabledGroups={enabledGroups}
+              playing={playing && beat.barIndex === idx}
               sizeNote={sizeNote}
+              tracking={beat.playNote && beat.barIndex === idx ? beat.rhythmIndex : null}
               onAddBar={onAddBar}
               onChangeSignature={onChangeSignature}
               onClearBar={onClearBar}

@@ -10,6 +10,8 @@ import type {
   TimeDivision,
 } from '../types';
 
+const order: InstrumentGroup[] = ['cy', 'hh', 't1', 'sn', 't2', 't3', 'ki'];
+
 export const enabledGroupsDefault: InstrumentGroupEnabled = {
   cy: false,
   hh: false,
@@ -18,6 +20,16 @@ export const enabledGroupsDefault: InstrumentGroupEnabled = {
   t1: false,
   t2: false,
   t3: false,
+};
+
+export const orderedEnabledGroups = (enabledGroups: InstrumentGroupEnabled): InstrumentGroup[] => {
+  return order.reduce<InstrumentGroup[]>((acc, group) => {
+    if (enabledGroups[group]) {
+      acc.push(group);
+    }
+
+    return acc;
+  }, []);
 };
 
 export const getUsedGroups = (bars: Bar[]) => {
@@ -96,8 +108,6 @@ export const convertBarInstrumentsByGroups = (
   bar: Bar,
   enabledGroups: InstrumentGroupEnabled,
 ): BarInstrumentsByGroups => {
-  const order: InstrumentGroup[] = ['cy', 'hh', 't1', 'sn', 't2', 't3', 'ki'];
-
   const unordered = safeKeys(bar.instruments).reduce<BarInstrumentsByGroups>((acc, key) => {
     const groupName = getGroupByInstrument(key);
     const isEnabled = enabledGroups[groupName];

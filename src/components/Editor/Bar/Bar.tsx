@@ -1,5 +1,6 @@
+import clsx from 'clsx';
 import type { MouseEventHandler } from 'react';
-import { Fragment, memo, useMemo } from 'react';
+import { Fragment, memo, useEffect, useMemo, useRef } from 'react';
 
 import { sizeIconDefault } from '../../../constants';
 import type {
@@ -19,7 +20,9 @@ export interface BarProps {
   barIndex: number;
   className?: string;
   enabledGroups: InstrumentGroupEnabled;
+  playing: boolean;
   sizeNote: number;
+  tracking: null | number;
   onAddBar: (barIndex: number) => void;
   onClearBar: (barIndex: number) => void;
   onClick?: MouseEventHandler<SVGSVGElement>;
@@ -37,7 +40,9 @@ const Bar = ({
   barIndex,
   className,
   enabledGroups,
+  playing,
   sizeNote,
+  tracking,
   onAddBar,
   onChangeSignature,
   onClearBar,
@@ -46,6 +51,8 @@ const Bar = ({
 }: BarProps) => {
   // const [actions, setActions] = useState(false);
   // const actionsRef = useRef(null);
+
+  const refTracker = useRef<SVGRectElement>(null);
 
   const instrumentsByGroups = useMemo(() => {
     return convertBarInstrumentsByGroups(bar, enabledGroups);
@@ -79,18 +86,37 @@ const Bar = ({
   const colsCount = bar.length;
   const rowsCount = Object.keys(instrumentsByGroups).length;
 
-  const barWidth = colsCount * sizeNote;
-  const barHeight = rowsCount * sizeNote;
-  const viewBox = `0 0 ${colsCount * sizeIconDefault} ${rowsCount * sizeIconDefault}`;
+  const svgWidth = colsCount * sizeNote;
+  const svgHeight = rowsCount * sizeNote;
+  const vbWidth = colsCount * sizeIconDefault;
+  const vbHeight = rowsCount * sizeIconDefault;
+  const viewBox = `0 0 ${vbWidth} ${vbHeight}`;
+
+  useEffect(() => {
+    const tracker = refTracker.current;
+    const index = tracking ?? -1;
+
+    if (tracker) {
+      if (playing) {
+        if (tracking !== null) {
+          tracker.setAttribute('x', String(index * sizeIconDefault));
+          tracker.setAttribute('fill', 'var(--color-highlight)');
+        }
+      } else {
+        tracker.setAttribute('fill', 'transparent');
+      }
+    }
+  }, [playing, tracking]);
 
   return (
     <svg
-      className={classes.root}
-      height={barHeight}
+      className={clsx(className, classes.root)}
+      height={svgHeight}
       viewBox={viewBox}
-      width={barWidth}
+      width={svgWidth}
       onClick={onClick}
     >
+      <rect ref={refTracker} height={vbHeight} width={sizeIconDefault} />
       {safeKeys(instrumentsByGroups).map((group, row) => {
         return instrumentsByGroups[group].map((instrument, col) => (
           <Fragment key={`${row}-${col}-${instrument}`}>

@@ -1,32 +1,39 @@
 import clsx from 'clsx';
 import { memo } from 'react';
 
+import { sizeIconDefault } from '../../../constants';
 import type { InstrumentGroupEnabled } from '../../../types';
-import { Icon } from '../../Icon';
+import { orderedEnabledGroups } from '../../../utils/groove';
 
 import classes from './Groups.module.css';
 
 export interface GroupsProps {
   className?: string;
   enabledGroups: InstrumentGroupEnabled;
+  sizeNote: number;
 }
 
-const Groups = ({ className, enabledGroups }: GroupsProps) => {
+const Groups = ({ className, enabledGroups, sizeNote }: GroupsProps) => {
+  const groups = orderedEnabledGroups(enabledGroups);
+  const rowsCount = groups.length;
+
+  const svgWidth = sizeNote;
+  const svgHeight = rowsCount * sizeNote;
+  const vbWidth = sizeIconDefault;
+  const vbHeight = rowsCount * sizeIconDefault;
+  const viewBox = `0 0 ${vbWidth} ${vbHeight}`;
+
   return (
-    <div className={clsx(className, classes.root)}>
-      {enabledGroups.cy && (
-        <Icon className={clsx(classes.icon, classes.toBottom)} name="icon.group.cy" />
-      )}
-      {enabledGroups.hh && (
-        <Icon className={clsx(classes.icon, classes.toBottom)} name="icon.group.hh" />
-      )}
-      {enabledGroups.t1 && <Icon className={classes.icon} name="icon.group.t1" />}
-      {enabledGroups.sn && <Icon className={classes.icon} name="icon.group.sn" />}
-      {enabledGroups.t2 && <Icon className={classes.icon} name="icon.group.t2" />}
-      {enabledGroups.t3 && <Icon className={classes.icon} name="icon.group.t3" />}
-      {enabledGroups.ki && <Icon className={classes.icon} name="icon.group.ki" />}
-      {/*{enabledGroups.hh && <Icon className={classes.icon} name="icon.group.hh-foot" />}*/}
-    </div>
+    <svg
+      className={clsx(className, classes.root)}
+      height={svgHeight}
+      viewBox={viewBox}
+      width={svgWidth}
+    >
+      {groups.map((group, row) => (
+        <use key={group} href={`#icon.group.${group}`} x="0" y={row * sizeIconDefault} />
+      ))}
+    </svg>
   );
 };
 
