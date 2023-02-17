@@ -10,16 +10,18 @@ import type {
   TimeDivision,
 } from '../types';
 
+export const enabledGroupsDefault: InstrumentGroupEnabled = {
+  cy: false,
+  hh: false,
+  ki: false,
+  sn: false,
+  t1: false,
+  t2: false,
+  t3: false,
+};
+
 export const getUsedGroups = (bars: Bar[]) => {
-  const groups: InstrumentGroupEnabled = {
-    cy: false,
-    hh: false,
-    ki: false,
-    sn: false,
-    t1: false,
-    t2: false,
-    t3: false,
-  };
+  const groups: InstrumentGroupEnabled = enabledGroupsDefault;
 
   for (const bar of bars) {
     for (const instrument in bar.instruments) {
@@ -90,23 +92,41 @@ export const scaleBar = (
   return newBar;
 };
 
-export const convertBarInstrumentsByGroups = (bar: Bar): BarInstrumentsByGroups => {
-  return safeKeys(bar.instruments).reduce<BarInstrumentsByGroups>((res, key) => {
-    const groupName = getGroupByInstrument(key);
+export const convertBarInstrumentsByGroups = (
+  bar: Bar,
+  enabledGroups: InstrumentGroupEnabled,
+): BarInstrumentsByGroups => {
+  const order: InstrumentGroup[] = ['cy', 'hh', 't1', 'sn', 't2', 't3', 'ki'];
 
-    if (!res[groupName]) {
-      res[groupName] = new Array(bar.length).fill(null);
+  const unordered = safeKeys(bar.instruments).reduce<BarInstrumentsByGroups>((acc, key) => {
+    const groupName = getGroupByInstrument(key);
+    const isEnabled = enabledGroups[groupName];
+
+    if (!isEnabled) {
+      return acc;
+    }
+
+    if (!acc[groupName]) {
+      acc[groupName] = new Array(bar.length).fill(null);
     }
 
     const notes = bar.instruments[key].map((hasNote) => (hasNote ? key : null));
 
     notes.forEach((instrument, rhythmIndex) => {
       if (instrument && rhythmIndex < bar.length) {
-        res[groupName][rhythmIndex] = instrument;
+        acc[groupName][rhythmIndex] = instrument;
       }
     });
 
-    return res;
+    return acc;
+  }, {} as BarInstrumentsByGroups);
+
+  return order.reduce<BarInstrumentsByGroups>((acc, key) => {
+    if (unordered[key]) {
+      acc[key] = unordered[key];
+    }
+
+    return acc;
   }, {} as BarInstrumentsByGroups);
 };
 

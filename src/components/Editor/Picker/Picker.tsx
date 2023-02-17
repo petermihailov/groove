@@ -19,12 +19,12 @@ export interface PickerProps {
 const Picker = ({ className, note, onChange }: PickerProps) => {
   const [cachedNote, setCachedNote] = useState<NoteType | null>(note);
 
-  const handleChange: MouseEventHandler<HTMLButtonElement> = (e) => {
-    const { group, instrument } = getDataFromNoteElement(e.currentTarget);
-    if (note && isInstrumentGroup(group) && isInstrument(instrument)) {
-      onChange({ ...note, group, instrument });
-    }
-  };
+  // const handleChange: MouseEventHandler<SVGSVGElement> = (e) => {
+  //   const { group, instrument } = getDataFromNoteElement(e.currentTarget);
+  //   if (note && isInstrumentGroup(group) && isInstrument(instrument)) {
+  //     onChange({ ...note, group, instrument });
+  //   }
+  // };
 
   useEffect(() => {
     if (note) {
@@ -47,7 +47,7 @@ const Picker = ({ className, note, onChange }: PickerProps) => {
             icon={instrument === 'hhFootRegular' ? 'icon.group.hh-foot' : undefined}
             index={cachedNote.rhythmIndex}
             instrument={instrument}
-            onClick={handleChange}
+            // onClick={handleChange}
           />
         ))}
     </Pill>

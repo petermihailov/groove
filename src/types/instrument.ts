@@ -1,6 +1,6 @@
 export type InstrumentGroup = 'cy' | 'hh' | 'sn' | 't1' | 't2' | 't3' | 'ki';
 
-export type InstrumentGroupEnabled = Partial<Record<InstrumentGroup, boolean>>;
+export type InstrumentGroupEnabled = Record<InstrumentGroup, boolean>;
 
 export type Instrument =
   | 'cyBellRegular'

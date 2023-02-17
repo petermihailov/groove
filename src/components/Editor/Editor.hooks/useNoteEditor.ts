@@ -13,13 +13,12 @@ export function useNoteEditor(setNote: (note: Note) => void) {
     setFocusedNote(null);
   }, []);
 
-  const toggleNote: MouseEventHandler<HTMLDivElement> = useCallback(
-    ({ currentTarget, target }) => {
-      const barIndex = Number(currentTarget.dataset.index);
-      const noteElement = target.closest('button');
+  const toggleNote: MouseEventHandler<SVGSVGElement> = useCallback(
+    ({ target }) => {
+      const noteElement = target.closest('rect');
 
       if (noteElement) {
-        const { rhythmIndex, group, instrument } = getDataFromNoteElement(noteElement);
+        const { barIndex, rhythmIndex, group, instrument } = getDataFromNoteElement(noteElement);
 
         if (isInstrumentGroup(group)) {
           const value = !instrument;

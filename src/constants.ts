@@ -1,5 +1,7 @@
 import type { InstrumentGroup, Instrument } from './types';
 
+export const sizeIconDefault = 24;
+
 export const instrumentGroups: InstrumentGroup[] = ['cy', 'hh', 'sn', 't1', 't2', 't3', 'ki'];
 
 export const instruments: Instrument[] = [

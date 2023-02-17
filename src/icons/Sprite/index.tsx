@@ -9,9 +9,9 @@ export const Sprite = memo(function Sprite() {
   return (
     <svg style={{ display: 'none' }}>
       <NotesIcons />
-      <UI />
       <NotesDuration />
       <Groups />
+      <UI />
     </svg>
   );
 });

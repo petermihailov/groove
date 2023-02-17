@@ -7,7 +7,12 @@ import { grooveDefault, tempoMax, tempoMin } from '../constants';
 import type { Groove, Note, TimeDivision, TimeSignature } from '../types';
 import type { Action } from '../utils/actions';
 import { createAction } from '../utils/actions';
-import { createEmptyInstruments, getInstrumentsByGroup, scaleBar } from '../utils/groove';
+import {
+  createEmptyInstruments,
+  enabledGroupsDefault,
+  getInstrumentsByGroup,
+  scaleBar,
+} from '../utils/groove';
 import { createGrooveFromString } from '../utils/shirtify';
 
 /* Actions */
@@ -83,7 +88,7 @@ const defaultState: State = {
   title: '',
   tempo: 80,
   bars: [],
-  groups: {},
+  groups: enabledGroupsDefault,
   canUndo: false,
   canRedo: false,
 };

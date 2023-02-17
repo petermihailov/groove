@@ -17,10 +17,10 @@ if (container) {
 
   root.render(
     <ErrorBoundary>
+      <Sprite />
       <GrooveProvider>
         <App />
       </GrooveProvider>
-      <Sprite />
     </ErrorBoundary>,
   );
 }

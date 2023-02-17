@@ -1,4 +1,6 @@
 .root {
+  display: grid;
+  gap: var(--size-2);
   padding-block: var(--size-5);
   padding-inline: var(--size-3);
   text-transform: uppercase;

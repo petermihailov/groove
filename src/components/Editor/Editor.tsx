@@ -6,7 +6,8 @@ import { Bar } from './Bar';
 import { Controls } from './Controls';
 import { useHighlightStyles, useNoteEditor } from './Editor.hooks';
 import { Groups } from './Groups';
-import { Picker } from './Picker';
+// import { Picker } from './Picker';
+import { sizeIconDefault } from '../../constants';
 import { useClickOutside } from '../../hooks';
 import type {
   Bar as BarType,
@@ -57,6 +58,7 @@ export const Editor = ({
   onUndo,
 }: EditorProps) => {
   const [uiScaleValue, setUiScaleValue] = useState(1);
+  const sizeNote = uiScaleValue * sizeIconDefault;
 
   const rootRef = useRef<HTMLDivElement>(null);
   // const highlightBeatStyles = useHighlightStyles(beat, bars);
@@ -74,10 +76,7 @@ export const Editor = ({
         onUndo={onUndo}
       />
 
-      <div
-        className={classes.editor}
-        style={{ '--size-note': `calc(${uiScaleValue} * 2rem)` } as CSSProperties}
-      >
+      <div className={classes.editor} style={{ '--size-note': `${sizeNote}px` } as CSSProperties}>
         <div className={classes.stickyWrapper}>
           <div className={classes.outOfTheFlowWrapper}>
             <div className={classes.groups}>
@@ -95,6 +94,7 @@ export const Editor = ({
               bar={bar}
               barIndex={idx}
               enabledGroups={enabledGroups}
+              sizeNote={sizeNote}
               onAddBar={onAddBar}
               onChangeSignature={onChangeSignature}
               onClearBar={onClearBar}
@@ -106,13 +106,13 @@ export const Editor = ({
         {/*<div className={classes.highlight} style={highlightBeatStyles} />*/}
       </div>
 
-      <div
-        className={clsx(classes.pickerWrapper, {
-          [classes.pickerHidden]: !focusedNote?.instrument,
-        })}
-      >
-        <Picker className={classes.picker} note={focusedNote} onChange={changeNote} />
-      </div>
+      {/*<div*/}
+      {/*  className={clsx(classes.pickerWrapper, {*/}
+      {/*    [classes.pickerHidden]: !focusedNote?.instrument,*/}
+      {/*  })}*/}
+      {/*>*/}
+      {/*  <Picker className={classes.picker} note={focusedNote} onChange={changeNote} />*/}
+      {/*</div>*/}
     </div>
   );
 };

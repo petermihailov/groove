@@ -1,7 +1,10 @@
 .root {
-  position: relative;
-  display: grid;
-  grid-gap: var(--spacing-note);
+  max-inline-size: unset;
+  cursor: pointer;
+}
+
+.root use {
+  pointer-events: none;
 }
 
 /* actions */
