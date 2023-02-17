@@ -13,7 +13,12 @@ import {
   useGrooveContext,
 } from '../../context/GrooveContext';
 import { usePlayer, useQuerySync } from '../../hooks';
-import type { InstrumentGroupEnabled, Note, TimeSignature, TimeDivision } from '../../types';
+import type {
+  InstrumentGroupEnabled,
+  Note,
+  TimeSignature,
+  TimeDivision,
+} from '../../types/instrument';
 import { enabledGroupsDefault } from '../../utils/groove';
 import { Controls } from '../Controls';
 import type { DialogHandlers } from '../Dialog';

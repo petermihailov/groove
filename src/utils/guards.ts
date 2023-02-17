@@ -1,5 +1,5 @@
 import { instrumentGroups, instruments } from '../constants';
-import type { Instrument, InstrumentGroup, TimeDivision } from '../types';
+import type { Instrument, InstrumentGroup, TimeDivision } from '../types/instrument';
 
 export const isInstrumentGroup = (str = ''): str is InstrumentGroup => {
   return instrumentGroups.includes(str as InstrumentGroup);

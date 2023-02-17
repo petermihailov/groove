@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { memo } from 'react';
 
-import type { IconName } from '../../types';
+import type { IconName } from '../../types/icons';
 
 import classes from './Icon.module.css';
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { instruments } from '../../constants';
-import type { DrumKit } from '../../types';
+import type { DrumKit } from '../../types/instrument';
 import { fetchAndDecodeAudio } from '../../utils/audio';
 
 export function useDrumKit() {

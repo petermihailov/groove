@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { memo } from 'react';
 
 import { sizeIconDefault } from '../../../constants';
-import type { InstrumentGroupEnabled } from '../../../types';
+import type { InstrumentGroupEnabled } from '../../../types/instrument';
 import { orderedEnabledGroups } from '../../../utils/groove';
 
 import classes from './Groups.module.css';

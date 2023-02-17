@@ -4,7 +4,7 @@ import { memo, useRef, useState } from 'react';
 
 import { Bar } from './Bar';
 import { Controls } from './Controls';
-import { useHighlightStyles, useNoteEditor } from './Editor.hooks';
+import { useNoteEditor } from './Editor.hooks';
 import { Groups } from './Groups';
 // import { Picker } from './Picker';
 import { sizeIconDefault } from '../../constants';
@@ -16,7 +16,7 @@ import type {
   Note,
   TimeDivision,
   TimeSignature,
-} from '../../types';
+} from '../../types/instrument';
 
 import classes from './Editor.module.css';
 

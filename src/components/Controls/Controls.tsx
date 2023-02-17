@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { memo } from 'react';
 
 import { tempoMax, tempoMin } from '../../constants';
-import type { Groove } from '../../types';
+import type { Groove } from '../../types/instrument';
 import { ButtonIcon } from '../ButtonIcon';
 import { ButtonPlay } from '../ButtonPlay';
 import { ButtonShare } from '../ButtonShare';

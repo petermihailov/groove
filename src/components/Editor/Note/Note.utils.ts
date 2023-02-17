@@ -1,4 +1,5 @@
-import type { IconName, Instrument, InstrumentGroup } from '../../../types';
+import type { IconName } from '../../../types/icons';
+import type { Instrument, InstrumentGroup } from '../../../types/instrument';
 import { groupNamesMap, iconNamesMap } from '../../../utils/maps';
 import { uncamelcase } from '../../../utils/uncamelcase';
 

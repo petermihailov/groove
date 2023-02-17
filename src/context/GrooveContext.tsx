@@ -4,7 +4,7 @@ import { createContext, useContext, useReducer } from 'react';
 import type { Dispatch, FC, ReactNode } from 'react';
 
 import { grooveDefault, tempoMax, tempoMin } from '../constants';
-import type { Groove, Note, TimeDivision, TimeSignature } from '../types';
+import type { Groove, Note, TimeDivision, TimeSignature } from '../types/instrument';
 import type { Action } from '../utils/actions';
 import { createAction } from '../utils/actions';
 import {

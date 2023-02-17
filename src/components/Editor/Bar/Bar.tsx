@@ -8,7 +8,7 @@ import type {
   InstrumentGroupEnabled,
   TimeSignature as TimeSignatureType,
   TimeDivision,
-} from '../../../types';
+} from '../../../types/instrument';
 import { convertBarInstrumentsByGroups } from '../../../utils/groove';
 import { safeKeys } from '../../../utils/safe-keys';
 import { getIconName } from '../Note/Note.utils';

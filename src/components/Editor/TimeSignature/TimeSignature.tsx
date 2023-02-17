@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { memo } from 'react';
 
-import type { TimeDivision, TimeSignature as TimeSignatureType } from '../../../types';
+import type { TimeDivision, TimeSignature as TimeSignatureType } from '../../../types/instrument';
 import { Icon } from '../../Icon';
 import { Select } from '../../Select';
 

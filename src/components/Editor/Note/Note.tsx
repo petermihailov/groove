@@ -3,7 +3,8 @@ import type { HTMLAttributes } from 'react';
 import { memo } from 'react';
 
 import { getIconName, getNoteLabel } from './Note.utils';
-import type { IconName, Instrument, InstrumentGroup } from '../../../types';
+import type { IconName } from '../../../types/icons';
+import type { Instrument, InstrumentGroup } from '../../../types/instrument';
 import { ButtonIcon } from '../../ButtonIcon';
 import { Icon } from '../../Icon';
 

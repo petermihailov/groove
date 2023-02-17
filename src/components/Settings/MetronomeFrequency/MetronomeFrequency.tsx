@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import type { MetronomeFrequency as MetronomeFrequencyType } from '../../../types';
+import type { MetronomeFrequency as MetronomeFrequencyType } from '../../../types/instrument';
 import { ButtonIcon } from '../../ButtonIcon';
 import { Icon } from '../../Icon';
 

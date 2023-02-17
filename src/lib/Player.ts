@@ -1,4 +1,4 @@
-import type { Beat, Instrument, Bar, DrumKit } from '../types';
+import type { Beat, Instrument, Bar, DrumKit } from '../types/instrument';
 import { getAudioContext } from '../utils/audio';
 import { getInstrumentsByIndex } from '../utils/groove';
 

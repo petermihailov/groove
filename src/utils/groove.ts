@@ -8,7 +8,7 @@ import type {
   BarInstruments,
   BarInstrumentsByGroups,
   TimeDivision,
-} from '../types';
+} from '../types/instrument';
 
 const order: InstrumentGroup[] = ['cy', 'hh', 't1', 'sn', 't2', 't3', 'ki'];
 

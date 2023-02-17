@@ -1,4 +1,5 @@
-import type { Instrument, IconName, InstrumentGroup } from '../types';
+import type { IconName } from '../types/icons';
+import type { Instrument, InstrumentGroup } from '../types/instrument';
 
 export const defaultGroupNoteMap: Record<InstrumentGroup, Instrument> = {
   cy: 'cyRideRegular',

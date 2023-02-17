@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 
-import type { Note, MouseEventHandler } from '../../../types';
+import type { MouseEventHandler } from '../../../types/helpers';
+import type { Note } from '../../../types/instrument';
 import { isInstrument, isInstrumentGroup } from '../../../utils/guards';
 import { defaultGroupNoteMap } from '../../../utils/maps';
 import { getDataFromNoteElement } from '../Note/Note.utils';

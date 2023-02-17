@@ -1,4 +1,4 @@
-import type { InstrumentGroup, Instrument } from './types';
+import type { InstrumentGroup, Instrument } from './types/instrument';
 
 export const sizeIconDefault = 24;
 

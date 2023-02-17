@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import type { InstrumentGroup, InstrumentGroupEnabled } from '../../../types';
+import type { InstrumentGroup, InstrumentGroupEnabled } from '../../../types/instrument';
 import { ButtonIcon } from '../../ButtonIcon';
 import { Icon } from '../../Icon';
 
