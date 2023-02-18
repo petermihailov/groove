@@ -1,5 +1,7 @@
-import type { Note } from '../../types/instrument';
+import type { IconName } from '../../types/icons';
+import type { InstrumentGroup, Note } from '../../types/instrument';
 import { isInstrument, isInstrumentGroup } from '../../utils/guards';
+import { iconNamesMap } from '../../utils/maps';
 
 export const getNoteFromDataset = (element: SVGElement | HTMLElement): Note | null => {
   const { barIndex, rhythmIndex, group, instrument, value } = element.dataset;
@@ -24,3 +26,14 @@ export const createNoteDataset = (note: Note) => ({
   'data-instrument': note.instrument,
   'data-value': String(note.value),
 });
+
+export const getEmptyIconName = (group: InstrumentGroup): IconName => {
+  const defaultName = 'icon.note.empty';
+
+  const special = {
+    cy: iconNamesMap.hhOpenRegular,
+    hh: iconNamesMap.hhCloseRegular,
+  };
+
+  return (special as Record<InstrumentGroup, IconName>)[group] ?? defaultName;
+};

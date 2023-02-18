@@ -9,11 +9,13 @@ import type {
   InstrumentGroupEnabled,
   TimeSignature as TimeSignatureType,
   TimeDivision,
+  InstrumentGroup,
+  Note,
 } from '../../../types/instrument';
 import { convertBarInstrumentsByGroups } from '../../../utils/groove';
 import { defaultGroupNoteMap, iconNamesMap } from '../../../utils/maps';
 import { safeKeys } from '../../../utils/safe-keys';
-import { createNoteDataset } from '../Editor.utils';
+import { createNoteDataset, getEmptyIconName } from '../Editor.utils';
 import { getIconName } from '../Picker/Note/Note.utils';
 
 import classes from './Bar.module.css';
@@ -23,6 +25,7 @@ export interface BarProps {
   barIndex: number;
   className?: string;
   enabledGroups: InstrumentGroupEnabled;
+  focusedNote: Note | null;
   playing: boolean;
   sizeNote: number;
   tracking: null | number;
@@ -43,6 +46,7 @@ const Bar = ({
   barIndex,
   className,
   enabledGroups,
+  focusedNote,
   playing,
   sizeNote,
   tracking,
@@ -131,9 +135,10 @@ const Bar = ({
         return instrumentsByGroups[group].map((instrumentOrNull, col) => {
           const instrument = instrumentOrNull ?? defaultGroupNoteMap[group];
           const value = Boolean(instrumentOrNull);
-
-          const emptyIconName: IconName =
-            group === 'hh' ? iconNamesMap.hhCloseRegular : 'icon.note.empty';
+          const isFocused =
+            focusedNote?.instrument === instrument &&
+            focusedNote.rhythmIndex === col &&
+            focusedNote.barIndex === barIndex;
 
           return (
             <Fragment key={`${row}-${col}-${instrument}`}>
@@ -152,7 +157,8 @@ const Bar = ({
                 y={sizeIconDefault * row}
               />
               <use
-                href={`#${value ? getIconName(instrument) : emptyIconName}`}
+                fill={isFocused ? 'var(--color-accent)' : undefined}
+                href={`#${value ? getIconName(instrument) : getEmptyIconName(group)}`}
                 opacity={value ? 1 : 0.15}
                 x={sizeIconDefault * col}
                 y={sizeIconDefault * row}

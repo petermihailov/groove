@@ -94,6 +94,7 @@ export const Editor = ({
               bar={bar}
               barIndex={idx}
               enabledGroups={enabledGroups}
+              focusedNote={focusedNote}
               playing={playing && beat.barIndex === idx}
               sizeNote={sizeNote}
               tracking={beat.playNote && beat.barIndex === idx ? beat.rhythmIndex : null}
