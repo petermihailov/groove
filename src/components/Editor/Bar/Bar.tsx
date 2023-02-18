@@ -3,17 +3,15 @@ import type { MouseEventHandler } from 'react';
 import { Fragment, memo, useEffect, useMemo, useRef } from 'react';
 
 import { sizeIconDefault } from '../../../constants';
-import type { IconName } from '../../../types/icons';
 import type {
   Bar as BarType,
   InstrumentGroupEnabled,
   TimeSignature as TimeSignatureType,
   TimeDivision,
-  InstrumentGroup,
   Note,
 } from '../../../types/instrument';
 import { convertBarInstrumentsByGroups } from '../../../utils/groove';
-import { defaultGroupNoteMap, iconNamesMap } from '../../../utils/maps';
+import { defaultGroupNoteMap } from '../../../utils/maps';
 import { safeKeys } from '../../../utils/safe-keys';
 import { createNoteDataset, getEmptyIconName } from '../Editor.utils';
 import { getIconName } from '../Picker/Note/Note.utils';

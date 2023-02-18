@@ -5,7 +5,7 @@ import type { Note } from '../../../types/instrument';
 import { defaultGroupNoteMap } from '../../../utils/maps';
 import { getNoteFromDataset } from '../Editor.utils';
 
-const dismissTimeout = 6000;
+const dismissTimeout = 10_000;
 
 export function useNoteEditor(setNote: (note: Note) => void) {
   const defaults = useRef(defaultGroupNoteMap);
