@@ -88,7 +88,7 @@ const defaultState: State = {
   title: '',
   tempo: 80,
   bars: [],
-  groups: enabledGroupsDefault,
+  groups: { ...enabledGroupsDefault },
   canUndo: false,
   canRedo: false,
 };

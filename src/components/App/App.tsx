@@ -35,7 +35,9 @@ const App = () => {
   const settings = useRef<DialogHandlers>(null);
 
   const [metronome, setMetronome] = useState(false);
-  const [enabledGroups, setEnabledGroups] = useState<InstrumentGroupEnabled>(enabledGroupsDefault);
+  const [enabledGroups, setEnabledGroups] = useState<InstrumentGroupEnabled>({
+    ...enabledGroupsDefault,
+  });
 
   const togglePlaying = () => (playing ? stop() : play());
   const toggleMetronome = () => setMetronome((prev) => !prev);

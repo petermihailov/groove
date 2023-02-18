@@ -12,7 +12,7 @@ import type {
 
 const order: InstrumentGroup[] = ['cy', 'hh', 't1', 'sn', 't2', 't3', 'ki'];
 
-export const enabledGroupsDefault: InstrumentGroupEnabled = {
+export const enabledGroupsDefault: Readonly<InstrumentGroupEnabled> = {
   cy: false,
   hh: false,
   ki: false,
@@ -33,7 +33,7 @@ export const orderedEnabledGroups = (enabledGroups: InstrumentGroupEnabled): Ins
 };
 
 export const getUsedGroups = (bars: Bar[]) => {
-  const groups: InstrumentGroupEnabled = enabledGroupsDefault;
+  const groups: InstrumentGroupEnabled = { ...enabledGroupsDefault };
 
   for (const bar of bars) {
     for (const instrument in bar.instruments) {
