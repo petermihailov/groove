@@ -1,7 +1,8 @@
 .root {
   position: relative;
+  display: grid;
+  min-height: 0;
   background-color: var(--color-surface-1);
-  overflow: auto;
 }
 
 .editor,
@@ -15,6 +16,7 @@
   display: grid;
   grid-template-columns: var(--size-note) 1fr;
   align-items: start;
+  overflow: auto;
 }
 
 .stickyWrapper {
@@ -44,39 +46,3 @@
   align-items: flex-start;
   padding-block-end: var(--size-2);
 }
-
-/* .pickerWrapper { */
-
-/*  position: fixed; */
-
-/*  inset-block-end: var(--size-3); */
-
-/*  inset-inline-start: 0; */
-
-/*  z-index: 1; */
-
-/*  display: flex; */
-
-/*  justify-content: center; */
-
-/*  inline-size: 100%; */
-
-/*  pointer-events: none; */
-
-/*  transition: transform 0.3s ease-in; */
-
-/* } */
-
-/* .pickerHidden { */
-
-/*  transform: translateY(calc(100% + var(--size-3))); */
-
-/* } */
-
-/* .picker { */
-
-/*  max-inline-size: calc(100% - 2 * var(--size-horizontal-padding)); */
-
-/*  pointer-events: auto; */
-
-/* } */

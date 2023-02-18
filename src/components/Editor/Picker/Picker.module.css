@@ -1,21 +1,54 @@
-.iconCenter svg {
-  transform: translateY(-0.4rem);
-}
-
-.iconHhFoot svg {
-  transform: translateY(0);
-}
-
-.selected {
-  position: relative;
-}
-
-.selected::before {
+.root {
   position: absolute;
-  inset-block-end: -4px;
-  inset-inline: 4px;
+  inset-block-start: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  inline-size: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.picker {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: var(--size-1);
+  padding-block-start: var(--size-1);
+  padding-block-end: var(--size-2);
+  padding-inline: var(--size-3);
+  background-color: var(--color-surface-1);
+  transform: translateY(-100%);
+  will-change: transform;
+  transition: transform 120ms var(--ease-out-3);
+  border-end-start-radius: var(--radius-3);
+  border-end-end-radius: var(--radius-3);
+}
+
+.picker::before,
+.picker::after {
+  position: absolute;
+  inset-block-start: 0;
   content: '';
-  block-size: 4px;
-  border-radius: var(--radius-pill);
-  background-color: var(--color-accent);
+  z-index: 1;
+  block-size: 50%;
+  background-color: inherit;
+  aspect-ratio: 1;
+}
+
+.picker::before {
+  inset-inline-end: 100%;
+  -webkit-mask: radial-gradient(farthest-side at bottom left, transparent 99%, #fff 100%);
+  mask: radial-gradient(farthest-side at bottom left, transparent 99%, #fff 100%);
+}
+
+.picker::after {
+  inset-inline-start: 100%;
+  -webkit-mask: radial-gradient(farthest-side at bottom right, transparent 99%, #fff 100%);
+  mask: radial-gradient(farthest-side at bottom right, transparent 99%, #fff 100%);
+}
+
+.open .picker {
+  transform: translateY(0);
+  pointer-events: auto;
 }

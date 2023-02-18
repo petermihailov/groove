@@ -6,7 +6,7 @@ import { Bar } from './Bar';
 import { Controls } from './Controls';
 import { useNoteEditor } from './Editor.hooks';
 import { Groups } from './Groups';
-// import { Picker } from './Picker';
+import { Picker } from './Picker';
 import { sizeIconDefault } from '../../constants';
 import { useClickOutside } from '../../hooks';
 import type {
@@ -62,7 +62,6 @@ export const Editor = ({
   const sizeNote = Math.round(uiScaleValue * sizeIconDefault);
 
   const rootRef = useRef<HTMLDivElement>(null);
-  // const highlightBeatStyles = useHighlightStyles(beat, bars);
   const { blurNote, changeNote, focusedNote, toggleNote } = useNoteEditor(onSetNote);
 
   useClickOutside(rootRef, blurNote);
@@ -106,16 +105,9 @@ export const Editor = ({
             />
           ))}
         </div>
-        {/*<div className={classes.highlight} style={highlightBeatStyles} />*/}
       </div>
 
-      {/*<div*/}
-      {/*  className={clsx(classes.pickerWrapper, {*/}
-      {/*    [classes.pickerHidden]: !focusedNote?.instrument,*/}
-      {/*  })}*/}
-      {/*>*/}
-      {/*  <Picker className={classes.picker} note={focusedNote} onChange={changeNote} />*/}
-      {/*</div>*/}
+      <Picker note={focusedNote} onChange={changeNote} />
     </div>
   );
 };

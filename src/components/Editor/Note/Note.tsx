@@ -14,12 +14,12 @@ export interface NoteProps extends HTMLAttributes<HTMLButtonElement> {
   group: InstrumentGroup;
   icon?: IconName;
   index: number;
-  instrument: Instrument | null;
+  instrument: Instrument;
 }
 
 const Note = ({ className, group, icon, index, instrument, ...delegated }: NoteProps) => {
   const isEmpty = !instrument;
-  const iconName = icon || getIconName(instrument, group);
+  const iconName = icon || getIconName(instrument);
   const label = getNoteLabel(instrument, group);
 
   return (

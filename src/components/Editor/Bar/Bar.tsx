@@ -3,6 +3,7 @@ import type { MouseEventHandler } from 'react';
 import { Fragment, memo, useEffect, useMemo, useRef } from 'react';
 
 import { sizeIconDefault } from '../../../constants';
+import type { IconName } from '../../../types/icons';
 import type {
   Bar as BarType,
   InstrumentGroupEnabled,
@@ -10,7 +11,9 @@ import type {
   TimeDivision,
 } from '../../../types/instrument';
 import { convertBarInstrumentsByGroups } from '../../../utils/groove';
+import { defaultGroupNoteMap, iconNamesMap } from '../../../utils/maps';
 import { safeKeys } from '../../../utils/safe-keys';
+import { createNoteDataset } from '../Editor.utils';
 import { getIconName } from '../Note/Note.utils';
 
 import classes from './Bar.module.css';
@@ -125,27 +128,38 @@ const Bar = ({
       />
 
       {safeKeys(instrumentsByGroups).map((group, row) => {
-        return instrumentsByGroups[group].map((instrument, col) => (
-          <Fragment key={`${row}-${col}-${instrument}`}>
-            <rect
-              data-bar={barIndex}
-              data-group={group}
-              data-index={col}
-              data-instrument={instrument}
-              fill="transparent"
-              height={sizeIconDefault}
-              width={sizeIconDefault}
-              x={sizeIconDefault * col}
-              y={sizeIconDefault * row}
-            />
-            <use
-              href={`#${getIconName(instrument, group)}`}
-              opacity={instrument !== null ? 1 : 0.15}
-              x={sizeIconDefault * col}
-              y={sizeIconDefault * row}
-            />
-          </Fragment>
-        ));
+        return instrumentsByGroups[group].map((instrumentOrNull, col) => {
+          const instrument = instrumentOrNull ?? defaultGroupNoteMap[group];
+          const value = Boolean(instrumentOrNull);
+
+          const emptyIconName: IconName =
+            group === 'hh' ? iconNamesMap.hhCloseRegular : 'icon.note.empty';
+
+          return (
+            <Fragment key={`${row}-${col}-${instrument}`}>
+              <rect
+                {...createNoteDataset({
+                  barIndex,
+                  group,
+                  instrument,
+                  rhythmIndex: col,
+                  value,
+                })}
+                fill="transparent"
+                height={sizeIconDefault}
+                width={sizeIconDefault}
+                x={sizeIconDefault * col}
+                y={sizeIconDefault * row}
+              />
+              <use
+                href={`#${value ? getIconName(instrument) : emptyIconName}`}
+                opacity={value ? 1 : 0.15}
+                x={sizeIconDefault * col}
+                y={sizeIconDefault * row}
+              />
+            </Fragment>
+          );
+        });
       })}
     </svg>
   );
