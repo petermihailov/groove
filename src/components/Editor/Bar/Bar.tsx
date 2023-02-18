@@ -116,7 +116,14 @@ const Bar = ({
       width={svgWidth}
       onClick={onClick}
     >
-      <rect ref={refTracker} height={vbHeight} width={sizeIconDefault} />
+      <rect
+        ref={refTracker}
+        className={classes.tracker}
+        fill="transparent"
+        height={vbHeight}
+        width={sizeIconDefault}
+      />
+
       {safeKeys(instrumentsByGroups).map((group, row) => {
         return instrumentsByGroups[group].map((instrument, col) => (
           <Fragment key={`${row}-${col}-${instrument}`}>

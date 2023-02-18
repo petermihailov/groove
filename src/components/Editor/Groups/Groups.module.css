@@ -2,14 +2,3 @@
   max-inline-size: unset;
   fill: var(--color-accent);
 }
-
-.icon {
-  --size: calc(0.8 * var(--size-note));
-
-  inline-size: var(--size);
-  block-size: var(--size);
-}
-
-.toBottom {
-  align-self: end;
-}
