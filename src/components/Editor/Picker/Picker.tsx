@@ -1,11 +1,9 @@
 import clsx from 'clsx';
 import { memo, useEffect, useState } from 'react';
 
-import type { MouseEventHandler } from '../../../types/helpers';
-import type { Note as NoteType } from '../../../types/instrument';
+import { Note } from './Note';
+import type { Instrument, Note as NoteType } from '../../../types/instrument';
 import { getInstrumentsByGroup } from '../../../utils/groove';
-import { getNoteFromDataset } from '../Editor.utils';
-import { Note } from '../Note';
 
 import classes from './Picker.module.css';
 
@@ -20,11 +18,9 @@ const Picker = ({ className, note: noteProp, onChange }: PickerProps) => {
   const instruments = note ? getInstrumentsByGroup(note.group) : [];
   const isOpen = noteProp && instruments.length > 1;
 
-  const handleChange: MouseEventHandler<SVGSVGElement> = (e) => {
-    const noteFromDataset = getNoteFromDataset(e.currentTarget);
-    if (note && noteFromDataset) {
-      const { group, instrument } = noteFromDataset;
-      onChange({ ...note, group, instrument });
+  const handleChange = (instrument: Instrument) => {
+    if (note) {
+      onChange({ ...note, instrument });
     }
   };
 
@@ -39,16 +35,15 @@ const Picker = ({ className, note: noteProp, onChange }: PickerProps) => {
           instruments.map((instrument) => (
             <Note
               key={instrument}
-              // className={clsx({
-              //   [classes.selected]: instrument === note.instrument,
-              //   [classes.iconCenter]: note.group === 'cy' || note.group === 'hh',
-              //   [classes.iconHhFoot]: instrument === 'hhFootRegular',
-              // })}
+              className={clsx({
+                [classes.selected]: instrument === note.instrument,
+                // [classes.iconCenter]: note.group === 'cy' || note.group === 'hh',
+                // [classes.iconHhFoot]: instrument === 'hhFootRegular',
+              })}
               group={note.group}
               icon={instrument === 'hhFootRegular' ? 'icon.group.hh-foot' : undefined}
-              index={note.rhythmIndex}
               instrument={instrument}
-              // onClick={handleChange}
+              onClick={handleChange}
             />
           ))}
       </div>

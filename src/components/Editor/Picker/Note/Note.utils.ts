@@ -1,7 +1,7 @@
-import type { IconName } from '../../../types/icons';
-import type { Instrument, InstrumentGroup } from '../../../types/instrument';
-import { groupNamesMap, iconNamesMap } from '../../../utils/maps';
-import { uncamelcase } from '../../../utils/uncamelcase';
+import type { IconName } from '../../../../types/icons';
+import type { Instrument, InstrumentGroup } from '../../../../types/instrument';
+import { groupNamesMap, iconNamesMap } from '../../../../utils/maps';
+import { uncamelcase } from '../../../../utils/uncamelcase';
 
 export const getIconName = (instrument: Instrument): IconName => {
   return iconNamesMap[instrument];

@@ -1,15 +1,14 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { MouseEventHandler } from '../../../types/helpers';
 import type { Note } from '../../../types/instrument';
-// import { isInstrument, isInstrumentGroup } from '../../../utils/guards';
-// import { defaultGroupNoteMap } from '../../../utils/maps';
+import { defaultGroupNoteMap } from '../../../utils/maps';
 import { getNoteFromDataset } from '../Editor.utils';
 
 const dismissTimeout = 5000;
 
 export function useNoteEditor(setNote: (note: Note) => void) {
-  // const [defaults, setDefaults] = useState(defaultGroupNoteMap);
+  const defaults = useRef(defaultGroupNoteMap);
   const [focusedNote, setFocusedNote] = useState<Note | null>(null);
 
   const blurNote = useCallback(() => {
@@ -24,18 +23,11 @@ export function useNoteEditor(setNote: (note: Note) => void) {
         const note = getNoteFromDataset(noteElement);
 
         if (note) {
-          note.value = !note.value;
+          if (!note.value) {
+            note.instrument = defaults.current[note.group];
+          }
 
-          // const { barIndex, rhythmIndex, group, instrument, value } = note;
-          // const instrumentOrDefaults = isInstrument(instrument) ? instrument : defaults[group];
-          //
-          // const note: Note = {
-          //   group,
-          //   instrument: instrumentOrDefaults,
-          //   barIndex,
-          //   rhythmIndex,
-          //   value,
-          // };
+          note.value = !note.value;
 
           setNote(note);
 
@@ -52,8 +44,8 @@ export function useNoteEditor(setNote: (note: Note) => void) {
 
   const changeNote = useCallback(
     (note: Note) => {
+      defaults.current[note.group] = note.instrument;
       setNote(note);
-      // setDefaults((prev) => ({ ...prev, [note.group]: note.instrument }));
       setFocusedNote(null);
     },
     [setNote],

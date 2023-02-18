@@ -52,3 +52,7 @@
   transform: translateY(0);
   pointer-events: auto;
 }
+
+.selected {
+  color: var(--color-accent);
+}

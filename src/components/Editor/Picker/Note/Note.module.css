@@ -1,0 +1,3 @@
+.root {
+  --size-control: var(--size-icon);
+}
