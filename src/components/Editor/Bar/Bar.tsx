@@ -3,13 +3,7 @@ import type { MouseEventHandler } from 'react';
 import { Fragment, memo, useEffect, useMemo, useRef } from 'react';
 
 import { sizeIconDefault } from '../../../constants';
-import type {
-  Bar as BarType,
-  InstrumentGroupEnabled,
-  TimeSignature as TimeSignatureType,
-  TimeDivision,
-  Note,
-} from '../../../types/instrument';
+import type { Bar as BarType, InstrumentGroupEnabled, Note } from '../../../types/instrument';
 import { convertBarInstrumentsByGroups } from '../../../utils/groove';
 import { defaultGroupNoteMap } from '../../../utils/maps';
 import { safeKeys } from '../../../utils/safe-keys';
@@ -27,16 +21,7 @@ export interface BarProps {
   playing: boolean;
   sizeNote: number;
   tracking: null | number;
-  onAddBar: (barIndex: number) => void;
-  onClearBar: (barIndex: number) => void;
   onClick?: MouseEventHandler<SVGSVGElement>;
-  onRemoveBar: (barIndex: number) => void;
-  onChangeSignature: (
-    signature: TimeSignatureType & {
-      barIndex: number;
-      timeDivision: TimeDivision;
-    },
-  ) => void;
 }
 
 const Bar = ({
@@ -48,11 +33,7 @@ const Bar = ({
   playing,
   sizeNote,
   tracking,
-  onAddBar,
-  onChangeSignature,
-  onClearBar,
   onClick,
-  onRemoveBar,
 }: BarProps) => {
   // const [actions, setActions] = useState(false);
   // const actionsRef = useRef(null);

@@ -1,0 +1,100 @@
+.root {
+  position: relative;
+  block-size: 100%;
+}
+
+.actionButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inline-size: calc(0.5 * var(--size-note));
+  block-size: 100%;
+  border: none;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-surface-2);
+  cursor: pointer;
+  overflow: hidden;
+  appearance: none;
+  user-select: none;
+}
+
+.moreIcon {
+  flex: none;
+  inline-size: var(--size-note);
+  block-size: var(--size-note);
+  max-inline-size: unset;
+  color: var(--color-text);
+  opacity: 0.65;
+  transform: scale(0.8);
+}
+
+.popper {
+  padding-block: var(--size-2);
+  border: 1.5px solid;
+  border-radius: var(--radius-3);
+  background-color: var(--color-surface-2);
+  box-shadow: var(--shadow-5);
+  overflow: hidden;
+}
+
+.popper > *:not(:last-child) {
+  box-shadow: 0 1px 0 var(--color-border);
+}
+
+.popper > *:hover {
+  background-color: var(--color-surface-3);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
+  padding-block: var(--size-1);
+  padding-inline-start: var(--size-2);
+  padding-inline-end: var(--size-3);
+  font-size: var(--font-size-1);
+  white-space: nowrap;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.option > svg {
+  --size-icon: var(--font-size-2);
+
+  flex: none;
+  margin-inline-end: var(--size-2);
+}
+
+.timeSignature {
+  justify-content: center;
+  cursor: unset;
+}
+
+.timeSignature:hover {
+  background-color: transparent;
+}
+
+.timeSignature > div {
+  flex: 1;
+  inline-size: var(--size-3);
+  font-weight: var(--font-weight-5);
+}
+
+.timeSignature > div:hover {
+  background-color: var(--color-surface-3);
+}
+
+.timeSignature > *:first-child {
+  padding-inline-end: var(--size-1);
+  text-align: end;
+}
+
+.timeSignature > *:last-child {
+  padding-inline-start: var(--size-1);
+  text-align: start;
+}
+
+.error {
+  color: var(--color-error);
+}

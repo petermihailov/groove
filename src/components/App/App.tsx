@@ -101,11 +101,11 @@ const App = () => {
     dispatch(redoAction());
   }, [dispatch]);
 
-  useQuerySync();
-
   useEffect(() => {
     setEnabledGroups(groove.groups);
   }, [groove.groups]);
+
+  useQuerySync();
 
   return (
     <div className={classes.root}>

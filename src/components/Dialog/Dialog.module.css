@@ -12,6 +12,7 @@ html:has(.root[open][data-mode='mega']) {
   margin: auto;
   padding: 0;
   color: var(--text-1);
+  border: 1.5px solid;
   border-radius: var(--radius-3);
   background: var(--surface-2);
   box-shadow: var(--shadow-6);

@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react';
 import { memo, useRef, useState } from 'react';
 
 import { Bar } from './Bar';
+import { BarActions } from './BarActions';
 import { Controls } from './Controls';
 import { useNoteEditor } from './Editor.hooks';
 import { Groups } from './Groups';
@@ -89,21 +90,27 @@ export const Editor = ({
 
         <div className={classes.bars}>
           {bars.map((bar, idx) => (
-            <Bar
-              key={idx}
-              bar={bar}
-              barIndex={idx}
-              enabledGroups={enabledGroups}
-              focusedNote={focusedNote}
-              playing={playing && beat.barIndex === idx}
-              sizeNote={sizeNote}
-              tracking={beat.playNote && beat.barIndex === idx ? beat.rhythmIndex : null}
-              onAddBar={onAddBar}
-              onChangeSignature={onChangeSignature}
-              onClearBar={onClearBar}
-              onClick={toggleNote}
-              onRemoveBar={onRemoveBar}
-            />
+            <div key={idx} className={classes.bar}>
+              <Bar
+                key={idx}
+                bar={bar}
+                barIndex={idx}
+                enabledGroups={enabledGroups}
+                focusedNote={focusedNote}
+                playing={playing && beat.barIndex === idx}
+                sizeNote={sizeNote}
+                tracking={beat.playNote && beat.barIndex === idx ? beat.rhythmIndex : null}
+                onClick={toggleNote}
+              />
+              <BarActions
+                bar={bar}
+                barIndex={idx}
+                onAddBar={onAddBar}
+                onChangeSignature={onChangeSignature}
+                onClearBar={onClearBar}
+                onRemoveBar={onRemoveBar}
+              />
+            </div>
           ))}
         </div>
       </div>

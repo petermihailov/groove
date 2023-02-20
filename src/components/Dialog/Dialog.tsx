@@ -20,7 +20,6 @@ const Dialog = forwardRef<DialogHandlers, DialogProps>(function Dialog(props, re
 
   const lightDismiss: MouseEventHandler<HTMLDialogElement> = useCallback(({ target }) => {
     if (target === dialogRef.current) {
-      dialogRef.current.offsetTop; // repaint
       dialogRef.current?.close('dismiss');
     }
   }, []);

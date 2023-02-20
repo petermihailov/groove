@@ -16,6 +16,7 @@
   display: grid;
   grid-template-columns: var(--size-note) 1fr;
   align-items: start;
+  padding-inline-end: var(--size-1);
   overflow: auto;
 }
 
@@ -35,6 +36,12 @@
   inline-size: 100%;
 }
 
+.bars,
+.groups {
+  padding-block-start: var(--size-1);
+  padding-block-end: var(--size-1);
+}
+
 .groups {
   display: grid;
   inline-size: var(--size-note);
@@ -44,5 +51,10 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  padding-block-end: var(--size-2);
+}
+
+.bar {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: var(--size-1);
 }
