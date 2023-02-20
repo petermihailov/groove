@@ -32,8 +32,9 @@
   padding-block: var(--size-2);
   border: 1.5px solid;
   border-radius: var(--radius-3);
-  background-color: var(--color-surface-2);
   box-shadow: var(--shadow-5);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  backdrop-filter: var(--backdrop-blur);
   overflow: hidden;
 }
 
