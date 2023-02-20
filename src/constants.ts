@@ -4,6 +4,8 @@ export const sizeIconDefault = 24;
 
 export const instrumentGroups: InstrumentGroup[] = ['cy', 'hh', 'sn', 't1', 't2', 't3', 'ki'];
 
+export const instrumentGroupsWithPicker: InstrumentGroup[] = ['cy', 'hh', 'sn', 't1', 't2', 't3'];
+
 export const instruments: Instrument[] = [
   'cyBellRegular',
   'cyChinaRegular',

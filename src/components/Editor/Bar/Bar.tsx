@@ -91,10 +91,13 @@ const Bar = ({
   const colsCount = bar.length;
   const rowsCount = Object.keys(instrumentsByGroups).length;
 
+  const hhFootHeight = sizeNote / 2 + 2;
+  const hhFootHeightVB = sizeIconDefault / 2 + 2;
+
   const svgWidth = colsCount * sizeNote;
-  const svgHeight = rowsCount * sizeNote;
+  const svgHeight = rowsCount * sizeNote + hhFootHeight;
   const vbWidth = colsCount * sizeIconDefault;
-  const vbHeight = rowsCount * sizeIconDefault;
+  const vbHeight = rowsCount * sizeIconDefault + hhFootHeightVB;
   const viewBox = `0 0 ${vbWidth} ${vbHeight}`;
 
   useEffect(() => {
@@ -133,6 +136,7 @@ const Bar = ({
         return instrumentsByGroups[group].map((instrumentOrNull, col) => {
           const instrument = instrumentOrNull ?? defaultGroupNoteMap[group];
           const value = Boolean(instrumentOrNull);
+          const isHHFootIcon = instrument === 'hhFootRegular' && value;
           const isFocused =
             focusedNote?.instrument === instrument &&
             focusedNote.rhythmIndex === col &&
@@ -152,14 +156,18 @@ const Bar = ({
                 height={sizeIconDefault}
                 width={sizeIconDefault}
                 x={sizeIconDefault * col}
-                y={sizeIconDefault * row}
+                {...(isHHFootIcon
+                  ? { y: sizeIconDefault * rowsCount }
+                  : { y: sizeIconDefault * row })}
               />
               <use
                 fill={isFocused ? 'var(--color-accent)' : undefined}
                 href={`#${value ? getIconName(instrument) : getEmptyIconName(group)}`}
                 opacity={value ? 1 : 0.15}
                 x={sizeIconDefault * col}
-                y={sizeIconDefault * row}
+                {...(isHHFootIcon
+                  ? { y: sizeIconDefault * rowsCount - sizeIconDefault + hhFootHeightVB }
+                  : { y: sizeIconDefault * row })}
               />
             </Fragment>
           );
