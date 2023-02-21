@@ -44,8 +44,8 @@ const Bar = ({
   const colsCount = bar.length;
   const rowsCount = Object.keys(instrumentsByGroups).length;
 
-  const hhFootHeight = sizeNote / 2 + 2;
-  const hhFootHeightVB = sizeIconDefault / 2 + 2;
+  const hhFootHeight = enabledGroups.hh ? sizeNote / 2 + 2 : 0;
+  const hhFootHeightVB = enabledGroups.hh ? sizeIconDefault / 2 + 2 : 0;
 
   const svgWidth = colsCount * sizeNote;
   const svgHeight = rowsCount * sizeNote + hhFootHeight;
