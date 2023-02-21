@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  inline-size: calc(0.5 * var(--size-note));
+  inline-size: calc(0.8 * var(--size-icon));
   block-size: 100%;
   border: none;
   border-radius: var(--radius-pill);
@@ -20,12 +20,11 @@
 
 .moreIcon {
   flex: none;
-  inline-size: var(--size-note);
-  block-size: var(--size-note);
+  inline-size: var(--size-icon);
+  block-size: var(--size-icon);
   max-inline-size: unset;
   color: var(--color-text);
   opacity: 0.65;
-  transform: scale(0.8);
 }
 
 .popper {
@@ -36,7 +35,7 @@
   padding-block: var(--size-2);
   border: 1.5px solid;
   border-radius: var(--radius-3);
-  background-color: var(--color-surface-2);
+  background-color: var(--color-surface-1);
   box-shadow: var(--shadow-5);
   overflow: hidden;
 }
@@ -46,7 +45,7 @@
 }
 
 .actions > *:hover {
-  background-color: var(--color-surface-3);
+  background-color: var(--color-surface-2);
 }
 
 .option {
