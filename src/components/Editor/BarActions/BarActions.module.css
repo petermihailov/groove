@@ -28,6 +28,7 @@
 }
 
 .popper {
+  z-index: 1;
   transition: opacity 150ms var(--ease-3);
 }
 

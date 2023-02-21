@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { memo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { usePopper } from 'react-popper';
 
 import { useClickOutside } from '../../../hooks';
@@ -119,66 +120,69 @@ const BarActions = ({
         <Icon className={classes.moreIcon} name="icon.more" />
       </button>
 
-      <div
-        ref={setPopperElement}
-        className={clsx(classes.popper, { [classes.open]: isOpen })}
-        style={styles.popper}
-        {...attributes.popper}
-      >
-        <div className={classes.actions}>
-          <button className={classes.option} onClick={addBar}>
-            <Icon name="icon.add" />
-            <span>add new</span>
-          </button>
+      {createPortal(
+        <div
+          ref={setPopperElement}
+          className={clsx(classes.popper, { [classes.open]: isOpen })}
+          style={styles.popper}
+          {...attributes.popper}
+        >
+          <div className={classes.actions}>
+            <button className={classes.option} onClick={addBar}>
+              <Icon name="icon.add" />
+              <span>add new</span>
+            </button>
 
-          <button className={classes.option} onClick={clearBar}>
-            <Icon name="icon.clear" />
-            <span>clear</span>
-          </button>
+            <button className={classes.option} onClick={clearBar}>
+              <Icon name="icon.clear" />
+              <span>clear</span>
+            </button>
 
-          <button className={clsx(classes.option, classes.error)} onClick={removeBar}>
-            <Icon name="icon.delete" />
-            <span>remove</span>
-          </button>
-
-          <Select
-            options={timeDivisionOptions.map((option) => ({
-              value: option,
-              label: `${option}th`,
-              customLabel: (
-                <div className={classes.option}>
-                  <Icon name={`icon.note.duration.${option}`} />
-                  <span>note duration</span>
-                </div>
-              ),
-            }))}
-            value={bar.timeDivision}
-            onChange={changeTimeDivision}
-          />
-
-          <div className={clsx(classes.option, classes.timeSignature)}>
-            <Select
-              options={beatsPerBarOptions.map((option) => ({
-                value: option,
-                label: option,
-              }))}
-              value={bar.beatsPerBar}
-              onChange={changeBeatsPerBar}
-            />
-
-            <span>/</span>
+            <button className={clsx(classes.option, classes.error)} onClick={removeBar}>
+              <Icon name="icon.delete" />
+              <span>remove</span>
+            </button>
 
             <Select
-              options={noteValueOptions.map((option) => ({
+              options={timeDivisionOptions.map((option) => ({
                 value: option,
-                label: option,
+                label: `${option}th`,
+                customLabel: (
+                  <div className={classes.option}>
+                    <Icon name={`icon.note.duration.${option}`} />
+                    <span>note duration</span>
+                  </div>
+                ),
               }))}
-              value={bar.noteValue}
-              onChange={changeNoteValue}
+              value={bar.timeDivision}
+              onChange={changeTimeDivision}
             />
+
+            <div className={clsx(classes.option, classes.timeSignature)}>
+              <Select
+                options={beatsPerBarOptions.map((option) => ({
+                  value: option,
+                  label: option,
+                }))}
+                value={bar.beatsPerBar}
+                onChange={changeBeatsPerBar}
+              />
+
+              <span>/</span>
+
+              <Select
+                options={noteValueOptions.map((option) => ({
+                  value: option,
+                  label: option,
+                }))}
+                value={bar.noteValue}
+                onChange={changeNoteValue}
+              />
+            </div>
           </div>
-        </div>
-      </div>
+        </div>,
+        document.querySelector('[data-popups]')!,
+      )}
     </div>
   );
 };
