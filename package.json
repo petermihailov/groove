@@ -11,6 +11,7 @@
     "update:minor": "npx npm-check-updates --target minor -u",
     "format": "prettier --write .",
     "lint": "eslint --fix . && stylelint --fix **/*.css",
+    "deploy": "gh-pages -d dist",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -35,6 +36,7 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "gh-pages": "^5.0.0",
     "husky": "^8.0.3",
     "prettier": "2.8.4",
     "stylelint": "^14.16.1",
