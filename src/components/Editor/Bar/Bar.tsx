@@ -118,7 +118,7 @@ const Bar = ({
                 href={`#${value ? getIconName(instrument) : getEmptyIconName(group)}`}
                 opacity={value ? 1 : 0.15}
                 x={sizeIconDefault * col}
-                {...(isHHFootIcon
+                {...(enabledGroups.hh && isHHFootIcon
                   ? { y: sizeIconDefault * rowsCount - sizeIconDefault + hhFootHeightVB }
                   : { y: sizeIconDefault * row })}
               />
