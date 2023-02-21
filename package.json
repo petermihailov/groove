@@ -5,7 +5,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "vite --host",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --base=./",
     "preview": "vite preview",
     "build:sounds": "src/sounds/wav2opus",
     "update:minor": "npx npm-check-updates --target minor -u",
