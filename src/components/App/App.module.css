@@ -3,11 +3,3 @@
   grid-template-rows: 1fr;
   max-block-size: 100%;
 }
-
-.title {
-  padding-inline: var(--size-horizontal-padding);
-  font-size: var(--font-size-1);
-  white-space: nowrap;
-  text-align: center;
-  overflow: auto;
-}

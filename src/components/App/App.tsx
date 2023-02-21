@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import {
@@ -124,10 +123,6 @@ const App = () => {
         onSetNote={setNote}
         onUndo={undo}
       />
-
-      <h1 className={clsx(classes.title, 'disableScroll')}>
-        <span>{groove.title}</span>
-      </h1>
 
       <Controls
         groove={groove}

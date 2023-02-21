@@ -119,13 +119,13 @@ const BarActions = ({
         <Icon className={classes.moreIcon} name="icon.more" />
       </button>
 
-      {isOpen && (
-        <div
-          ref={setPopperElement}
-          className={classes.popper}
-          style={styles.popper}
-          {...attributes.popper}
-        >
+      <div
+        ref={setPopperElement}
+        className={clsx(classes.popper, { [classes.open]: isOpen })}
+        style={styles.popper}
+        {...attributes.popper}
+      >
+        <div className={classes.actions}>
           <button className={classes.option} onClick={addBar}>
             <Icon name="icon.add" />
             <span>add new</span>
@@ -178,7 +178,7 @@ const BarActions = ({
             />
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

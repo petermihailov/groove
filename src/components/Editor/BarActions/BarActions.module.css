@@ -29,20 +29,23 @@
 }
 
 .popper {
+  transition: opacity 150ms var(--ease-3);
+}
+
+.actions {
   padding-block: var(--size-2);
   border: 1.5px solid;
   border-radius: var(--radius-3);
+  background-color: var(--color-surface-2);
   box-shadow: var(--shadow-5);
-  -webkit-backdrop-filter: var(--backdrop-blur);
-  backdrop-filter: var(--backdrop-blur);
   overflow: hidden;
 }
 
-.popper > *:not(:last-child) {
+.actions > *:not(:last-child) {
   box-shadow: 0 1px 0 var(--color-border);
 }
 
-.popper > *:hover {
+.actions > *:hover {
   background-color: var(--color-surface-3);
 }
 
@@ -98,4 +101,29 @@
 
 .error {
   color: var(--color-error);
+}
+
+.popper:not(.open) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .actions {
+    animation: var(--animation-scale-down) forwards;
+    animation-duration: 150ms;
+    animation-timing-function: var(--ease-squish-3);
+  }
+
+  .open .actions {
+    animation: slide-in-up forwards;
+    animation-duration: 120ms;
+    animation-timing-function: var(--ease-out-1);
+  }
+}
+
+@keyframes slide-in-up {
+  from {
+    transform: translateY(15%);
+  }
 }
