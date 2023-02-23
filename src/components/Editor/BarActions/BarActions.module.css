@@ -19,11 +19,6 @@
 }
 
 .moreIcon {
-  flex: none;
-  inline-size: var(--size-icon);
-  block-size: var(--size-icon);
-  max-inline-size: unset;
-  color: var(--color-text);
   opacity: 0.65;
 }
 
@@ -106,6 +101,10 @@
 .popper:not(.open) {
   opacity: 0;
   pointer-events: none;
+}
+
+.barHighlight {
+  background-color: var(--color-highlight);
 }
 
 @media (prefers-reduced-motion: no-preference) {

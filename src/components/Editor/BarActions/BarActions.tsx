@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { memo, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { usePopper } from 'react-popper';
 
@@ -113,6 +113,10 @@ const BarActions = ({
   };
 
   useClickOutside(refActions, closeDialog);
+
+  useEffect(() => {
+    referenceElement?.closest('[data-bar]')?.classList.toggle(classes.barHighlight, isOpen);
+  }, [referenceElement, isOpen]);
 
   return (
     <div ref={refActions} className={clsx(className, classes.root)}>

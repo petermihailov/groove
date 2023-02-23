@@ -57,4 +57,6 @@
   display: grid;
   grid-auto-flow: column;
   grid-gap: var(--size-1);
+  border-radius: var(--radius-2);
+  transition: background-color 100ms var(--ease-out-1);
 }

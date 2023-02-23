@@ -90,7 +90,7 @@ export const Editor = ({
 
         <div className={classes.bars}>
           {bars.map((bar, idx) => (
-            <div key={idx} className={classes.bar}>
+            <div key={idx} className={classes.bar} data-bar={idx}>
               <Bar
                 key={idx}
                 bar={bar}
