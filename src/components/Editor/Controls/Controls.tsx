@@ -4,7 +4,6 @@ import { memo, useEffect } from 'react';
 
 import { ButtonIcon } from '../../ButtonIcon';
 import { Icon } from '../../Icon';
-import { Logo } from '../../Logo';
 
 import classes from './Controls.module.css';
 
@@ -78,8 +77,6 @@ const Controls = ({
           <Icon name="icon.redo" />
         </ButtonIcon>
       </div>
-
-      <Logo />
 
       <div className={classes.group}>
         <ButtonIcon aria-label="zoom in" onClick={zoomIn}>

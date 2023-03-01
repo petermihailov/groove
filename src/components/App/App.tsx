@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import {
@@ -11,7 +12,7 @@ import {
   undoAction,
   useGrooveContext,
 } from '../../context/GrooveContext';
-import { usePlayer, useQuerySync } from '../../hooks';
+import { useLoadingDelay, usePlayer, useQuerySync } from '../../hooks';
 import type {
   InstrumentGroupEnabled,
   Note,
@@ -23,13 +24,15 @@ import { Controls } from '../Controls';
 import type { DialogHandlers } from '../Dialog';
 import { Dialog } from '../Dialog';
 import { Editor } from '../Editor';
+import { Logo } from '../Logo';
 import { Settings } from '../Settings';
 
 import classes from './App.module.css';
 
 const App = () => {
   const { groove, dispatch } = useGrooveContext();
-  const { beat, play, playing, stop } = usePlayer(groove);
+  const { loading, beat, play, playing, stop } = usePlayer(groove);
+  const showLoader = useLoadingDelay(loading);
 
   const settings = useRef<DialogHandlers>(null);
 
@@ -107,7 +110,8 @@ const App = () => {
   useQuerySync();
 
   return (
-    <div className={classes.root}>
+    <div className={clsx(classes.root, classes.withLoader, { [classes.loading]: showLoader })}>
+      <Logo className={classes.logo} />
       <Editor
         bars={groove.bars}
         beat={beat}

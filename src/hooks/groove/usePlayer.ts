@@ -7,6 +7,7 @@ import type { Beat, Groove } from '../../types/instrument';
 export function usePlayer(groove: Groove) {
   const { tempo, bars } = groove;
 
+  const [loading, setLoading] = useState(true);
   const kit = useDrumKit();
   const player = useRef(new Player());
 
@@ -20,6 +21,7 @@ export function usePlayer(groove: Groove) {
   // Initialize
   useEffect(() => {
     if (kit) {
+      setLoading(false);
       player.current.setKit(kit);
       player.current.setOnBeat(setBeat);
     }
@@ -46,6 +48,7 @@ export function usePlayer(groove: Groove) {
   }, []);
 
   return {
+    loading,
     beat,
     bars,
     play,

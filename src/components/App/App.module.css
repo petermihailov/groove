@@ -3,3 +3,34 @@
   grid-template-rows: 1fr;
   max-block-size: 100%;
 }
+
+.logo {
+  position: absolute;
+  inset-block-start: var(--size-2);
+  inset-inline-start: calc(50% - 50px);
+  z-index: 11;
+  transition: transform 200ms var(--ease-in-out-3);
+}
+
+.withLoader::before {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  content: '';
+  z-index: 10;
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: var(--color-surface-1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms var(--ease-in-out-3);
+}
+
+.loading.withLoader::before {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.loading .logo {
+  transform: translateY(35vh) scale(3);
+}
