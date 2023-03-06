@@ -19,7 +19,9 @@ import type {
   TimeSignature,
   TimeDivision,
 } from '../../types/instrument';
+import checkBrowser from '../../utils/checkBrowser';
 import { enabledGroupsDefault } from '../../utils/groove';
+import { BadBrowser } from '../BadBrowser';
 import { Controls } from '../Controls';
 import type { DialogHandlers } from '../Dialog';
 import { Dialog } from '../Dialog';
@@ -32,10 +34,12 @@ import classes from './App.module.css';
 const App = () => {
   const { groove, dispatch } = useGrooveContext();
   const { loading, beat, play, playing, stop } = usePlayer(groove);
+
   const showLoader = useLoadingDelay(loading);
 
   const settings = useRef<DialogHandlers>(null);
 
+  const [isBadBrowser, setIsBadBrowser] = useState(false);
   const [metronome, setMetronome] = useState(false);
   const [enabledGroups, setEnabledGroups] = useState<InstrumentGroupEnabled>({
     ...enabledGroupsDefault,
@@ -107,10 +111,22 @@ const App = () => {
     setEnabledGroups(groove.groups);
   }, [groove.groups]);
 
+  useEffect(() => {
+    setIsBadBrowser(!checkBrowser.test(navigator.userAgent));
+  }, []);
+
   useQuerySync();
 
+  if (isBadBrowser) {
+    return <BadBrowser />;
+  }
+
   return (
-    <div className={clsx(classes.root, classes.withLoader, { [classes.loading]: showLoader })}>
+    <div
+      className={clsx(classes.root, classes.withOverlay, {
+        [classes.loading]: showLoader,
+      })}
+    >
       <Logo className={classes.logo} />
       <Editor
         bars={groove.bars}
