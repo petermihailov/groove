@@ -13,7 +13,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
-          node-version: '18.16.0'
+          node-version-file: '.nvmrc'
       - run: npm install
       - run: npm run build
       - name: GitHub Pages
