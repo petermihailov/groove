@@ -17,13 +17,9 @@ const ButtonShare = (props: ButtonShareProps) => {
   const iconName = hasShareAPI ? 'icon.share' : 'icon.link';
 
   const shareHandler = useCallback(() => {
-    share()
-      .then((type) => {
-        setTooltipText(type + '! 👍');
-      })
-      .catch(() => {
-        setTooltipText('error 😵');
-      });
+    share().then((type) => {
+      setTooltipText(type + '! 👍');
+    });
   }, []);
 
   useEffect(() => {
