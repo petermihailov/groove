@@ -55,7 +55,7 @@ export interface Bar extends TimeSignature {
 export interface Beat {
   barIndex: number;
   rhythmIndex: number;
-  playNote: boolean;
+  instruments: Instrument[];
 }
 
 export interface Note {

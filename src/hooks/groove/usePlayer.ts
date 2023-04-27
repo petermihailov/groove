@@ -7,16 +7,26 @@ import type { Beat, Groove } from '../../types/instrument';
 export function usePlayer(groove: Groove) {
   const { tempo, bars } = groove;
 
-  const [loading, setLoading] = useState(true);
   const kit = useDrumKit();
   const player = useRef(new Player());
 
+  const [loading, setLoading] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [beat, setBeat] = useState<Beat>({
     barIndex: 0,
     rhythmIndex: 0,
-    playNote: false,
+    instruments: [],
   });
+
+  const play = useCallback(() => {
+    setPlaying(true);
+    player.current.play();
+  }, []);
+
+  const stop = useCallback(() => {
+    setPlaying(false);
+    player.current.stop();
+  }, []);
 
   // Initialize
   useEffect(() => {
@@ -36,16 +46,6 @@ export function usePlayer(groove: Groove) {
   useEffect(() => {
     player.current.setTempo(tempo);
   }, [tempo]);
-
-  const play = () => {
-    setPlaying(true);
-    player.current.play();
-  };
-
-  const stop = useCallback(() => {
-    setPlaying(false);
-    player.current.stop();
-  }, []);
 
   return {
     loading,

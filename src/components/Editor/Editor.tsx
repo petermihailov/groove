@@ -99,7 +99,9 @@ export const Editor = ({
                 focusedNote={focusedNote}
                 playing={playing && beat.barIndex === idx}
                 sizeNote={sizeNote}
-                tracking={beat.playNote && beat.barIndex === idx ? beat.rhythmIndex : null}
+                tracking={
+                  beat.instruments.length > 0 && beat.barIndex === idx ? beat.rhythmIndex : null
+                }
                 onClick={toggleNote}
               />
               <BarActions
