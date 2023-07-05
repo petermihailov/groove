@@ -1,12 +1,3 @@
-# [1.2.0](https://github.com/petermihailov/groove/compare/v1.1.2...v1.2.0) (2023-07-05)
-
-
-### Features
-
-* metronome ([c92e64c](https://github.com/petermihailov/groove/commit/c92e64ca9628c1c7f13d27013698eae24fb13dd7))
-
-
-
 ## [1.1.2](https://github.com/petermihailov/groove/compare/v1.1.1...v1.1.2) (2023-04-26)
 
 
