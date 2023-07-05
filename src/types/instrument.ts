@@ -11,8 +11,6 @@ export type Instrument =
   | 'cyRideRegular'
   | 'cySplashRegular'
   | 'cyTrashRegular'
-  // | 'fxMetronomeAccent'
-  // | 'fxMetronomeRegular'
   | 'hhCloseAccent'
   | 'hhCloseGhost'
   | 'hhCloseRegular'
@@ -29,7 +27,9 @@ export type Instrument =
   | 't2MidAccent'
   | 't2MidRegular'
   | 't3LowAccent'
-  | 't3LowRegular';
+  | 't3LowRegular'
+  | 'fxMetronomeAccent'
+  | 'fxMetronomeRegular';
 
 export type DrumKit = Record<Instrument, AudioBuffer>;
 
@@ -72,5 +72,3 @@ export interface Groove {
   bars: Bar[];
   groups: InstrumentGroupEnabled;
 }
-
-export type MetronomeFrequency = 4 | 8 | 16 | 32;

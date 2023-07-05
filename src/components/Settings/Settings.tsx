@@ -2,24 +2,24 @@ import { memo } from 'react';
 
 import type { InstrumentGroupsProps } from './InstrumentGroups';
 import { InstrumentGroups } from './InstrumentGroups';
-import type { MetronomeFrequencyProps } from './MetronomeFrequency';
-import { MetronomeFrequency } from './MetronomeFrequency';
+import { MetronomeDivision } from './MetronomeDivision';
+import type { MetronomeDivisionProps } from './MetronomeDivision';
 
 import classes from './Settings.module.css';
 
-export interface SettingsProps extends InstrumentGroupsProps, MetronomeFrequencyProps {}
+export interface SettingsProps extends InstrumentGroupsProps, MetronomeDivisionProps {}
 
 const Settings = ({
-  metronomeFrequency,
-  setMetronomeFrequency,
+  metronomeDivision,
+  setMetronomeDivision,
   enabledGroups,
   setEnabledGroups,
 }: SettingsProps) => {
   return (
     <div className={classes.root}>
-      <MetronomeFrequency
-        metronomeFrequency={metronomeFrequency}
-        setMetronomeFrequency={setMetronomeFrequency}
+      <MetronomeDivision
+        metronomeDivision={metronomeDivision}
+        setMetronomeDivision={setMetronomeDivision}
       />
       <InstrumentGroups enabledGroups={enabledGroups} setEnabledGroups={setEnabledGroups} />
     </div>

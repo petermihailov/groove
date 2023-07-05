@@ -15,8 +15,6 @@ export const instruments: Instrument[] = [
   'cyRideRegular',
   'cySplashRegular',
   'cyTrashRegular',
-  // 'fxMetronomeAccent',
-  // 'fxMetronomeRegular',
   'hhCloseAccent',
   'hhCloseGhost',
   'hhCloseRegular',
@@ -34,6 +32,8 @@ export const instruments: Instrument[] = [
   't2MidRegular',
   't3LowAccent',
   't3LowRegular',
+  'fxMetronomeAccent',
+  'fxMetronomeRegular',
 ];
 
 export const tempoMin = 20;

@@ -33,20 +33,37 @@ import classes from './App.module.css';
 
 const App = () => {
   const { groove, dispatch } = useGrooveContext();
-  const { loading, beat, play, playing, stop } = usePlayer(groove);
+  const {
+    loading,
+    beat,
+    play,
+    playing,
+    stop,
+    metronome,
+    playMetronome,
+    playingMetronome,
+    stopMetronome,
+    setMetronome,
+  } = usePlayer(groove);
 
   const showLoader = useLoadingDelay(loading);
 
   const settings = useRef<DialogHandlers>(null);
 
   const [isBadBrowser, setIsBadBrowser] = useState(false);
-  const [metronome, setMetronome] = useState(false);
   const [enabledGroups, setEnabledGroups] = useState<InstrumentGroupEnabled>({
     ...enabledGroupsDefault,
   });
 
   const togglePlaying = () => (playing ? stop() : play());
-  const toggleMetronome = () => setMetronome((prev) => !prev);
+  const toggleMetronome = () => {
+    if (playingMetronome) {
+      stopMetronome();
+    } else {
+      playMetronome();
+    }
+  };
+
   const openSettings = () => settings.current?.showModal();
   const closeSettings = () => settings.current?.close();
 
@@ -146,7 +163,7 @@ const App = () => {
 
       <Controls
         groove={groove}
-        metronomeEnabled={metronome}
+        metronomeEnabled={playingMetronome}
         playing={playing}
         onOpenSettings={openSettings}
         onSetTempo={setTempo}
@@ -155,7 +172,12 @@ const App = () => {
       />
 
       <Dialog ref={settings} mode="mega" onClose={closeSettings}>
-        <Settings enabledGroups={enabledGroups} setEnabledGroups={setEnabledGroups} />
+        <Settings
+          enabledGroups={enabledGroups}
+          metronomeDivision={metronome}
+          setEnabledGroups={setEnabledGroups}
+          setMetronomeDivision={setMetronome}
+        />
       </Dialog>
     </div>
   );

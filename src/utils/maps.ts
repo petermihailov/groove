@@ -90,4 +90,6 @@ export const iconNamesMap: Record<Instrument, IconName> = {
   t2MidRegular: 'icon.note.regular',
   t3LowAccent: 'icon.note.accent',
   t3LowRegular: 'icon.note.regular',
+  fxMetronomeAccent: 'icon.note.empty',
+  fxMetronomeRegular: 'icon.note.empty',
 };

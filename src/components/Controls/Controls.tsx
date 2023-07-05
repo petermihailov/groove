@@ -39,7 +39,6 @@ const Controls = ({
         <ButtonPlay active playing={playing} onClick={onTogglePlaying} />
 
         <ButtonIcon
-          disabled
           active={metronomeEnabled}
           aria-label={`metronome ${metronomeEnabled ? 'enabled' : 'disabled'}`}
           onClick={onToggleMetronome}

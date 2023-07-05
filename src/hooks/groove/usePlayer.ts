@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useDrumKit } from './useDrumKit';
 import { Player } from '../../lib/Player';
-import type { Beat, Groove } from '../../types/instrument';
+import type { Beat, Groove, TimeDivision } from '../../types/instrument';
 
 export function usePlayer(groove: Groove) {
   const { tempo, bars } = groove;
@@ -12,6 +12,8 @@ export function usePlayer(groove: Groove) {
 
   const [loading, setLoading] = useState(true);
   const [playing, setPlaying] = useState(false);
+  const [playingMetronome, setPlayingMetronome] = useState(false);
+  const [metronome, setMetronomeState] = useState<TimeDivision>(4);
   const [beat, setBeat] = useState<Beat>({
     barIndex: 0,
     rhythmIndex: 0,
@@ -26,6 +28,19 @@ export function usePlayer(groove: Groove) {
   const stop = useCallback(() => {
     setPlaying(false);
     player.current.stop();
+  }, []);
+
+  const playMetronome = useCallback(() => {
+    setPlayingMetronome(true);
+  }, []);
+
+  const stopMetronome = useCallback(() => {
+    setPlayingMetronome(false);
+  }, []);
+
+  const setMetronome = useCallback((division: TimeDivision) => {
+    setMetronomeState(division);
+    player.current.setMetronome(division);
   }, []);
 
   // Initialize
@@ -47,6 +62,11 @@ export function usePlayer(groove: Groove) {
     player.current.setTempo(tempo);
   }, [tempo]);
 
+  // Update metronome division
+  useEffect(() => {
+    player.current.setMetronome(playingMetronome ? metronome : null);
+  }, [metronome, playingMetronome]);
+
   return {
     loading,
     beat,
@@ -54,5 +74,10 @@ export function usePlayer(groove: Groove) {
     play,
     playing,
     stop,
+    metronome,
+    playMetronome,
+    playingMetronome,
+    setMetronome,
+    stopMetronome,
   };
 }
