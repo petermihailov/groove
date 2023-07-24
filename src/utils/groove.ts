@@ -7,19 +7,19 @@ export const orderGroups = (groups: Group[]): Group[] => {
 };
 
 export const getUsedGroups = (bars: Bar[]) => {
-  const groups: Group[] = [];
+  const groups: Set<Group> = new Set();
 
   for (const bar of bars) {
     const entries = Object.entries(bar.groups);
 
     for (const [group, instruments] of entries) {
       if (instruments.some(Boolean)) {
-        groups.push(group as Group);
+        groups.add(group as Group);
       }
     }
   }
 
-  return groups;
+  return Array.from(groups);
 };
 
 export const createEmptyBar = (
