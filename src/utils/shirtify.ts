@@ -3,16 +3,19 @@ import { isInstrument, isTimeDivision } from './guards';
 import { longInstrumentMap, shirtInstrumentMap, shirtSymbolsMap as symbols } from './maps';
 import type { Groove, Bar, Instrument } from '../types/instrument';
 
-export const readStringParamValue = (settingsString: string, shirtParam: string) => {
+const readNumberParamValue = (settingsString: string, shirtParam: string) => {
   const pattern = new RegExp(`${shirtParam}[0-9]+`, 'g');
   const matches = Array.from(settingsString.match(pattern) || ['']);
-  return matches[0].substring(1);
+  return Number(matches[0].substring(1));
 };
 
-export const readStringTimeSignature = (param: string): [beatsPerBar: number, noteValue: number] =>
-  Number(param.slice(0, 2)) > 16
-    ? [Number(param.slice(0, 1)), Number(param.slice(1))]
-    : [Number(param.slice(0, 2)), Number(param.slice(2))];
+const readTimeSignature = (value: number): { beatsPerBar: number; noteValue: number } => {
+  const stringValue = value.toString();
+
+  return Number(stringValue.slice(0, 2)) > 16
+    ? { beatsPerBar: +stringValue.slice(0, 1), noteValue: +stringValue.slice(1) }
+    : { beatsPerBar: +stringValue.slice(0, 2), noteValue: +stringValue.slice(2) };
+};
 
 /*
  * TO string
@@ -54,9 +57,9 @@ export const createBarsFromString = (str: string): Bar[] => {
   return barsStrArr.reduce<Bar[]>((bars, barStr) => {
     const [barSettingsString = '', notesStr = ''] = barStr.split(symbols.barSettingsDelimiter);
 
-    const signature = readStringParamValue(barSettingsString, symbols.timeSignature);
-    const timeDivision = Number(readStringParamValue(barSettingsString, symbols.timeDivision));
-    const [beatsPerBar, noteValue] = readStringTimeSignature(signature);
+    const signature = readNumberParamValue(barSettingsString, symbols.timeSignature);
+    const timeDivision = readNumberParamValue(barSettingsString, symbols.timeDivision);
+    const { beatsPerBar, noteValue } = readTimeSignature(signature);
 
     if (!isTimeDivision(timeDivision)) {
       throw new Error('groove damaged');
@@ -99,10 +102,9 @@ export const createBarsFromString = (str: string): Bar[] => {
 
 export const createGrooveFromString = (str: string): Groove => {
   const [settingsString, barsStr] = str.split(symbols.grooveSettingsDelimiter);
-  const title = readStringParamValue(settingsString, symbols.title);
-  const tempo = Number(readStringParamValue(settingsString, symbols.tempo));
+  const tempo = readNumberParamValue(settingsString, symbols.tempo);
   const bars = createBarsFromString(barsStr);
   const groups = getUsedGroups(bars);
 
-  return { title, tempo, bars, groups };
+  return { tempo, bars, groups };
 };

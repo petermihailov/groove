@@ -21,6 +21,7 @@ type RemoveBarAction = Action<'REMOVE_BAR', number>;
 type SetGrooveFromStringAction = Action<'SET_GROOVE_FROM_STRING', string>;
 type SetNoteAction = Action<'SET_NOTE', Note>;
 type SetTempoAction = Action<'SET_TEMPO', number>;
+type SetTitleAction = Action<'SET_TITLE', string>;
 type SetEnabledGroupAction = Action<
   'SET_ENABLED_GROUP',
   {
@@ -44,6 +45,7 @@ type Actions =
   | SetNoteAction
   | SetSignatureAction
   | SetTempoAction
+  | SetTitleAction
   | SetEnabledGroupAction
   | UndoAction
   | RedoAction;
@@ -57,6 +59,7 @@ export const removeBarAction = createAction<RemoveBarAction>('REMOVE_BAR');
 export const setNoteAction = createAction<SetNoteAction>('SET_NOTE');
 export const setSignatureAction = createAction<SetSignatureAction>('SET_SIGNATURE');
 export const setTempoAction = createAction<SetTempoAction>('SET_TEMPO');
+export const setTitleAction = createAction<SetTitleAction>('SET_TITLE');
 export const setGrooveFromStringAction =
   createAction<SetGrooveFromStringAction>('SET_GROOVE_FROM_STRING');
 export const setEnabledGroupAction = createAction<SetEnabledGroupAction>('SET_ENABLED_GROUP');
@@ -84,6 +87,7 @@ const patchListener: PatchListener = (patches, inversePatches) => {
 /* Reducer */
 
 interface State extends Groove {
+  title: string;
   canUndo: boolean;
   canRedo: boolean;
 }
@@ -139,22 +143,20 @@ const reducer = (state: State, action: Actions): State => {
     case 'SET_GROOVE_FROM_STRING': {
       return produce(state, (draft) => {
         try {
-          const { title, bars, groups, tempo } = createGrooveFromString(action.payload);
+          const { bars, groups, tempo } = createGrooveFromString(action.payload);
 
           const damageCheck = bars.every((bar) => Object.values(bar).every(Boolean));
           if (!damageCheck) {
             new Error('Groove damaged');
           }
 
-          draft.title = title;
           draft.bars = bars;
           draft.groups = groups;
           draft.tempo = Math.min(tempoMax, Math.max(tempoMin, Number(tempo)));
         } catch (err) {
           alert(err);
 
-          const { title, bars, groups, tempo } = createGrooveFromString(grooveDefault);
-          draft.title = title;
+          const { bars, groups, tempo } = createGrooveFromString(grooveDefault);
           draft.bars = bars;
           draft.groups = groups;
           draft.tempo = tempo;
@@ -197,6 +199,12 @@ const reducer = (state: State, action: Actions): State => {
     case 'SET_TEMPO': {
       return produce(state, (draft) => {
         draft.tempo = action.payload;
+      });
+    }
+
+    case 'SET_TITLE': {
+      return produce(state, (draft) => {
+        draft.title = action.payload;
       });
     }
 

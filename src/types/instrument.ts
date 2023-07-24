@@ -61,7 +61,6 @@ export interface Note {
 }
 
 export interface Groove {
-  title: string;
   tempo: number;
   bars: Bar[];
   groups: Group[];
