@@ -71,11 +71,13 @@ export const scaleBar = (
   const scale = timeDivision / bar.timeDivision;
 
   const scaledBar = createEmptyBar(timeDivision, beatsPerBar, noteValue);
-  scaledBar.groups = safeKeys(bar.groups).reduce<BarGroup>((res, key) => {
-    bar.groups[key]!.forEach((note, rhythmIndex) => {
-      if (note) {
-        res[key][Math.floor(rhythmIndex * scale)] = note;
+  scaledBar.groups = safeKeys(bar.groups).reduce<BarGroup>((res, group) => {
+    bar.groups[group]!.forEach((note, rhythmIndex) => {
+      if (!Array.isArray(res[group])) {
+        res[group] = new Array(scaledBar.length);
       }
+
+      res[group][Math.floor(rhythmIndex * scale)] = note;
     });
 
     return res;

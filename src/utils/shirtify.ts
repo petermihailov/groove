@@ -1,4 +1,9 @@
-import { getGroupByInstrument, getInstrumentsByIndex, getUsedGroups } from './groove';
+import {
+  createEmptyBar,
+  getGroupByInstrument,
+  getInstrumentsByIndex,
+  getUsedGroups,
+} from './groove';
 import { isInstrument, isTimeDivision } from './guards';
 import { longInstrumentMap, shirtInstrumentMap, shirtSymbolsMap as symbols } from './maps';
 import type { Groove, Bar, Instrument } from '../types/instrument';
@@ -65,16 +70,9 @@ export const createBarsFromString = (str: string): Bar[] => {
       throw new Error('groove damaged');
     }
 
+    const bar: Bar = createEmptyBar(timeDivision, beatsPerBar, noteValue);
+
     const beats = notesStr.split(symbols.beatDelimiter);
-
-    const bar: Bar = {
-      beatsPerBar,
-      noteValue,
-      timeDivision,
-      length: (timeDivision / noteValue) * beatsPerBar,
-      groups: {},
-    };
-
     const slicedBeats = beats.slice(0, bar.length);
 
     slicedBeats.forEach((insStr, rhythmIndex) => {
@@ -87,7 +85,7 @@ export const createBarsFromString = (str: string): Bar[] => {
           const group = getGroupByInstrument(instrument);
 
           if (!Array.isArray(bar.groups[group])) {
-            bar.groups[group] = new Array(length).fill(null);
+            bar.groups[group] = new Array(bar.length);
           }
 
           (bar.groups[group] as Instrument[])[rhythmIndex] = instrument;

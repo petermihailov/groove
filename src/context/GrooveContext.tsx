@@ -1,5 +1,5 @@
 import type { Patch, PatchListener } from 'immer';
-import { produce, enablePatches, applyPatches } from 'immer';
+import { current, produce, enablePatches, applyPatches } from 'immer';
 import { createContext, useContext, useReducer } from 'react';
 import type { Dispatch, FC, ReactNode } from 'react';
 
@@ -187,7 +187,7 @@ const reducer = (state: State, action: Actions): State => {
         state,
         (draft) => {
           const { barIndex, noteValue, beatsPerBar, timeDivision } = action.payload;
-          const bar = draft.bars[barIndex];
+          const bar = current(draft.bars[barIndex]);
           draft.bars[barIndex] = scaleBar(bar, noteValue, beatsPerBar, timeDivision);
           draft.canUndo = true;
           draft.canRedo = false;
