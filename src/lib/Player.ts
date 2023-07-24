@@ -1,4 +1,4 @@
-import type { Beat, Instrument, Bar, DrumKit, TimeDivision } from '../types/instrument';
+import type { Beat, Instrument, Bar, DrumKit, TimeDivision, Group } from '../types/instrument';
 import { getAudioContext } from '../utils/audio';
 import { getInstrumentsByIndex } from '../utils/groove';
 
@@ -8,10 +8,11 @@ export class Player {
   private bars: Bar[];
   private tempo: number;
   private metronome: TimeDivision | null;
+  private muted: Group[];
   private nextBeatAt: number;
+  private onBeat: (beat: Beat) => void;
   private hhOpenBuffers: AudioBufferSourceNode[];
   private fxOpenBuffers: AudioBufferSourceNode[];
-  private onBeat: (beat: Beat) => void;
   private timeoutId: number | undefined;
 
   constructor() {
@@ -19,6 +20,7 @@ export class Player {
     this.bars = [];
     this.tempo = 80;
     this.metronome = null;
+    this.muted = [];
     this.nextBeatAt = 0;
     this.onBeat = () => undefined;
     this.audioCtx = getAudioContext();
@@ -42,13 +44,25 @@ export class Player {
     this.metronome = division;
   }
 
+  public mute(group: Group) {
+    this.muted.push(group);
+  }
+
+  public unmute(group: Group) {
+    this.muted = this.muted.filter((key) => key !== group);
+  }
+
+  public isMuted(group: Group) {
+    this.muted.includes(group);
+  }
+
   public setOnBeat(onBeat: (beat: Beat) => void) {
     this.onBeat = onBeat;
   }
 
   public play() {
     const bar = this.bars[0];
-    const instruments = getInstrumentsByIndex(bar, 0);
+    const instruments = getInstrumentsByIndex(bar, 0, this.muted);
 
     this.nextBeatAt = this.audioCtx.currentTime;
 
@@ -112,7 +126,7 @@ export class Player {
       this.scheduleMetronome(nextBar);
     }
 
-    const nextInstruments = getInstrumentsByIndex(nextBar, nextRhythmIndex);
+    const nextInstruments = getInstrumentsByIndex(nextBar, nextRhythmIndex, this.muted);
 
     // Schedule next beat
     this.playNotesAtNextBeatTime(nextInstruments, this.nextBeatAt);

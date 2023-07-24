@@ -1,58 +1,26 @@
 import { safeKeys } from './safe-keys';
-import { instruments } from '../constants';
-import type {
-  Bar,
-  Instrument,
-  InstrumentGroup,
-  InstrumentGroupEnabled,
-  BarInstruments,
-  BarInstrumentsByGroups,
-  TimeDivision,
-} from '../types/instrument';
+import { groups as groupsConst, instruments } from '../constants';
+import type { Bar, BarGroup, Instrument, Group, TimeDivision } from '../types/instrument';
 
-const order: InstrumentGroup[] = ['cy', 'hh', 't1', 'sn', 't2', 't3', 'ki'];
-
-export const enabledGroupsDefault: Readonly<InstrumentGroupEnabled> = {
-  cy: false,
-  hh: false,
-  ki: false,
-  sn: false,
-  t1: false,
-  t2: false,
-  t3: false,
-};
-
-export const orderedEnabledGroups = (enabledGroups: InstrumentGroupEnabled): InstrumentGroup[] => {
-  return order.reduce<InstrumentGroup[]>((acc, group) => {
-    if (enabledGroups[group]) {
-      acc.push(group);
-    }
-
-    return acc;
-  }, []);
+export const orderGroups = (groups: Group[]): Group[] => {
+  return groupsConst.filter((key) => groups.includes(key));
 };
 
 export const getUsedGroups = (bars: Bar[]) => {
-  const groups: InstrumentGroupEnabled = { ...enabledGroupsDefault };
+  const groups: Group[] = [];
 
   for (const bar of bars) {
-    for (const instrument in bar.instruments) {
-      const group = getGroupByInstrument(instrument as Instrument);
+    const entries = Object.entries(bar.groups);
 
-      if (!groups[group] && bar.instruments[instrument as Instrument]?.some(Boolean)) {
-        groups[group] = true;
+    for (const [group, instruments] of entries) {
+      if (instruments.some(Boolean)) {
+        groups.push(group as Group);
       }
     }
   }
 
   return groups;
 };
-
-export const createEmptyInstruments = () =>
-  instruments.reduce<BarInstruments>((res, key) => {
-    res[key] = [];
-    return res;
-  }, {} as BarInstruments);
 
 export const createEmptyBar = (
   timeDivision: TimeDivision,
@@ -64,22 +32,34 @@ export const createEmptyBar = (
     noteValue,
     timeDivision,
     length: (timeDivision / noteValue) * beatsPerBar,
-    instruments: createEmptyInstruments(),
+    groups: {},
   };
 };
 
 export const getGroupByInstrument = (instrument: Instrument) => {
-  return instrument.substring(0, 2) as InstrumentGroup;
+  return instrument.substring(0, 2) as Group;
 };
 
-export const getInstrumentsByGroup = (group: InstrumentGroup) => {
+export const getInstrumentsByGroup = (group: Group) => {
   return instruments.filter((instrument) => instrument.startsWith(group));
 };
 
-export const getInstrumentsByIndex = (bar: Bar, rhythmIndex: number): Instrument[] => {
-  return safeKeys(bar.instruments).filter((key) => {
-    return bar.instruments[key][rhythmIndex];
-  });
+export const getInstrumentsByIndex = (
+  bar: Bar,
+  rhythmIndex: number,
+  muted: Group[] = [],
+): Instrument[] => {
+  return safeKeys(bar.groups).reduce<Instrument[]>((acc, key) => {
+    if (!muted.includes(key)) {
+      const instrument = bar.groups[key]![rhythmIndex];
+
+      if (instrument) {
+        acc.push(instrument);
+      }
+    }
+
+    return acc;
+  }, []);
 };
 
 export const scaleBar = (
@@ -89,55 +69,19 @@ export const scaleBar = (
   timeDivision: TimeDivision,
 ): Bar => {
   const scale = timeDivision / bar.timeDivision;
-  const newBar = createEmptyBar(timeDivision, beatsPerBar, noteValue);
 
-  newBar.instruments = safeKeys(bar.instruments).reduce<BarInstruments>((res, key) => {
-    bar.instruments[key].forEach((note, rhythmIndex) => {
+  const scaledBar = createEmptyBar(timeDivision, beatsPerBar, noteValue);
+  scaledBar.groups = safeKeys(bar.groups).reduce<BarGroup>((res, key) => {
+    bar.groups[key]!.forEach((note, rhythmIndex) => {
       if (note) {
         res[key][Math.floor(rhythmIndex * scale)] = note;
       }
     });
 
     return res;
-  }, createEmptyInstruments());
+  }, {} as BarGroup);
 
-  return newBar;
-};
-
-export const convertBarInstrumentsByGroups = (
-  bar: Bar,
-  enabledGroups: InstrumentGroupEnabled,
-): BarInstrumentsByGroups => {
-  const unordered = safeKeys(bar.instruments).reduce<BarInstrumentsByGroups>((acc, key) => {
-    const groupName = getGroupByInstrument(key);
-    const isEnabled = enabledGroups[groupName];
-
-    if (!isEnabled) {
-      return acc;
-    }
-
-    if (!acc[groupName]) {
-      acc[groupName] = new Array(bar.length).fill(null);
-    }
-
-    const notes = bar.instruments[key].map((hasNote) => (hasNote ? key : null));
-
-    notes.forEach((instrument, rhythmIndex) => {
-      if (instrument && rhythmIndex < bar.length) {
-        acc[groupName][rhythmIndex] = instrument;
-      }
-    });
-
-    return acc;
-  }, {} as BarInstrumentsByGroups);
-
-  return order.reduce<BarInstrumentsByGroups>((acc, key) => {
-    if (unordered[key]) {
-      acc[key] = unordered[key];
-    }
-
-    return acc;
-  }, {} as BarInstrumentsByGroups);
+  return scaledBar;
 };
 
 export const isTriplet = (timeDivision: number) => {

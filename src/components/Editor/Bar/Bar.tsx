@@ -3,10 +3,10 @@ import type { MouseEventHandler } from 'react';
 import { Fragment, memo, useEffect, useMemo, useRef } from 'react';
 
 import { sizeIconDefault } from '../../../constants';
-import type { Bar as BarType, InstrumentGroupEnabled, Note } from '../../../types/instrument';
-import { convertBarInstrumentsByGroups } from '../../../utils/groove';
+import type { Bar as BarType, Group, Note } from '../../../types/instrument';
+import { ensureArray } from '../../../utils/array';
+import { orderGroups } from '../../../utils/groove';
 import { defaultGroupNoteMap } from '../../../utils/maps';
-import { safeKeys } from '../../../utils/safe-keys';
 import { createNoteDataset, getEmptyIconName } from '../Editor.utils';
 import { getIconName } from '../Picker/Note/Note.utils';
 
@@ -16,8 +16,9 @@ export interface BarProps {
   bar: BarType;
   barIndex: number;
   className?: string;
-  enabledGroups: InstrumentGroupEnabled;
+  enabledGroups: Group[];
   focusedNote: Note | null;
+  muted: Group[];
   playing: boolean;
   sizeNote: number;
   tracking: null | number;
@@ -31,21 +32,19 @@ const Bar = ({
   enabledGroups,
   focusedNote,
   playing,
+  muted,
   sizeNote,
   tracking,
   onClick,
 }: BarProps) => {
   const refTracker = useRef<SVGRectElement>(null);
-
-  const instrumentsByGroups = useMemo(() => {
-    return convertBarInstrumentsByGroups(bar, enabledGroups);
-  }, [bar, enabledGroups]);
+  const orderedGroups = useMemo(() => orderGroups(enabledGroups), [enabledGroups]);
 
   const colsCount = bar.length;
-  const rowsCount = Object.keys(instrumentsByGroups).length;
+  const rowsCount = enabledGroups.length;
 
-  const hhFootHeight = enabledGroups.hh ? sizeNote / 2 + 2 : 0;
-  const hhFootHeightVB = enabledGroups.hh ? sizeIconDefault / 2 + 2 : 0;
+  const hhFootHeight = enabledGroups.includes('hh') ? sizeNote / 2 + 2 : 0;
+  const hhFootHeightVB = enabledGroups.includes('hh') ? sizeIconDefault / 2 + 2 : 0;
 
   const svgWidth = colsCount * sizeNote;
   const svgHeight = rowsCount * sizeNote + hhFootHeight;
@@ -85,30 +84,34 @@ const Bar = ({
         width={sizeIconDefault}
       />
 
-      {safeKeys(instrumentsByGroups).map((group, row) => {
-        return instrumentsByGroups[group].map((instrumentOrNull, col) => {
+      {orderedGroups.map((group, row) => {
+        const columns = [];
+        const isMuted = muted.includes(group);
+
+        for (let i = 0; i < bar.length; i++) {
+          const instrumentOrNull = ensureArray(bar.groups[group])[i];
           const instrument = instrumentOrNull ?? defaultGroupNoteMap[group];
           const value = Boolean(instrumentOrNull);
           const isHHFootIcon = instrument === 'hhFootRegular' && value;
           const isFocused =
             focusedNote?.instrument === instrument &&
-            focusedNote.rhythmIndex === col &&
+            focusedNote.rhythmIndex === i &&
             focusedNote.barIndex === barIndex;
 
-          return (
-            <Fragment key={`${row}-${col}-${instrument}`}>
+          columns.push(
+            <Fragment key={`${row}-${i}-${instrument}`}>
               <rect
                 {...createNoteDataset({
                   barIndex,
                   group,
                   instrument,
-                  rhythmIndex: col,
+                  rhythmIndex: i,
                   value,
                 })}
                 fill="transparent"
                 height={sizeIconDefault}
                 width={sizeIconDefault}
-                x={sizeIconDefault * col}
+                x={sizeIconDefault * i}
                 {...(isHHFootIcon
                   ? { y: sizeIconDefault * rowsCount }
                   : { y: sizeIconDefault * row })}
@@ -116,15 +119,17 @@ const Bar = ({
               <use
                 fill={isFocused ? 'var(--color-accent)' : undefined}
                 href={`#${value ? getIconName(instrument) : getEmptyIconName(group)}`}
-                opacity={value ? 1 : 0.15}
-                x={sizeIconDefault * col}
-                {...(enabledGroups.hh && isHHFootIcon
+                opacity={(value ? 1 : 0.15) * (isMuted ? 0.25 : 1)}
+                x={sizeIconDefault * i}
+                {...(enabledGroups.includes('hh') && isHHFootIcon
                   ? { y: sizeIconDefault * rowsCount - sizeIconDefault + hhFootHeightVB }
                   : { y: sizeIconDefault * row })}
               />
-            </Fragment>
+            </Fragment>,
           );
-        });
+        }
+
+        return columns;
       })}
     </svg>
   );

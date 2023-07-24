@@ -13,7 +13,7 @@ import { useClickOutside } from '../../hooks';
 import type {
   Bar as BarType,
   Beat,
-  InstrumentGroupEnabled,
+  Group,
   Note,
   TimeDivision,
   TimeSignature,
@@ -25,9 +25,12 @@ export interface EditorProps {
   className?: string;
   bars: BarType[];
   beat: Beat;
+  muted: Group[];
+  muteGroup: (group: Group) => void;
+  unmuteGroup: (group: Group) => void;
   canUndo: boolean;
   canRedo: boolean;
-  enabledGroups: InstrumentGroupEnabled;
+  enabledGroups: Group[];
   onAddBar: (barIndex: number) => void;
   onClearBar: (barIndex: number) => void;
   onRemoveBar: (barIndex: number) => void;
@@ -51,6 +54,9 @@ export const Editor = ({
   className,
   enabledGroups,
   playing,
+  muted,
+  muteGroup,
+  unmuteGroup,
   onAddBar,
   onChangeSignature,
   onClearBar,
@@ -82,7 +88,14 @@ export const Editor = ({
           <div className={classes.outOfTheFlowWrapper}>
             <div className={classes.groups}>
               {bars.map((_, idx) => (
-                <Groups key={idx} enabledGroups={enabledGroups} sizeNote={sizeNote} />
+                <Groups
+                  key={idx}
+                  enabledGroups={enabledGroups}
+                  muteGroup={muteGroup}
+                  muted={muted}
+                  sizeNote={sizeNote}
+                  unmuteGroup={unmuteGroup}
+                />
               ))}
             </div>
           </div>
@@ -97,6 +110,7 @@ export const Editor = ({
                 barIndex={idx}
                 enabledGroups={enabledGroups}
                 focusedNote={focusedNote}
+                muted={muted}
                 playing={playing && beat.barIndex === idx}
                 sizeNote={sizeNote}
                 tracking={

@@ -1,7 +1,7 @@
 import type { IconName } from '../types/icons';
-import type { Instrument, InstrumentGroup } from '../types/instrument';
+import type { Instrument, Group } from '../types/instrument';
 
-export const defaultGroupNoteMap: Record<InstrumentGroup, Instrument> = {
+export const defaultGroupNoteMap: Record<Group, Instrument> = {
   cy: 'cyRideRegular',
   hh: 'hhCloseRegular',
   ki: 'kiKickRegular',
@@ -32,7 +32,7 @@ export const groupNamesMap = {
   t3: 'low tom',
 } as const;
 
-export const shirtInstrumentMap = {
+export const shirtInstrumentMap: Partial<Record<Instrument, string>> = {
   cyBellRegular: 'cbr',
   cyChinaRegular: 'chr',
   cyCowbellRegular: 'cwr',

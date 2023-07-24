@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { instrumentGroupsWithPicker } from '../../../constants';
+import { groupsWithPicker } from '../../../constants';
 import type { MouseEventHandler } from '../../../types/helpers';
 import type { Note } from '../../../types/instrument';
 import { defaultGroupNoteMap } from '../../../utils/maps';
@@ -32,7 +32,7 @@ export function useNoteEditor(setNote: (note: Note) => void) {
 
           setNote(note);
 
-          if (note.value && instrumentGroupsWithPicker.includes(note.group)) {
+          if (note.value && groupsWithPicker.includes(note.group)) {
             setFocusedNote(note);
           } else {
             setFocusedNote(null);

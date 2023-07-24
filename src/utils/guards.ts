@@ -1,8 +1,8 @@
-import { instrumentGroups, instruments } from '../constants';
-import type { Instrument, InstrumentGroup, TimeDivision } from '../types/instrument';
+import { groups, instruments } from '../constants';
+import type { Instrument, Group, TimeDivision } from '../types/instrument';
 
-export const isInstrumentGroup = (str = ''): str is InstrumentGroup => {
-  return instrumentGroups.includes(str as InstrumentGroup);
+export const isGroup = (str = ''): str is Group => {
+  return groups.includes(str as Group);
 };
 
 export const isInstrument = (str = ''): str is Instrument => {

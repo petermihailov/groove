@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useDrumKit } from './useDrumKit';
 import { Player } from '../../lib/Player';
-import type { Beat, Groove, TimeDivision } from '../../types/instrument';
+import type { Beat, Groove, Group, TimeDivision } from '../../types/instrument';
 
 export function usePlayer(groove: Groove) {
   const { tempo, bars } = groove;
@@ -14,11 +14,14 @@ export function usePlayer(groove: Groove) {
   const [playing, setPlaying] = useState(false);
   const [playingMetronome, setPlayingMetronome] = useState(false);
   const [metronome, setMetronomeState] = useState<TimeDivision>(4);
+  const [muted, setMuted] = useState<Group[]>([]);
   const [beat, setBeat] = useState<Beat>({
     barIndex: 0,
     rhythmIndex: 0,
     instruments: [],
   });
+
+  // Play / stop
 
   const play = useCallback(() => {
     setPlaying(true);
@@ -29,6 +32,8 @@ export function usePlayer(groove: Groove) {
     setPlaying(false);
     player.current.stop();
   }, []);
+
+  // Metronome
 
   const playMetronome = useCallback(() => {
     setPlayingMetronome(true);
@@ -41,6 +46,18 @@ export function usePlayer(groove: Groove) {
   const setMetronome = useCallback((division: TimeDivision) => {
     setMetronomeState(division);
     player.current.setMetronome(division);
+  }, []);
+
+  // Mute groups
+
+  const muteGroup = useCallback((group: Group) => {
+    setMuted((prev) => [...prev, group]);
+    player.current.mute(group);
+  }, []);
+
+  const unmuteGroup = useCallback((group: Group) => {
+    setMuted((prev) => prev.filter((key) => group !== key));
+    player.current.unmute(group);
   }, []);
 
   // Initialize
@@ -75,6 +92,9 @@ export function usePlayer(groove: Groove) {
     playing,
     stop,
     metronome,
+    muted,
+    muteGroup,
+    unmuteGroup,
     playMetronome,
     playingMetronome,
     setMetronome,

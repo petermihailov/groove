@@ -1,7 +1,7 @@
-import { createEmptyBar, getInstrumentsByIndex, getUsedGroups } from './groove';
+import { getGroupByInstrument, getInstrumentsByIndex, getUsedGroups } from './groove';
 import { isInstrument, isTimeDivision } from './guards';
 import { longInstrumentMap, shirtInstrumentMap, shirtSymbolsMap as symbols } from './maps';
-import type { Groove, Bar } from '../types/instrument';
+import type { Groove, Bar, Instrument } from '../types/instrument';
 
 export const readStringParamValue = (settingsString: string, shirtParam: string) => {
   const pattern = new RegExp(`${shirtParam}[0-9]+`, 'g');
@@ -18,7 +18,7 @@ export const readStringTimeSignature = (param: string): [beatsPerBar: number, no
  * TO string
  */
 
-export const createStringBar = (bar: Bar) => {
+export const createStringBar = (bar: Bar): string => {
   const signature = symbols.timeSignature + bar.beatsPerBar + bar.noteValue;
   const timeDivision = symbols.timeDivision + bar.timeDivision;
   const settings = signature + timeDivision;
@@ -63,7 +63,15 @@ export const createBarsFromString = (str: string): Bar[] => {
     }
 
     const beats = notesStr.split(symbols.beatDelimiter);
-    const bar = createEmptyBar(timeDivision, beatsPerBar, noteValue);
+
+    const bar: Bar = {
+      beatsPerBar,
+      noteValue,
+      timeDivision,
+      length: (timeDivision / noteValue) * beatsPerBar,
+      groups: {},
+    };
+
     const slicedBeats = beats.slice(0, bar.length);
 
     slicedBeats.forEach((insStr, rhythmIndex) => {
@@ -71,8 +79,15 @@ export const createBarsFromString = (str: string): Bar[] => {
 
       matches.forEach((ins) => {
         const instrument = longInstrumentMap[ins];
+
         if (isInstrument(instrument)) {
-          bar.instruments[instrument][rhythmIndex] = true;
+          const group = getGroupByInstrument(instrument);
+
+          if (!Array.isArray(bar.groups[group])) {
+            bar.groups[group] = new Array(length).fill(null);
+          }
+
+          (bar.groups[group] as Instrument[])[rhythmIndex] = instrument;
         }
       });
     });

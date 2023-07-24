@@ -12,8 +12,8 @@ export interface SettingsProps extends InstrumentGroupsProps, MetronomeDivisionP
 const Settings = ({
   metronomeDivision,
   setMetronomeDivision,
-  enabledGroups,
-  setEnabledGroups,
+  grooveGroups,
+  setGrooveGroup,
 }: SettingsProps) => {
   return (
     <div className={classes.root}>
@@ -21,7 +21,7 @@ const Settings = ({
         metronomeDivision={metronomeDivision}
         setMetronomeDivision={setMetronomeDivision}
       />
-      <InstrumentGroups enabledGroups={enabledGroups} setEnabledGroups={setEnabledGroups} />
+      <InstrumentGroups grooveGroups={grooveGroups} setGrooveGroup={setGrooveGroup} />
     </div>
   );
 };

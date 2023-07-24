@@ -1,47 +1,60 @@
 import { memo } from 'react';
 
-import type { InstrumentGroup, InstrumentGroupEnabled } from '../../../types/instrument';
+import type { Group } from '../../../types/instrument';
 import { ButtonIcon } from '../../ButtonIcon';
 import { Icon } from '../../Icon';
 
 import classes from './InstrumentGroups.module.css';
 
 export interface InstrumentGroupsProps {
-  enabledGroups: InstrumentGroupEnabled;
-  setEnabledGroups: (enabledGroups: InstrumentGroupEnabled) => void;
+  grooveGroups: Group[];
+  setGrooveGroup: (group: Group, enabled: boolean) => void;
 }
 
-const InstrumentGroups = ({ enabledGroups, setEnabledGroups }: InstrumentGroupsProps) => {
-  const toggleGroup = (group: InstrumentGroup) => () => {
-    setEnabledGroups?.({
-      ...enabledGroups,
-      [group]: !enabledGroups[group],
-    });
+const InstrumentGroups = ({ grooveGroups, setGrooveGroup }: InstrumentGroupsProps) => {
+  const toggle = (group: Group) => () => {
+    setGrooveGroup?.(group, !grooveGroups.includes(group));
   };
 
   return (
     <div className={classes.root}>
       Groups
       <div className={classes.list}>
-        <ButtonIcon active={enabledGroups.cy} aria-label="cymbals" onClick={toggleGroup('cy')}>
+        <ButtonIcon
+          active={grooveGroups.includes('cy')}
+          aria-label="cymbals"
+          onClick={toggle('cy')}
+        >
           <Icon name="icon.group.cy" />
         </ButtonIcon>
-        <ButtonIcon active={enabledGroups.hh} aria-label="hi-hat" onClick={toggleGroup('hh')}>
+        <ButtonIcon active={grooveGroups.includes('hh')} aria-label="hi-hat" onClick={toggle('hh')}>
           <Icon name="icon.group.hh" />
         </ButtonIcon>
-        <ButtonIcon active={enabledGroups.sn} aria-label="snare" onClick={toggleGroup('sn')}>
+        <ButtonIcon active={grooveGroups.includes('sn')} aria-label="snare" onClick={toggle('sn')}>
           <Icon name="icon.group.sn" />
         </ButtonIcon>
-        <ButtonIcon active={enabledGroups.ki} aria-label="kick" onClick={toggleGroup('ki')}>
+        <ButtonIcon active={grooveGroups.includes('ki')} aria-label="kick" onClick={toggle('ki')}>
           <Icon name="icon.group.ki" />
         </ButtonIcon>
-        <ButtonIcon active={enabledGroups.t1} aria-label="high tom" onClick={toggleGroup('t1')}>
+        <ButtonIcon
+          active={grooveGroups.includes('t1')}
+          aria-label="high tom"
+          onClick={toggle('t1')}
+        >
           <Icon name="icon.group.t1" />
         </ButtonIcon>
-        <ButtonIcon active={enabledGroups.t2} aria-label="middle tom" onClick={toggleGroup('t2')}>
+        <ButtonIcon
+          active={grooveGroups.includes('t2')}
+          aria-label="middle tom"
+          onClick={toggle('t2')}
+        >
           <Icon name="icon.group.t2" />
         </ButtonIcon>
-        <ButtonIcon active={enabledGroups.t3} aria-label="low tom" onClick={toggleGroup('t3')}>
+        <ButtonIcon
+          active={grooveGroups.includes('t3')}
+          aria-label="low tom"
+          onClick={toggle('t3')}
+        >
           <Icon name="icon.group.t3" />
         </ButtonIcon>
       </div>

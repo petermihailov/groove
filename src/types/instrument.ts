@@ -1,6 +1,4 @@
-export type InstrumentGroup = 'cy' | 'hh' | 'sn' | 't1' | 't2' | 't3' | 'ki';
-
-export type InstrumentGroupEnabled = Record<InstrumentGroup, boolean>;
+export type Group = 'cy' | 'hh' | 'sn' | 't1' | 't2' | 't3' | 'ki';
 
 export type Instrument =
   | 'cyBellRegular'
@@ -40,16 +38,12 @@ export interface TimeSignature {
   noteValue: number;
 }
 
-export type BarInstruments = Record<Instrument, boolean[]>;
-
-export type BarLine = (Instrument | null)[];
-
-export type BarInstrumentsByGroups = Record<InstrumentGroup, BarLine>;
+export type BarGroup = Record<Group, Array<Instrument | null>>;
 
 export interface Bar extends TimeSignature {
   timeDivision: TimeDivision;
   length: number;
-  instruments: BarInstruments;
+  groups: Partial<BarGroup>;
 }
 
 export interface Beat {
@@ -59,7 +53,7 @@ export interface Beat {
 }
 
 export interface Note {
-  group: InstrumentGroup;
+  group: Group;
   instrument: Instrument;
   barIndex: number;
   rhythmIndex: number;
@@ -70,5 +64,5 @@ export interface Groove {
   title: string;
   tempo: number;
   bars: Bar[];
-  groups: InstrumentGroupEnabled;
+  groups: Group[];
 }

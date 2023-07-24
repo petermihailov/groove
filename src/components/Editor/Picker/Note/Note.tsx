@@ -4,14 +4,14 @@ import { memo } from 'react';
 
 import { getIconName, getNoteLabel } from './Note.utils';
 import type { IconName } from '../../../../types/icons';
-import type { Instrument, InstrumentGroup } from '../../../../types/instrument';
+import type { Instrument, Group } from '../../../../types/instrument';
 import { ButtonIcon } from '../../../ButtonIcon';
 import { Icon } from '../../../Icon';
 
 import classes from './Note.module.css';
 
 export interface NoteProps extends Omit<HTMLAttributes<HTMLButtonElement>, 'onClick'> {
-  group: InstrumentGroup;
+  group: Group;
   icon?: IconName;
   instrument: Instrument;
   onClick?: (instrument: Instrument) => void;

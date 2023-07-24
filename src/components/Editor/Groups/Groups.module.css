@@ -2,3 +2,11 @@
   max-inline-size: unset;
   fill: var(--color-accent);
 }
+
+.root use {
+  pointer-events: none;
+}
+
+.root rect {
+  cursor: pointer;
+}

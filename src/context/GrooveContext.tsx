@@ -4,15 +4,10 @@ import { createContext, useContext, useReducer } from 'react';
 import type { Dispatch, FC, ReactNode } from 'react';
 
 import { grooveDefault, tempoMax, tempoMin } from '../constants';
-import type { Groove, Note, TimeDivision, TimeSignature } from '../types/instrument';
+import type { Groove, Group, Note, TimeDivision, TimeSignature } from '../types/instrument';
 import type { Action } from '../utils/actions';
 import { createAction } from '../utils/actions';
-import {
-  createEmptyInstruments,
-  enabledGroupsDefault,
-  getInstrumentsByGroup,
-  scaleBar,
-} from '../utils/groove';
+import { scaleBar } from '../utils/groove';
 import { createGrooveFromString } from '../utils/shirtify';
 
 /* Actions */
@@ -26,6 +21,13 @@ type RemoveBarAction = Action<'REMOVE_BAR', number>;
 type SetGrooveFromStringAction = Action<'SET_GROOVE_FROM_STRING', string>;
 type SetNoteAction = Action<'SET_NOTE', Note>;
 type SetTempoAction = Action<'SET_TEMPO', number>;
+type SetEnabledGroupAction = Action<
+  'SET_ENABLED_GROUP',
+  {
+    group: Group;
+    enabled: boolean;
+  }
+>;
 type SetSignatureAction = Action<
   'SET_SIGNATURE',
   TimeSignature & {
@@ -42,6 +44,7 @@ type Actions =
   | SetNoteAction
   | SetSignatureAction
   | SetTempoAction
+  | SetEnabledGroupAction
   | UndoAction
   | RedoAction;
 
@@ -56,6 +59,7 @@ export const setSignatureAction = createAction<SetSignatureAction>('SET_SIGNATUR
 export const setTempoAction = createAction<SetTempoAction>('SET_TEMPO');
 export const setGrooveFromStringAction =
   createAction<SetGrooveFromStringAction>('SET_GROOVE_FROM_STRING');
+export const setEnabledGroupAction = createAction<SetEnabledGroupAction>('SET_ENABLED_GROUP');
 
 /* Undo/Redo */
 
@@ -88,7 +92,7 @@ const defaultState: State = {
   title: '',
   tempo: 80,
   bars: [],
-  groups: { ...enabledGroupsDefault },
+  groups: [],
   canUndo: false,
   canRedo: false,
 };
@@ -112,7 +116,7 @@ const reducer = (state: State, action: Actions): State => {
       return produce(
         state,
         (draft) => {
-          draft.bars[action.payload].instruments = createEmptyInstruments();
+          draft.bars[action.payload].groups = {};
           draft.canUndo = true;
           draft.canRedo = false;
         },
@@ -139,7 +143,7 @@ const reducer = (state: State, action: Actions): State => {
 
           const damageCheck = bars.every((bar) => Object.values(bar).every(Boolean));
           if (!damageCheck) {
-            throw new Error('Groove damaged');
+            new Error('Groove damaged');
           }
 
           draft.title = title;
@@ -163,13 +167,12 @@ const reducer = (state: State, action: Actions): State => {
         state,
         (draft) => {
           const { rhythmIndex, instrument, group, barIndex, value } = action.payload;
-          // reset all group of instruments
-          const instruments = getInstrumentsByGroup(group);
-          instruments.forEach((ins) => {
-            draft.bars[barIndex].instruments[ins][rhythmIndex] = false;
-          });
 
-          draft.bars[barIndex].instruments[instrument][rhythmIndex] = value;
+          if (!Array.isArray(draft.bars[barIndex].groups[group])) {
+            draft.bars[barIndex].groups[group] = [];
+          }
+
+          draft.bars[barIndex].groups[group]![rhythmIndex] = value ? instrument : null;
           draft.canUndo = true;
           draft.canRedo = false;
         },
@@ -195,6 +198,30 @@ const reducer = (state: State, action: Actions): State => {
       return produce(state, (draft) => {
         draft.tempo = action.payload;
       });
+    }
+
+    case 'SET_ENABLED_GROUP': {
+      return produce(
+        state,
+        (draft) => {
+          const { group, enabled } = action.payload;
+
+          if (enabled) {
+            draft.groups.push(group);
+          } else {
+            draft.groups = draft.groups.filter((key) => group !== key);
+
+            draft.bars.forEach((bar) => {
+              if (bar.groups[group]) {
+                bar.groups[group] = [];
+                draft.canUndo = true;
+                draft.canRedo = false;
+              }
+            });
+          }
+        },
+        patchListener,
+      );
     }
 
     case 'UNDO': {

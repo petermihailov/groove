@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { memo, useEffect, useState } from 'react';
 
 import { Note } from './Note';
-import { instrumentGroupsWithPicker } from '../../../constants';
+import { groupsWithPicker } from '../../../constants';
 import type { Instrument, Note as NoteType } from '../../../types/instrument';
 import { getInstrumentsByGroup } from '../../../utils/groove';
 
@@ -17,7 +17,7 @@ export interface PickerProps {
 const Picker = ({ className, note: noteProp, onChange }: PickerProps) => {
   const [note, setNote] = useState<NoteType | null>(null);
   const instruments = note ? getInstrumentsByGroup(note.group) : [];
-  const isOpen = noteProp && note ? instrumentGroupsWithPicker.includes(note.group) : false;
+  const isOpen = noteProp && note ? groupsWithPicker.includes(note.group) : false;
 
   const handleChange = (instrument: Instrument) => {
     if (note) {

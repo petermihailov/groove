@@ -8,19 +8,14 @@ import {
   removeBarAction,
   setNoteAction,
   setSignatureAction,
+  setEnabledGroupAction,
   setTempoAction,
   undoAction,
   useGrooveContext,
 } from '../../context/GrooveContext';
 import { useLoadingDelay, usePlayer, useQuerySync } from '../../hooks';
-import type {
-  InstrumentGroupEnabled,
-  Note,
-  TimeSignature,
-  TimeDivision,
-} from '../../types/instrument';
+import type { Note, TimeSignature, TimeDivision, Group } from '../../types/instrument';
 import checkBrowser from '../../utils/checkBrowser';
-import { enabledGroupsDefault } from '../../utils/groove';
 import { BadBrowser } from '../BadBrowser';
 import { Controls } from '../Controls';
 import type { DialogHandlers } from '../Dialog';
@@ -33,6 +28,7 @@ import classes from './App.module.css';
 
 const App = () => {
   const { groove, dispatch } = useGrooveContext();
+
   const {
     loading,
     beat,
@@ -40,6 +36,9 @@ const App = () => {
     playing,
     stop,
     metronome,
+    muted,
+    muteGroup,
+    unmuteGroup,
     playMetronome,
     playingMetronome,
     stopMetronome,
@@ -51,9 +50,6 @@ const App = () => {
   const settings = useRef<DialogHandlers>(null);
 
   const [isBadBrowser, setIsBadBrowser] = useState(false);
-  const [enabledGroups, setEnabledGroups] = useState<InstrumentGroupEnabled>({
-    ...enabledGroupsDefault,
-  });
 
   const togglePlaying = () => (playing ? stop() : play());
   const toggleMetronome = () => {
@@ -116,6 +112,13 @@ const App = () => {
     [dispatch, stop],
   );
 
+  const setEnabledGroup = useCallback(
+    (group: Group, enabled: boolean) => {
+      dispatch(setEnabledGroupAction({ group, enabled }));
+    },
+    [dispatch],
+  );
+
   const undo = useCallback(() => {
     dispatch(undoAction());
   }, [dispatch]);
@@ -124,15 +127,15 @@ const App = () => {
     dispatch(redoAction());
   }, [dispatch]);
 
-  useEffect(() => {
-    setEnabledGroups(groove.groups);
-  }, [groove.groups]);
+  // Initialize
 
   useEffect(() => {
     setIsBadBrowser(!checkBrowser.test(navigator.userAgent));
   }, []);
 
   useQuerySync();
+
+  // Render
 
   if (isBadBrowser) {
     return <BadBrowser />;
@@ -150,8 +153,11 @@ const App = () => {
         beat={beat}
         canRedo={groove.canRedo}
         canUndo={groove.canUndo}
-        enabledGroups={enabledGroups}
+        enabledGroups={groove.groups}
+        muteGroup={muteGroup}
+        muted={muted}
         playing={playing}
+        unmuteGroup={unmuteGroup}
         onAddBar={addBar}
         onChangeSignature={setSignature}
         onClearBar={clearBar}
@@ -173,9 +179,9 @@ const App = () => {
 
       <Dialog ref={settings} mode="mega" onClose={closeSettings}>
         <Settings
-          enabledGroups={enabledGroups}
+          grooveGroups={groove.groups}
           metronomeDivision={metronome}
-          setEnabledGroups={setEnabledGroups}
+          setGrooveGroup={setEnabledGroup}
           setMetronomeDivision={setMetronome}
         />
       </Dialog>

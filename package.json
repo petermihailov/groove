@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "abcjs": "^6.2.2",
     "clsx": "^1.2.1",
     "immer": "^9.0.21",
     "open-props": "^1.5.10",
