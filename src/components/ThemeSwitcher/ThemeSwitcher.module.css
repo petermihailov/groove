@@ -21,7 +21,8 @@
   stroke: currentcolor;
   stroke-width: 2;
   transform-origin: center center;
-  transition: transform 0.3s cubic-bezier(0.5, 1.5, 0.75, 1.25),
+  transition:
+    transform 0.3s cubic-bezier(0.5, 1.5, 0.75, 1.25),
     opacity 0.3s cubic-bezier(0.25, 0, 0.3, 1);
 }
 
