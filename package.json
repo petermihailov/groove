@@ -19,7 +19,7 @@
     "@popperjs/core": "^2.11.8",
     "abcjs": "^6.2.2",
     "clsx": "^2.0.0",
-    "immer": "^9.0.21",
+    "immer": "^10.0.2",
     "open-props": "^1.5.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
