@@ -1,4 +1,4 @@
-import type { Beat, Instrument, Bar, DrumKit, TimeDivision, Group } from '../types/instrument';
+import type { Beat, Instrument, Bar, DrumKit, Group } from '../types/instrument';
 import { getAudioContext } from '../utils/audio';
 import { getInstrumentsByIndex } from '../utils/groove';
 
@@ -7,7 +7,8 @@ export class Player {
   private kit: DrumKit;
   private bars: Bar[];
   private tempo: number;
-  private metronome: TimeDivision | null;
+  private metronome: boolean;
+  private metronomeSubdivision: number;
   private muted: Group[];
   private nextBeatAt: number;
   private onBeat: (beat: Beat) => void;
@@ -19,7 +20,8 @@ export class Player {
     this.kit = {} as DrumKit;
     this.bars = [];
     this.tempo = 80;
-    this.metronome = null;
+    this.metronome = false;
+    this.metronomeSubdivision = 1;
     this.muted = [];
     this.nextBeatAt = 0;
     this.onBeat = () => undefined;
@@ -40,8 +42,16 @@ export class Player {
     this.tempo = bpm;
   }
 
-  public setMetronome(division: TimeDivision | null) {
-    this.metronome = division;
+  public playMetronome() {
+    this.metronome = true;
+  }
+
+  public stopMetronome() {
+    this.metronome = false;
+  }
+
+  public setMetronomeSubdivision(subdivision: number) {
+    this.metronomeSubdivision = subdivision;
   }
 
   public mute(group: Group) {
@@ -142,9 +152,9 @@ export class Player {
   scheduleMetronome(bar: Bar) {
     if (this.metronome) {
       const timeOffset = getNextTimeOffset(this.tempo, bar);
-      const timeStep = (timeOffset * bar.length) / this.metronome;
+      const timeStep = (timeOffset * bar.length) / bar.beatsPerBar;
 
-      for (let i = 0; i < this.metronome; i++) {
+      for (let i = 0; i < bar.beatsPerBar; i++) {
         const instrument = i === 0 ? 'fxMetronomeAccent' : 'fxMetronomeRegular';
         this.playNotesAtNextBeatTime([instrument], this.nextBeatAt + timeStep * i);
       }

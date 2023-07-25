@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useDrumKit } from './useDrumKit';
 import { Player } from '../../lib/Player';
-import type { Beat, Groove, Group, TimeDivision } from '../../types/instrument';
+import type { Beat, Groove, Group } from '../../types/instrument';
 
 export function usePlayer(groove: Groove) {
   const { tempo, bars } = groove;
@@ -12,8 +12,8 @@ export function usePlayer(groove: Groove) {
 
   const [loading, setLoading] = useState(true);
   const [playing, setPlaying] = useState(false);
-  const [playingMetronome, setPlayingMetronome] = useState(false);
-  const [metronome, setMetronomeState] = useState<TimeDivision>(4);
+  const [metronomePlaying, setMetronomePlaying] = useState(false);
+  const [metronomeSubdivision, setMetronomeSubdivisionState] = useState<number>(1);
   const [muted, setMuted] = useState<Group[]>([]);
   const [beat, setBeat] = useState<Beat>({
     barIndex: 0,
@@ -36,16 +36,18 @@ export function usePlayer(groove: Groove) {
   // Metronome
 
   const playMetronome = useCallback(() => {
-    setPlayingMetronome(true);
+    setMetronomePlaying(true);
+    player.current.playMetronome();
   }, []);
 
   const stopMetronome = useCallback(() => {
-    setPlayingMetronome(false);
+    setMetronomePlaying(false);
+    player.current.stopMetronome();
   }, []);
 
-  const setMetronome = useCallback((division: TimeDivision) => {
-    setMetronomeState(division);
-    player.current.setMetronome(division);
+  const setMetronomeSubdivision = useCallback((subdivision: number = 1) => {
+    setMetronomeSubdivisionState(subdivision);
+    player.current.setMetronomeSubdivision(subdivision);
   }, []);
 
   // Mute groups
@@ -79,11 +81,6 @@ export function usePlayer(groove: Groove) {
     player.current.setTempo(tempo);
   }, [tempo]);
 
-  // Update metronome division
-  useEffect(() => {
-    player.current.setMetronome(playingMetronome ? metronome : null);
-  }, [metronome, playingMetronome]);
-
   return {
     loading,
     beat,
@@ -91,13 +88,13 @@ export function usePlayer(groove: Groove) {
     play,
     playing,
     stop,
-    metronome,
+    metronomePlaying,
+    playMetronome,
+    stopMetronome,
+    metronomeSubdivision,
+    setMetronomeSubdivision,
     muted,
     muteGroup,
     unmuteGroup,
-    playMetronome,
-    playingMetronome,
-    setMetronome,
-    stopMetronome,
   };
 }

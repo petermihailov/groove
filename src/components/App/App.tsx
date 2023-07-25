@@ -13,6 +13,7 @@ import {
   undoAction,
   useGrooveContext,
 } from '../../context/GrooveContext';
+import env from '../../env';
 import { useLoadingDelay, usePlayer, useQuerySync } from '../../hooks';
 import type { Note, TimeSignature, TimeDivision, Group } from '../../types/instrument';
 import checkBrowser from '../../utils/checkBrowser';
@@ -35,14 +36,14 @@ const App = () => {
     play,
     playing,
     stop,
-    metronome,
+    metronomePlaying,
     muted,
     muteGroup,
     unmuteGroup,
     playMetronome,
-    playingMetronome,
     stopMetronome,
-    setMetronome,
+    setMetronomeSubdivision,
+    metronomeSubdivision,
   } = usePlayer(groove);
 
   const showLoader = useLoadingDelay(loading);
@@ -53,7 +54,7 @@ const App = () => {
 
   const togglePlaying = () => (playing ? stop() : play());
   const toggleMetronome = () => {
-    if (playingMetronome) {
+    if (metronomePlaying) {
       stopMetronome();
     } else {
       playMetronome();
@@ -137,7 +138,7 @@ const App = () => {
 
   // Render
 
-  if (isBadBrowser) {
+  if (!env.DEV && isBadBrowser) {
     return <BadBrowser />;
   }
 
@@ -169,7 +170,7 @@ const App = () => {
 
       <Controls
         groove={groove}
-        metronomeEnabled={playingMetronome}
+        metronomeEnabled={metronomePlaying}
         playing={playing}
         onOpenSettings={openSettings}
         onSetTempo={setTempo}
@@ -180,9 +181,9 @@ const App = () => {
       <Dialog ref={settings} mode="mega" onClose={closeSettings}>
         <Settings
           grooveGroups={groove.groups}
-          metronomeDivision={metronome}
+          metronomeSubdivision={metronomeSubdivision}
           setGrooveGroup={setEnabledGroup}
-          setMetronomeDivision={setMetronome}
+          setMetronomeSubdivision={setMetronomeSubdivision}
         />
       </Dialog>
     </div>
